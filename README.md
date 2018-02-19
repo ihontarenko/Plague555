@@ -1,2 +1,2 @@
 # StartApp
-Main StartApp Application
+StartApp StartApp Application
