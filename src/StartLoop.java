@@ -1,4 +1,4 @@
-import org.plagueinc.sl.gui.GUIWindow;
+import org.plagueinc.sorrowland.gui.GUIWindow;
 
 public class StartLoop {
 
