@@ -1,4 +1,4 @@
-package org.plagueinc.sl.core.helper;
+package org.plagueinc.sl.core.common;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

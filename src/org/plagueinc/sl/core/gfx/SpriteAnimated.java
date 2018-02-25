@@ -1,6 +1,6 @@
 package org.plagueinc.sl.core.gfx;
 
-import org.plagueinc.sl.core.helper.Time;
+import org.plagueinc.sl.core.common.Time;
 
 import java.awt.*;
 

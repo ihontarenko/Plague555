@@ -1,4 +1,4 @@
-package org.plagueinc.sl.core.helper;
+package org.plagueinc.sl.core.common;
 
 public class Time {
 

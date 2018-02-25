@@ -1,4 +1,4 @@
-package org.plagueinc.sl.core.helper;
+package org.plagueinc.sl.core.common;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
