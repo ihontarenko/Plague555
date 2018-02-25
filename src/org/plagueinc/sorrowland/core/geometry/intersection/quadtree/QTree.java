@@ -1,7 +1,7 @@
-package org.plagueinc.sorrowland.core.intersection.quadtree;
+package org.plagueinc.sorrowland.core.geometry.intersection.quadtree;
 
-import org.plagueinc.sorrowland.core.intersection.Bound2D;
-import org.plagueinc.sorrowland.core.intersection.Object2D;
+import org.plagueinc.sorrowland.core.geometry.intersection.Bound2D;
+import org.plagueinc.sorrowland.core.geometry.intersection.Object2D;
 
 import java.util.Set;
 

@@ -1,4 +1,4 @@
-package org.plagueinc.sorrowland.core.intersection;
+package org.plagueinc.sorrowland.core.geometry.intersection;
 
 import java.util.List;
 

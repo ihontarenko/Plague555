@@ -1,7 +1,7 @@
-package org.plagueinc.sorrowland.core.intersection.spatialhash;
+package org.plagueinc.sorrowland.core.geometry.intersection.spatialhash;
 
-import org.plagueinc.sorrowland.core.intersection.IntersectionInterface;
-import org.plagueinc.sorrowland.core.intersection.Object2D;
+import org.plagueinc.sorrowland.core.geometry.intersection.IntersectionInterface;
+import org.plagueinc.sorrowland.core.geometry.intersection.Object2D;
 
 import java.awt.*;
 import java.util.ArrayList;

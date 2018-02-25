@@ -1,4 +1,4 @@
-package org.plagueinc.sorrowland.core.intersection.quadtree;
+package org.plagueinc.sorrowland.core.geometry.intersection.quadtree;
 
 public enum QTreeNodeType {
 

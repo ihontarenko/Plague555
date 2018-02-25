@@ -1,5 +1,5 @@
 
-import org.plagueinc.sorrowland.core.intersection.spatialhash.SpatialHash;
+import org.plagueinc.sorrowland.core.geometry.intersection.spatialhash.SpatialHash;
 
 import java.awt.*;
 
