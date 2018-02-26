@@ -2,7 +2,7 @@ package org.plagueinc.sorrowland.core.geometry.intersection;
 
 import java.util.List;
 
-public interface IntersectionInterface<T extends Object2D & Comparable<T>> {
+public interface IntersectionInterface<T extends Object2D & Comparable<Object2D>> {
 
   List<T> retrieve(T object);
 

@@ -9,6 +9,8 @@ import java.util.List;
 
 public class SpatialHash implements IntersectionInterface{
 
+  final public static int SHIFT = 5;
+
   @Override
   public List<Object2D> retrieve(Object2D object) {
     return null;
@@ -26,12 +28,27 @@ public class SpatialHash implements IntersectionInterface{
 
   public List<String> getHash(Rectangle box) {
 
-    int shift = 3;
+    int sx = (int) box.getX() >> SHIFT,
+        sy = (int) box.getY() >> SHIFT,
+        ex = (int) (box.getX() + box.getWidth()) >> SHIFT,
+        ey = (int) (box.getY() + box.getHeight()) >> SHIFT;
 
-    int sx = (int) box.getX() >> shift,
-        sy = (int) box.getY() >> shift,
-        ex = (int) (box.getX() + box.getWidth()) >> shift,
-        ey = (int) (box.getY() + box.getHeight()) >> shift;
+    List<String> keys = new ArrayList<>();
+
+    for (int y = sy; y <= ey; y++) {
+      for (int x = sx; x <= ex; x++) {
+        keys.add(x + ":" + y);
+      }
+    }
+    return keys;
+  }
+
+  public List<String> getFlatHash(Rectangle box) {
+
+    int sx = (int) box.getX() >> SHIFT,
+        sy = (int) box.getY() >> SHIFT,
+        ex = (int) (box.getX() + box.getWidth()) >> SHIFT,
+        ey = (int) (box.getY() + box.getHeight()) >> SHIFT;
 
     List<String> keys = new ArrayList<>();
 

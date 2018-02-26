@@ -1,6 +1,6 @@
 package org.plagueinc.sorrowland.core.geometry.intersection;
 
-public interface Object2D {
+public interface Object2D extends Comparable<Object2D> {
 
   public double x();
 

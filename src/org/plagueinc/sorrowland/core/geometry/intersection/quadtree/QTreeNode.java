@@ -9,18 +9,18 @@ import java.util.*;
 import java.util.List;
 import java.util.function.BiConsumer;
 
-public class QTreeNode implements IntersectionInterface {
+public class QTreeNode implements IntersectionInterface<Object2D> {
 
   private static final int MAX_OBJECTS_PER_NODE = 2;
   private static final int MAX_DEPTH = 6;
-  private Map<QTreeNodeType, QTreeNode<T>> nodes;
+  private Map<QTreeNodeType, QTreeNode> nodes;
   private int depth = 0;
   private boolean hasChildren = false;
-  private Bound2D      bounds;
-  private Set<T>       leafs;
-  private QTreeNode<T> parentNode;
+  private Bound2D bounds;
+  private Set<Object2D> leafs;
+  private QTreeNode parentNode;
 
-  public QTreeNode(QTreeNode<T> parentNode, Bound2D bounds, int depth) {
+  public QTreeNode(QTreeNode parentNode, Bound2D bounds, int depth) {
     this.parentNode = parentNode;
     this.bounds = bounds;
     this.leafs = new HashSet<>();
@@ -36,18 +36,8 @@ public class QTreeNode implements IntersectionInterface {
     this(null, minX, minY, maxX, maxY, depth);
   }
 
-  public QTreeNode(QTreeNode<T> parentNode, double minX, double minY, double maxX, double maxY, int depth) {
+  public QTreeNode(QTreeNode parentNode, double minX, double minY, double maxX, double maxY, int depth) {
     this(parentNode, new Bound2D(minX, minY, maxX, maxY), depth);
-  }
-
-  @Override
-  public List retrieve(Object2D object) {
-    return null;
-  }
-
-  @Override
-  public void insert(Object2D object) {
-
   }
 
   public void eachLeaf(QTree.EachLeaf eachLeaf) {
@@ -63,8 +53,8 @@ public class QTreeNode implements IntersectionInterface {
     nodeExecute.accept(nodeExecute, this);
   }
 
-  public Set<T> getFlatItems() {
-    Set<T> items = new HashSet<>(this.leafs);
+  public Set<Object2D> getFlatItems() {
+    Set<Object2D> items = new HashSet<>(this.leafs);
 
     if (this.hasChildren) {
       this.nodes().forEach((qtreeNodeType, node) -> items.addAll(node.getFlatItems()));
@@ -73,7 +63,7 @@ public class QTreeNode implements IntersectionInterface {
     return items;
   }
 
-  public Set<T> getLeafs() {
+  public Set<Object2D> getLeafs() {
     return this.leafs;
   }
 
@@ -84,9 +74,9 @@ public class QTreeNode implements IntersectionInterface {
         this.nodes.forEach((qtreeNodeType, node) -> node.updateBelongs());
       }
     } else {
-      Iterator<T> iterator = this.leafs.iterator();
+      Iterator<Object2D> iterator = this.leafs.iterator();
       while (iterator.hasNext()) {
-        T leaf = iterator.next();
+        Object2D leaf = iterator.next();
         if (!this.isBelong(leaf)) {
           iterator.remove();
           this.insertToParent(leaf);
@@ -106,7 +96,7 @@ public class QTreeNode implements IntersectionInterface {
     }
   }
 
-  public boolean isBelong(T leaf) {
+  public boolean isBelong(Object2D leaf) {
     return this.getBounds().contains(leaf.x(), leaf.y());
   }
 
@@ -123,18 +113,18 @@ public class QTreeNode implements IntersectionInterface {
     this.nodes.clear();
   }
 
-  public Set<T> search(Bound2D treeBound) {
+  public Set<Object2D> search(Bound2D treeBound) {
     treeBound.intersects(this.bounds);
     // not implemented yet
     return null;
   }
 
-  public Set<T> search(Rectangle rectangle) {
+  public Set<Object2D> search(Rectangle rectangle) {
     return this.search(new Bound2D(rectangle.x, rectangle.y, rectangle.getMaxX(), rectangle.getMaxY()));
   }
 
-  public void insertToParent(T object2D) throws RuntimeException {
-    QTreeNode<T> node = this.getParentNode();
+  public void insertToParent(Object2D object2D) throws RuntimeException {
+    QTreeNode node = this.getParentNode();
 
     if (this.isRoot()) {
       this.insert(object2D);
@@ -147,7 +137,8 @@ public class QTreeNode implements IntersectionInterface {
     }
   }
 
-  public void insert(T object2D) {
+  @Override
+  public void insert(Object2D object2D) {
     if (this.hasChildren) {
       this.nodes.get(this.detectNodeType(object2D)).insert(object2D);
     } else {
@@ -158,9 +149,9 @@ public class QTreeNode implements IntersectionInterface {
         this.splitNode();
         this.nodes.get(this.detectNodeType(object2D)).insert(object2D);
 
-        Iterator<T> iterator = this.leafs.iterator();
+        Iterator<Object2D> iterator = this.leafs.iterator();
         while (iterator.hasNext()) {
-          T leaf = iterator.next();
+          Object2D leaf = iterator.next();
           this.nodes.get(this.detectNodeType(leaf)).insert(leaf);
           iterator.remove();
         }
@@ -170,14 +161,19 @@ public class QTreeNode implements IntersectionInterface {
     }
   }
 
+  @Override
+  public List<Object2D> retrieve(Object2D object) {
+    return null;
+  }
+
   public void splitNode() {
-    QTreeNode<T> nodeNorthWest = new QTreeNode<>(this.bounds.minX, this.bounds.minY, this.bounds.centreX,
+    QTreeNode nodeNorthWest = new QTreeNode(this.bounds.minX, this.bounds.minY, this.bounds.centreX,
         this.bounds.centreY, this.depth + 1);
-    QTreeNode<T> nodeNorthEast = new QTreeNode<>(this.bounds.centreX, this.bounds.minY, this.bounds.maxX,
+    QTreeNode nodeNorthEast = new QTreeNode(this.bounds.centreX, this.bounds.minY, this.bounds.maxX,
         this.bounds.centreY, this.depth + 1);
-    QTreeNode<T> nodeSouthEast = new QTreeNode<>(this.bounds.centreX, this.bounds.centreY, this.bounds.maxX,
+    QTreeNode nodeSouthEast = new QTreeNode(this.bounds.centreX, this.bounds.centreY, this.bounds.maxX,
         this.bounds.maxY, this.depth + 1);
-    QTreeNode<T> nodeSouthWest = new QTreeNode<>(this.bounds.minX, this.bounds.centreY, this.bounds.centreX,
+    QTreeNode nodeSouthWest = new QTreeNode(this.bounds.minX, this.bounds.centreY, this.bounds.centreX,
         this.bounds.maxY, this.depth + 1);
 
     this.nodes.put(QTreeNodeType.NW, nodeNorthWest);
@@ -195,7 +191,7 @@ public class QTreeNode implements IntersectionInterface {
     return this.detectNodeType(x, y);
   }
 
-  public QTreeNodeType detectNodeType(T object2D) {
+  public QTreeNodeType detectNodeType(Object2D object2D) {
     return this.detectNodeType(object2D.x(), object2D.y());
   }
 
@@ -215,7 +211,7 @@ public class QTreeNode implements IntersectionInterface {
     return null == this.parentNode;
   }
 
-  public QTreeNode<T> getParentNode() {
+  public QTreeNode getParentNode() {
     return this.parentNode;
   }
 
@@ -231,7 +227,7 @@ public class QTreeNode implements IntersectionInterface {
     return this.hasChildren;
   }
 
-  public Map<QTreeNodeType, QTreeNode<T>> nodes() {
+  public Map<QTreeNodeType, QTreeNode> nodes() {
     return this.nodes;
   }
 

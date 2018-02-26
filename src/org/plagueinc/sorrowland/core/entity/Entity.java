@@ -3,8 +3,9 @@ package org.plagueinc.sorrowland.core.entity;
 
 import org.plagueinc.sorrowland.core.geometry.Bounds2D;
 import org.plagueinc.sorrowland.core.geometry.Vector2D;
+import org.plagueinc.sorrowland.core.geometry.intersection.Object2D;
 
-abstract public class Entity<T extends Entity> implements Object2D, Comparable<T> {
+abstract public class Entity<T extends Entity> implements Object2D {
 
   protected int width = 0;
   protected int height = 0;
@@ -89,8 +90,8 @@ abstract public class Entity<T extends Entity> implements Object2D, Comparable<T
   }
 
   @Override
-  public int compareTo(T entity) {
-    return entity.x() < this.x() ? 1 : entity.x() == this.x() ? 0 : -1;
+  public int compareTo(Object2D entity) {
+    return Double.compare(this.x(), entity.x());
   }
 
   @Override

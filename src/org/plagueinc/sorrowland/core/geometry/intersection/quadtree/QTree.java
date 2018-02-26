@@ -6,16 +6,16 @@ import org.plagueinc.sorrowland.core.geometry.intersection.Object2D;
 import java.util.Set;
 
 @SuppressWarnings("unused")
-public class QTree<T extends Object2D & Comparable<T>> {
+public class QTree {
 
-  private QTreeNode<T> root;
-  private Set<T>       items;
+  private QTreeNode     root;
+  private Set<Object2D> items;
 
   public QTree(double minX, double minY, double maxX, double maxY) {
-    root = new QTreeNode<>(new Bound2D(minX, minY, maxX, maxY), 0);
+    root = new QTreeNode(new Bound2D(minX, minY, maxX, maxY), 0);
   }
 
-  public void add(T treeLeaf) {
+  public void add(Object2D treeLeaf) {
     this.root.insert(treeLeaf);
   }
 
@@ -27,7 +27,7 @@ public class QTree<T extends Object2D & Comparable<T>> {
     this.root.eachLeaf(executor);
   }
 
-  public Set<T> leafsAll() {
+  public Set<Object2D> leafsAll() {
     if (this.items == null) {
       this.items = this.root.getFlatItems();
     }
@@ -35,7 +35,7 @@ public class QTree<T extends Object2D & Comparable<T>> {
     return this.items;
   }
 
-  public QTreeNode<T> rootNode() {
+  public QTreeNode rootNode() {
     return this.root;
   }
 
