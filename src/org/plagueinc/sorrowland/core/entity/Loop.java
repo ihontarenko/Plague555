@@ -77,7 +77,7 @@ abstract public class Loop implements Runnable, ProxyInterface {
       boolean readyToRender = false;
 
       while (lostTime > 1) {
-        update(elapsedTime / ONE_NANO_SECOND);
+        update(elapsedTime);
         lostTime--;
 
         counters[1]++;

@@ -1,6 +1,7 @@
 package org.plagueinc.sorrowland.gui;
 
 import org.plagueinc.sorrowland.core.common.ProxyInterface;
+import org.plagueinc.sorrowland.gui.pane.MainMenuPane;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +18,7 @@ public class GUIWindow implements ProxyInterface {
 
   private int width;
   private int height;
-  private JFrame frame;
+  private GUIFrame frame;
   private Canvas content;
   private BufferedImage bufferedImage;
   private BufferStrategy bufferStrategy;
@@ -36,33 +37,12 @@ public class GUIWindow implements ProxyInterface {
   }
 
   private void createFrame() {
-    this.frame = new JFrame(this.title);
     this.content = new Canvas();
     this.content.setSize(new Dimension(this.width, this.height));
 
-    JPanel panel = new JPanel(new BorderLayout());
-
-    panel.setBackground(Color.decode("#b24926"));
-    panel.setBorder(BorderFactory.createMatteBorder(3, 0, 0, 0, Color.decode("#faa523")));
-    panel.setLayout(new FlowLayout(FlowLayout.LEADING, 10, 10));
-
-    JButton button = new JButton("Hello World!");
-    button.setBackground(Color.decode("#7acef4"));
-    panel.add(button);
-
-    button.addActionListener(e -> {
-      button.setText("Update date!");
-      this.getMainFrame().setTitle(new Date().toString());
-    });
-
-    this.frame.add(panel, BorderLayout.SOUTH);
-
-    this.frame.setResizable(false);
-    this.frame.getContentPane().add(this.content);
-    this.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-    this.frame.pack();
-    this.frame.setLocationRelativeTo(null);
-    this.frame.setVisible(true);
+    this.frame = new GUIFrame();
+    this.frame.add(this.content);
+    this.frame.initialize();
   }
 
   public void initialize() {
@@ -109,7 +89,7 @@ public class GUIWindow implements ProxyInterface {
     return height;
   }
 
-  public JFrame getMainFrame() {
+  public GUIFrame getMainFrame() {
     return frame;
   }
 

@@ -1,4 +1,4 @@
-package org.plagueinc.sorrowland.core.gfx;
+package org.plagueinc.sorrowland.core.common;
 
 import java.awt.*;
 
