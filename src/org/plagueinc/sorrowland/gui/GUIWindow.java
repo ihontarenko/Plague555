@@ -7,7 +7,9 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.text.DateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 public class GUIWindow implements ProxyInterface {
 
@@ -37,6 +39,23 @@ public class GUIWindow implements ProxyInterface {
     this.frame = new JFrame(this.title);
     this.content = new Canvas();
     this.content.setSize(new Dimension(this.width, this.height));
+
+    JPanel panel = new JPanel(new BorderLayout());
+
+    panel.setBackground(Color.decode("#b24926"));
+    panel.setBorder(BorderFactory.createMatteBorder(3, 0, 0, 0, Color.decode("#faa523")));
+    panel.setLayout(new FlowLayout(FlowLayout.LEADING, 10, 10));
+
+    JButton button = new JButton("Hello World!");
+    button.setBackground(Color.decode("#7acef4"));
+    panel.add(button);
+
+    button.addActionListener(e -> {
+      button.setText("Update date!");
+      this.getMainFrame().setTitle(new Date().toString());
+    });
+
+    this.frame.add(panel, BorderLayout.SOUTH);
 
     this.frame.setResizable(false);
     this.frame.getContentPane().add(this.content);
@@ -79,7 +98,7 @@ public class GUIWindow implements ProxyInterface {
   }
 
   public void appendTitle(String title) {
-    this.getFrame().setTitle(this.title + title);
+    this.getMainFrame().setTitle(this.title + title);
   }
 
   public int getWidth() {
@@ -90,7 +109,7 @@ public class GUIWindow implements ProxyInterface {
     return height;
   }
 
-  public JFrame getFrame() {
+  public JFrame getMainFrame() {
     return frame;
   }
 
