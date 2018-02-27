@@ -1,8 +1,8 @@
-package org.plagueinc.sorrowland.controller;
+package org.plagueinc.sorrowland.core.controller;
 
 import org.plagueinc.sorrowland.core.common.Drawable;
 
-public interface GameControllerInterface extends Drawable {
+public interface ControllerInterface extends Drawable {
 
 //  public void pause();
 

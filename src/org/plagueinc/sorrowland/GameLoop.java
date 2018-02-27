@@ -1,23 +1,20 @@
 package org.plagueinc.sorrowland;
 
-import org.plagueinc.sorrowland.controller.GameControllerInterface;
 import org.plagueinc.sorrowland.controller.MenuController;
-import org.plagueinc.sorrowland.controller.Window1Controller;
+import org.plagueinc.sorrowland.core.controller.ControllerContainer;
+import org.plagueinc.sorrowland.core.controller.ControllerInterface;
 import org.plagueinc.sorrowland.core.entity.Loop;
-import org.plagueinc.sorrowland.gui.GUIFrame;
+import org.plagueinc.sorrowland.core.renderer.RendererContainer;
 import org.plagueinc.sorrowland.gui.GUIWindow;
-import org.plagueinc.sorrowland.gui.canvas.GUICanvas;
-import org.plagueinc.sorrowland.gui.pane.MainMenuPane;
-
-import javax.swing.*;
-import java.awt.*;
 
 public class GameLoop extends Loop {
 
-  private boolean isInitialized    = false;
-  private float   oneSecondElapsed = 0;
-  private GUIWindow               gui;
-  private GameControllerInterface controller;
+  private boolean             isInitialized;
+  private float               oneSecondElapsed;
+  private GUIWindow           gui;
+  private ControllerInterface activeController;
+  private ControllerContainer controllerContainer;
+  private RendererContainer   rendererContainer;
 
   public GameLoop() {
     super();
@@ -34,20 +31,13 @@ public class GameLoop extends Loop {
     if (!isInitialized()) {
       gui = new GUIWindow(800, 600);
       gui.initialize();
-      controller = new MenuController();
 
-      GUICanvas canvas = new GUICanvas(400, 300);
-      canvas.setDefaultColor(0xFF72A0C1);
+      controllerContainer = new ControllerContainer();
+      rendererContainer = new RendererContainer();
 
-      gui.getMainFrame().add(new MainMenuPane(), BorderLayout.SOUTH);
-      gui.getMainFrame().updateUI();
+      activeController = controllerContainer.getObject(MenuController.class);
 
-      gui.getMainFrame().addCanvas("canvas1", canvas);
-
-      GUICanvas canvas2 = new GUICanvas(300, 200);
-      canvas.setDefaultColor(0xFFE32636);
-
-      gui.getMainFrame().addCanvas("canvas2", canvas2);
+      System.out.println(activeController);
 
       isInitialized = true;
     }
@@ -56,35 +46,19 @@ public class GameLoop extends Loop {
   @Override
   protected void update(float elapsedTime) {
     oneSecondElapsed += elapsedTime;
-    if (oneSecondElapsed > (ONE_NANO_SECOND / 4)) {
-      gui.appendTitle(getExecutionInfo());
-      oneSecondElapsed = 0;
-//
-//      GUIFrame frame = gui.getMainFrame();
-//
-//      MainMenuPane pane = new MainMenuPane();
-//
-//      frame.add(pane, BorderLayout.SOUTH);
-//      frame.updateUI();
-//
-//      pane.getStartButton().addActionListener(e -> {
-//        if (controller instanceof MenuController) {
-//          controller = new Window1Controller();
-//        } else {
-//          controller = new MenuController();
-//        }
-//      });
 
+    if (oneSecondElapsed > (ONE_NANO_SECOND / 4)) {
+      gui.setTitle(getExecutionInfo());
+      oneSecondElapsed = 0;
     }
-    controller.update(elapsedTime);
+
+    activeController.update(elapsedTime);
   }
 
   @Override
   protected void render() {
     gui.clearFrame();
-
-//    controller.draw(gui.getMainCanvas().getG2D());
-
+    activeController.draw(gui.getG2D());
     gui.swapBuffer();
   }
 }

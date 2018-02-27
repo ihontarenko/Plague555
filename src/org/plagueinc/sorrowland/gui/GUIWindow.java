@@ -27,20 +27,15 @@ public class GUIWindow implements ProxyInterface {
   }
 
   private void createFrame() {
-    GUIFrame guiFrame = new GUIFrame();
     GUICanvas canvas = new GUICanvas(getWidth(), getHeight());
+    canvas.setDefaultColor(0xFFE32636);
+    canvas.setSize(getWidth(), getHeight());
 
-    canvas.setDefaultColor(0xff00ccaa);
-    canvas.setSize(100, 200);
+    frame = new GUIFrame();
+    frame.setCanvas(canvas);
+    frame.initialize();
 
-    guiFrame.initialize();
-    guiFrame.setSize(getWidth(), getHeight());
-//    guiFrame.add(canvas);
-
-//    canvas.initialize();
-//    guiFrame.getCanvasCollection().put(GUIFrame.CANVAS_NAME, canvas);
-
-    this.frame = guiFrame;
+    canvas.initialize();
   }
 
   public void initialize() {
@@ -55,14 +50,14 @@ public class GUIWindow implements ProxyInterface {
   }
 
   public void swapBuffer() {
-    getMainFrame().getCanvasCollection().forEach((s, canvas) -> canvas.swapBuffer());
+    getMainFrame().getCanvas().swapBuffer();
   }
 
   public void clearFrame() {
-    getMainFrame().getCanvasCollection().forEach((s, canvas) -> canvas.clearFrame());
+    getMainFrame().getCanvas().clearFrame();
   }
 
-  public void appendTitle(String title) {
+  public void setTitle(String title) {
     this.getMainFrame().setTitle(this.title + title);
   }
 
@@ -78,8 +73,12 @@ public class GUIWindow implements ProxyInterface {
     return frame;
   }
 
-  public GUICanvas getMainCanvas() {
-    return getMainFrame().getGUICanvas(GUIFrame.CANVAS_NAME);
+  public GUICanvas getCanvas() {
+    return getMainFrame().getCanvas();
+  }
+
+  public Graphics2D getG2D() {
+    return (Graphics2D)getCanvas().getG2D();
   }
 
   public String getTitle() {
