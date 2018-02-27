@@ -1,33 +1,23 @@
 package org.plagueinc.sorrowland.gui;
 
 import org.plagueinc.sorrowland.core.common.ProxyInterface;
+import org.plagueinc.sorrowland.gui.canvas.GUICanvas;
 import org.plagueinc.sorrowland.gui.pane.MainMenuPane;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferStrategy;
-import java.awt.image.BufferedImage;
-import java.awt.image.DataBufferInt;
-import java.text.DateFormat;
-import java.util.Arrays;
-import java.util.Date;
 
 public class GUIWindow implements ProxyInterface {
 
   private boolean isInitialized = false;
 
-  private int width;
-  private int height;
+  private int      width;
+  private int      height;
   private GUIFrame frame;
-  private Canvas content;
-  private BufferedImage bufferedImage;
-  private BufferStrategy bufferStrategy;
-  private int[] bufferedData;
-  private Graphics2D graphics2D;
-  private String title;
+  private String   title;
 
   public GUIWindow(int width, int height) {
-    this(width, height, GUIWindow.class.getCanonicalName());
+    this(width, height, GUIWindow.class.getSimpleName());
   }
 
   public GUIWindow(int width, int height, String title) {
@@ -37,27 +27,25 @@ public class GUIWindow implements ProxyInterface {
   }
 
   private void createFrame() {
-    this.content = new Canvas();
-    this.content.setSize(new Dimension(this.width, this.height));
+    GUIFrame guiFrame = new GUIFrame();
+    GUICanvas canvas = new GUICanvas(getWidth(), getHeight());
 
-    this.frame = new GUIFrame();
-    this.frame.add(this.content);
-    this.frame.initialize();
+    canvas.setDefaultColor(0xff00ccaa);
+    canvas.setSize(100, 200);
+
+    guiFrame.initialize();
+    guiFrame.setSize(getWidth(), getHeight());
+//    guiFrame.add(canvas);
+
+//    canvas.initialize();
+//    guiFrame.getCanvasCollection().put(GUIFrame.CANVAS_NAME, canvas);
+
+    this.frame = guiFrame;
   }
 
   public void initialize() {
     if (!isInitialized()) {
       this.createFrame();
-
-      this.bufferedImage  = new BufferedImage(this.width, this.height, BufferedImage.TYPE_INT_ARGB);
-      this.bufferedData   = ((DataBufferInt) this.bufferedImage.getRaster().getDataBuffer()).getData();
-      this.graphics2D     = (Graphics2D) this.bufferedImage.getGraphics();
-
-      this.graphics2D.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-      this.content.createBufferStrategy(3);
-      this.bufferStrategy = this.content.getBufferStrategy();
-
       this.isInitialized = true;
     }
   }
@@ -67,14 +55,11 @@ public class GUIWindow implements ProxyInterface {
   }
 
   public void swapBuffer() {
-    this.bufferStrategy
-        .getDrawGraphics()
-        .drawImage(this.bufferedImage, 0, 0, null);
-    this.bufferStrategy.show();
+    getMainFrame().getCanvasCollection().forEach((s, canvas) -> canvas.swapBuffer());
   }
 
   public void clearFrame() {
-    Arrays.fill(this.bufferedData, 0xff000000);
+    getMainFrame().getCanvasCollection().forEach((s, canvas) -> canvas.clearFrame());
   }
 
   public void appendTitle(String title) {
@@ -93,24 +78,8 @@ public class GUIWindow implements ProxyInterface {
     return frame;
   }
 
-  public Canvas getContent() {
-    return content;
-  }
-
-  public BufferedImage getBufferedImage() {
-    return bufferedImage;
-  }
-
-  public BufferStrategy getBufferStrategy() {
-    return bufferStrategy;
-  }
-
-  public int[] getBufferedData() {
-    return bufferedData;
-  }
-
-  public Graphics2D getGraphics2D() {
-    return graphics2D;
+  public GUICanvas getMainCanvas() {
+    return getMainFrame().getGUICanvas(GUIFrame.CANVAS_NAME);
   }
 
   public String getTitle() {

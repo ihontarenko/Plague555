@@ -6,8 +6,10 @@ import org.plagueinc.sorrowland.controller.Window1Controller;
 import org.plagueinc.sorrowland.core.entity.Loop;
 import org.plagueinc.sorrowland.gui.GUIFrame;
 import org.plagueinc.sorrowland.gui.GUIWindow;
+import org.plagueinc.sorrowland.gui.canvas.GUICanvas;
 import org.plagueinc.sorrowland.gui.pane.MainMenuPane;
 
+import javax.swing.*;
 import java.awt.*;
 
 public class GameLoop extends Loop {
@@ -20,7 +22,6 @@ public class GameLoop extends Loop {
   public GameLoop() {
     super();
     initialize();
-    controller = new MenuController();
   }
 
   @Override
@@ -33,6 +34,21 @@ public class GameLoop extends Loop {
     if (!isInitialized()) {
       gui = new GUIWindow(800, 600);
       gui.initialize();
+      controller = new MenuController();
+
+      GUICanvas canvas = new GUICanvas(400, 300);
+      canvas.setDefaultColor(0xFF72A0C1);
+
+      gui.getMainFrame().add(new MainMenuPane(), BorderLayout.SOUTH);
+      gui.getMainFrame().updateUI();
+
+      gui.getMainFrame().addCanvas("canvas1", canvas);
+
+      GUICanvas canvas2 = new GUICanvas(300, 200);
+      canvas.setDefaultColor(0xFFE32636);
+
+      gui.getMainFrame().addCanvas("canvas2", canvas2);
+
       isInitialized = true;
     }
   }
@@ -40,24 +56,24 @@ public class GameLoop extends Loop {
   @Override
   protected void update(float elapsedTime) {
     oneSecondElapsed += elapsedTime;
-    if (oneSecondElapsed > ONE_NANO_SECOND) {
+    if (oneSecondElapsed > (ONE_NANO_SECOND / 4)) {
       gui.appendTitle(getExecutionInfo());
       oneSecondElapsed = 0;
-
-      GUIFrame frame = gui.getMainFrame();
-
-      MainMenuPane pane = new MainMenuPane();
-
-      frame.add(pane, BorderLayout.SOUTH);
-      frame.updateUI();
-
-      pane.getStartButton().addActionListener(e -> {
-        if (controller instanceof MenuController) {
-          controller = new Window1Controller();
-        } else {
-          controller = new MenuController();
-        }
-      });
+//
+//      GUIFrame frame = gui.getMainFrame();
+//
+//      MainMenuPane pane = new MainMenuPane();
+//
+//      frame.add(pane, BorderLayout.SOUTH);
+//      frame.updateUI();
+//
+//      pane.getStartButton().addActionListener(e -> {
+//        if (controller instanceof MenuController) {
+//          controller = new Window1Controller();
+//        } else {
+//          controller = new MenuController();
+//        }
+//      });
 
     }
     controller.update(elapsedTime);
@@ -67,7 +83,7 @@ public class GameLoop extends Loop {
   protected void render() {
     gui.clearFrame();
 
-    controller.draw(gui.getGraphics2D());
+//    controller.draw(gui.getMainCanvas().getG2D());
 
     gui.swapBuffer();
   }

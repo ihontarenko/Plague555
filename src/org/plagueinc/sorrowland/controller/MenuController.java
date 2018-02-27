@@ -12,7 +12,7 @@ public class MenuController implements GameControllerInterface {
   @Override
   public void draw(Graphics2D g2d) {
     g2d.setColor(Color.RED);
-    g2d.drawRect(10, 10, 100, 100);
+    g2d.drawOval(10, 10, 100, 100);
   }
 
 }
