@@ -7,8 +7,6 @@ import javax.swing.*;
 
 public class GUIFrame extends JFrame implements ProxyInterface {
 
-  final public static String CANVAS_NAME = "Main";
-
   private boolean      isInitialized;
   private GUICanvas    canvas;
 

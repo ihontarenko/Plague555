@@ -11,7 +11,7 @@ public class MainMenuPane extends JPanel {
     super(new BorderLayout());
 
     setBackground(Color.decode("#b24926"));
-    setBorder(BorderFactory.createMatteBorder(3, 0, 0, 0, Color.decode("#faa523")));
+    setBorder(BorderFactory.createMatteBorder(0, 2, 0, 0, Color.WHITE));
     setLayout(new FlowLayout(FlowLayout.LEADING, 10, 10));
 
     startButton = new JButton("Hello World!");
