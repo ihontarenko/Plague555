@@ -1,5 +1,6 @@
 package org.plagueinc.sorrowland.core.state;
 
+import org.plagueinc.sorrowland.core.common.Initializable;
 import org.plagueinc.sorrowland.core.common.RunnableProcess;
 import org.plagueinc.sorrowland.core.container.ObjectContainer;
 import org.plagueinc.sorrowland.core.controller.AbstractController;
@@ -7,21 +8,19 @@ import org.plagueinc.sorrowland.core.controller.AbstractController;
 import java.awt.*;
 
 abstract public class AbstractState<Manager extends AbstractStateManager, Controller extends AbstractController>
-    implements RunnableProcess<Controller> {
+    implements RunnableProcess<Controller>, Initializable {
 
   private ObjectContainer<Controller> controllers;
   private Manager                     stateManager;
   private Controller                  activeController;
   private ProcessMode                 processMode;
-
-  public AbstractState() {
-    this(null);
-  }
+  private boolean                     isInitialized;
 
   public AbstractState(Manager stateManager) {
     this.controllers = new ObjectContainer<>();
     this.stateManager = stateManager;
     this.processMode = ProcessMode.ACTIVE;
+    initialize();
   }
 
   public ProcessMode getProcessMode() {
@@ -36,12 +35,12 @@ abstract public class AbstractState<Manager extends AbstractStateManager, Contro
     return activeController;
   }
 
-  public void setActiveController(Controller controller) {
-    activeController = controller;
-  }
-
   public void setActiveController(String name) {
     setActiveController(getController(name));
+  }
+
+  public void setActiveController(Controller controller) {
+    activeController = controller;
   }
 
   public void registerController(String name, Controller controller) {
@@ -84,6 +83,20 @@ abstract public class AbstractState<Manager extends AbstractStateManager, Contro
         getActiveController().update(nanoSeconds);
     }
   }
+
+  @Override
+  public boolean isInitialized() {
+    return isInitialized;
+  }
+
+  @Override
+  public void initialize() {
+    if (!isInitialized()) {
+      doInitialize();
+    }
+  }
+
+  abstract protected void doInitialize();
 
   public enum ProcessMode {
     BATCH, ACTIVE

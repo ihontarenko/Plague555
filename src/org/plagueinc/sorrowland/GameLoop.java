@@ -3,6 +3,7 @@ package org.plagueinc.sorrowland;
 import org.plagueinc.sorrowland.core.entity.Loop;
 import org.plagueinc.sorrowland.core.state.AbstractStateManager;
 import org.plagueinc.sorrowland.gui.GUIWindow;
+import org.plagueinc.sorrowland.manager.GameStateManager;
 
 public class GameLoop extends Loop {
 
@@ -27,31 +28,35 @@ public class GameLoop extends Loop {
       isInitialized = true;
       gui = new GUIWindow(800, 600);
       gui.initialize();
-      stateManager = new AbstractStateManager() { };
+      stateManager = new GameStateManager();
     }
   }
 
   @Override
-  protected void update(float elapsedTime) {
+  protected void update(float nano) {
     // default code for update window title information
-    oneSecondElapsed += elapsedTime;
+    oneSecondElapsed += nano;
     if (oneSecondElapsed > (ONE_NANO_SECOND / 4) && null != getExecutionInfo()) {
       gui.setTitle(getExecutionInfo());
       oneSecondElapsed = 0;
     }
 
     // custom code below
+    getStateManager().update(nano);
   }
 
   @Override
   protected void render() {
-    gui.clearFrame();
-//    .draw(gui.getG2D());
-    gui.swapBuffer();
+    getGUI().clearFrame();
+    getStateManager().draw(getGUI().getG2D());
+    getGUI().swapBuffer();
   }
 
   public AbstractStateManager getStateManager() {
     return stateManager;
   }
 
+  public GUIWindow getGUI() {
+    return gui;
+  }
 }

@@ -14,6 +14,6 @@ public interface Renderer<R extends Renderer, M extends Map<String, R>> extends 
 
   public R getInnerRenderer(String name);
 
-  public void setInnerRenderer(String name, R renderer);
+  public void registerInnerRenderer(String name, R renderer);
 
 }

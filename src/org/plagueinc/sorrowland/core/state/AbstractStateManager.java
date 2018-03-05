@@ -1,18 +1,21 @@
 package org.plagueinc.sorrowland.core.state;
 
 import org.plagueinc.sorrowland.core.common.Drawable;
+import org.plagueinc.sorrowland.core.common.Initializable;
 import org.plagueinc.sorrowland.core.common.Updateable;
 import org.plagueinc.sorrowland.core.container.ObjectContainer;
 
 import java.awt.*;
 
-abstract public class AbstractStateManager<State extends AbstractState> implements Drawable, Updateable {
+abstract public class AbstractStateManager<State extends AbstractState> implements Drawable, Updateable, Initializable {
 
-  private ObjectContainer<State> states;
-  private State                  activeState;
+  protected boolean                isInitialized;
+  private   ObjectContainer<State> states;
+  private   State                  activeState;
 
   public AbstractStateManager() {
     states = new ObjectContainer<>();
+    initialize();
   }
 
   public State getActiveState() {
@@ -40,6 +43,18 @@ abstract public class AbstractStateManager<State extends AbstractState> implemen
   }
 
   @Override
+  public boolean isInitialized() {
+    return isInitialized;
+  }
+
+  @Override
+  public void initialize() {
+    if (!isInitialized()) {
+      doInitialize();
+    }
+  }
+
+  @Override
   public void draw(Graphics2D g2d) {
     states.forEach((keyName, state) -> state.draw(g2d));
   }
@@ -48,5 +63,7 @@ abstract public class AbstractStateManager<State extends AbstractState> implemen
   public void update(float nanoSeconds) {
     states.forEach((keyName, state) -> state.update(nanoSeconds));
   }
+
+  abstract protected void doInitialize();
 
 }

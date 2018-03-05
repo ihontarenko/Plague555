@@ -2,7 +2,6 @@ package org.plagueinc.sorrowland.gui;
 
 import org.plagueinc.sorrowland.core.common.Initializable;
 import org.plagueinc.sorrowland.gui.canvas.GUICanvas;
-import org.plagueinc.sorrowland.gui.pane.MainMenuPane;
 
 import java.awt.*;
 
@@ -27,7 +26,7 @@ public class GUIWindow implements Initializable {
 
   private void createFrame() {
     GUICanvas canvas = new GUICanvas();
-    canvas.setDefaultColor(0xFFE32636);
+    canvas.setDefaultColor(0xff61898e);
     canvas.setSize(getWidth(), getHeight());
 
     frame = new GUIFrame();

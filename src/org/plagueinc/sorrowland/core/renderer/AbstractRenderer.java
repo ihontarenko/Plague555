@@ -5,6 +5,7 @@ import org.plagueinc.sorrowland.core.controller.AbstractController;
 import org.plagueinc.sorrowland.core.state.AbstractState;
 import org.plagueinc.sorrowland.core.state.AbstractStateManager;
 
+import java.awt.*;
 import java.util.Map;
 
 abstract public class AbstractRenderer<Manager extends AbstractStateManager, State extends AbstractState, Controller extends AbstractController, RendererType extends AbstractRenderer>
@@ -15,7 +16,7 @@ abstract public class AbstractRenderer<Manager extends AbstractStateManager, Sta
   private Manager                       stateManager;
   private State                         state;
 
-  public AbstractRenderer(Controller controller, Manager stateManager, State state) {
+  public AbstractRenderer(Manager stateManager, State state, Controller controller) {
     this.controller = controller;
     this.stateManager = stateManager;
     this.state = state;
@@ -43,8 +44,15 @@ abstract public class AbstractRenderer<Manager extends AbstractStateManager, Sta
   }
 
   @Override
-  public void setInnerRenderer(String name, RendererType renderer) {
+  public void registerInnerRenderer(String name, RendererType renderer) {
+    innerRenderers.setObject(name, renderer);
+  }
 
+  @Override
+  public void draw(Graphics2D g2d) {
+    if (getInnerRenderers().size() > 0) {
+      getInnerRenderers().forEach((s, renderer) -> renderer.draw(g2d));
+    }
   }
 
   public Controller getController() {

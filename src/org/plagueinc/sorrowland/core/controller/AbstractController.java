@@ -1,5 +1,6 @@
 package org.plagueinc.sorrowland.core.controller;
 
+import org.plagueinc.sorrowland.core.common.Initializable;
 import org.plagueinc.sorrowland.core.container.ObjectContainer;
 import org.plagueinc.sorrowland.core.state.AbstractState;
 import org.plagueinc.sorrowland.core.state.AbstractStateManager;
@@ -8,20 +9,18 @@ import org.plagueinc.sorrowland.core.renderer.AbstractRenderer;
 import java.awt.*;
 
 abstract public class AbstractController<Manager extends AbstractStateManager, State extends AbstractState, Renderer extends AbstractRenderer>
-    implements Controller<Renderer> {
+    implements Controller<Renderer>, Initializable {
 
   private Manager                   stateManager;
   private State                     state;
   private ObjectContainer<Renderer> renderers;
-
-  public AbstractController() {
-    this(null, null);
-  }
+  private boolean                     isInitialized;
 
   public AbstractController(Manager stateManager, State state) {
     this.renderers = new ObjectContainer<>();
     this.stateManager = stateManager;
     this.state = state;
+    initialize();
   }
 
   public void registerRenderer(String name, Renderer renderer) {
@@ -55,8 +54,17 @@ abstract public class AbstractController<Manager extends AbstractStateManager, S
   }
 
   @Override
-  public void update(float nanoSeconds) {
-
+  public boolean isInitialized() {
+    return isInitialized;
   }
+
+  @Override
+  public void initialize() {
+    if (!isInitialized()) {
+      doInitialize();
+    }
+  }
+
+  abstract protected void doInitialize();
 
 }
