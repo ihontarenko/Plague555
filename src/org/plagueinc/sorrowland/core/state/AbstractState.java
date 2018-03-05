@@ -19,7 +19,6 @@ abstract public class AbstractState<Manager extends AbstractStateManager, Contro
   public AbstractState(Manager stateManager) {
     this.controllers = new ObjectContainer<>();
     this.stateManager = stateManager;
-    this.processMode = ProcessMode.ACTIVE;
     initialize();
   }
 
@@ -69,8 +68,10 @@ abstract public class AbstractState<Manager extends AbstractStateManager, Contro
     switch (getProcessMode()) {
       case BATCH:
         getControllers().forEach((s, controller) -> controller.draw(g2d));
+        break;
       case ACTIVE:
         getActiveController().draw(g2d);
+        break;
     }
   }
 
@@ -79,8 +80,10 @@ abstract public class AbstractState<Manager extends AbstractStateManager, Contro
     switch (getProcessMode()) {
       case BATCH:
         getControllers().forEach((s, controller) -> controller.update(nanoSeconds));
+        break;
       case ACTIVE:
         getActiveController().update(nanoSeconds);
+        break;
     }
   }
 
@@ -92,14 +95,11 @@ abstract public class AbstractState<Manager extends AbstractStateManager, Contro
   @Override
   public void initialize() {
     if (!isInitialized()) {
+      setProcessMode(ProcessMode.ACTIVE);
       doInitialize();
     }
   }
 
   abstract protected void doInitialize();
-
-  public enum ProcessMode {
-    BATCH, ACTIVE
-  }
 
 }

@@ -12,34 +12,11 @@ abstract public class AbstractStateManager<State extends AbstractState> implemen
   protected boolean                isInitialized;
   private   ObjectContainer<State> states;
   private   State                  activeState;
+  private   ProcessMode            processMode;
 
   public AbstractStateManager() {
     states = new ObjectContainer<>();
     initialize();
-  }
-
-  public State getActiveState() {
-    return activeState;
-  }
-
-  public void setActiveState(State activeState) {
-    this.activeState = activeState;
-  }
-
-  public void setActiveState(String name) {
-    setActiveState(getState(name));
-  }
-
-  public void registerState(String name, State state) {
-    states.setObject(name, state);
-  }
-
-  public State getState(String name) {
-    return states.getObject(name);
-  }
-
-  public ObjectContainer<State> getStates() {
-    return states;
   }
 
   @Override
@@ -50,20 +27,68 @@ abstract public class AbstractStateManager<State extends AbstractState> implemen
   @Override
   public void initialize() {
     if (!isInitialized()) {
+      setProcessMode(ProcessMode.ACTIVE);
       doInitialize();
     }
   }
 
+  abstract protected void doInitialize();
+
+  public ProcessMode getProcessMode() {
+    return processMode;
+  }
+
+  public void setProcessMode(ProcessMode processMode) {
+    this.processMode = processMode;
+  }
+
+  public State getActiveState() {
+    return activeState;
+  }
+
+  public void setActiveState(String name) {
+    setActiveState(getState(name));
+  }
+
+  public void setActiveState(State activeState) {
+    this.activeState = activeState;
+  }
+
+  public State getState(String name) {
+    return states.getObject(name);
+  }
+
+  public void registerState(String name, State state) {
+    states.setObject(name, state);
+  }
+
+  public ObjectContainer<State> getStates() {
+    return states;
+  }
+
   @Override
   public void draw(Graphics2D g2d) {
-    states.forEach((keyName, state) -> state.draw(g2d));
+    switch (getProcessMode()) {
+      case BATCH:
+        getStates().forEach((keyName, state) -> state.draw(g2d));
+        break;
+      case ACTIVE:
+        getActiveState().draw(g2d);
+        break;
+    }
+
   }
 
   @Override
-  public void update(float nanoSeconds) {
-    states.forEach((keyName, state) -> state.update(nanoSeconds));
+  public void update(float nano) {
+    switch (getProcessMode()) {
+      case BATCH:
+        states.forEach((keyName, state) -> state.update(nano));
+        break;
+      case ACTIVE:
+        getActiveState().update(nano);
+        break;
+    }
   }
-
-  abstract protected void doInitialize();
 
 }

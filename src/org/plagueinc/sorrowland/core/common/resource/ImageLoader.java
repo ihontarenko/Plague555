@@ -1,18 +1,17 @@
-package org.plagueinc.sorrowland.core.common;
+package org.plagueinc.sorrowland.core.common.resource;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class ImageLoader extends FileResourceLoader {
 
-  public ImageLoader(String filepath) throws FileNotFoundException {
+  public ImageLoader(String filepath) {
     super(filepath);
   }
 
   public BufferedImage load() throws IOException {
-    return ImageIO.read(this.resource);
+    return ImageIO.read(getFileStream());
   }
 
 }

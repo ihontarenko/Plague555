@@ -1,18 +1,17 @@
-package org.plagueinc.sorrowland.core.common;
+package org.plagueinc.sorrowland.core.common.resource;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Properties;
 
 public class PropertiesLoader extends FileResourceLoader {
 
-  public PropertiesLoader(String filepath) throws FileNotFoundException {
+  public PropertiesLoader(String filepath) {
     super(filepath);
   }
 
   public Properties load() throws IOException {
     Properties properties = new Properties();
-    properties.load(this.fileReader());
+    properties.load(getFileStream());
 
     return properties;
   }

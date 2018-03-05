@@ -12,6 +12,7 @@ public class GameStateManager extends AbstractStateManager<AbstractState> {
   @Override
   public void doInitialize() {
     registerState(INTRO, new IntroState(this));
+    setActiveState(INTRO);
   }
 
 }

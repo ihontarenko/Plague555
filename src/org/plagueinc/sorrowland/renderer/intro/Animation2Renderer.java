@@ -2,6 +2,7 @@ package org.plagueinc.sorrowland.renderer.intro;
 
 import org.plagueinc.sorrowland.controller.intro.IntroController;
 import org.plagueinc.sorrowland.core.renderer.AbstractRenderer;
+import org.plagueinc.sorrowland.core.renderer.Renderer;
 import org.plagueinc.sorrowland.manager.GameStateManager;
 import org.plagueinc.sorrowland.state.IntroState;
 
@@ -11,6 +12,11 @@ public class Animation2Renderer extends AbstractRenderer<GameStateManager, Intro
 
   public Animation2Renderer(GameStateManager stateManager, IntroState state, IntroController controller) {
     super(stateManager, state, controller);
+  }
+
+  @Override
+  public void doInitialize() {
+
   }
 
   @Override
