@@ -1,10 +1,10 @@
 package org.plagueinc.sorrowland.core.entity;
 
-import org.plagueinc.sorrowland.core.common.ProxyInterface;
+import org.plagueinc.sorrowland.core.common.Initializable;
 
 import java.util.Arrays;
 
-abstract public class Loop implements Runnable, ProxyInterface {
+abstract public class Loop implements Runnable, Initializable {
 
   final public static int   THREAD_IDLE_TIME = 1;
   final public static float ONE_NANO_SECOND  = 1E+9F;

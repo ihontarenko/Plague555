@@ -1,10 +1,10 @@
 package org.plagueinc.sorrowland.controller;
 
-import org.plagueinc.sorrowland.core.controller.ControllerInterface;
+import org.plagueinc.sorrowland.core.controller.AbstractController;
 
 import java.awt.*;
 
-public class Window1Controller implements ControllerInterface {
+public class GameController extends AbstractController {
 
   @Override
   public void update(float nanoSeconds) {

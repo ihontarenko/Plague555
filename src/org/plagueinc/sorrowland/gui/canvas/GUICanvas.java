@@ -1,6 +1,6 @@
 package org.plagueinc.sorrowland.gui.canvas;
 
-import org.plagueinc.sorrowland.core.common.ProxyInterface;
+import org.plagueinc.sorrowland.core.common.Initializable;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -8,7 +8,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import java.util.Arrays;
 
-public class GUICanvas extends Canvas implements ProxyInterface {
+public class GUICanvas extends Canvas implements Initializable {
 
   private BufferedImage  image;
   private BufferStrategy strategy;

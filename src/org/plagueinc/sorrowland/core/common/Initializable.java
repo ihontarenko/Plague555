@@ -1,6 +1,6 @@
 package org.plagueinc.sorrowland.core.common;
 
-public interface ProxyInterface {
+public interface Initializable {
 
   boolean isInitialized();
 

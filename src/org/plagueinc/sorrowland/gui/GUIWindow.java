@@ -1,13 +1,12 @@
 package org.plagueinc.sorrowland.gui;
 
-import org.plagueinc.sorrowland.core.common.ProxyInterface;
+import org.plagueinc.sorrowland.core.common.Initializable;
 import org.plagueinc.sorrowland.gui.canvas.GUICanvas;
 import org.plagueinc.sorrowland.gui.pane.MainMenuPane;
 
-import javax.swing.*;
 import java.awt.*;
 
-public class GUIWindow implements ProxyInterface {
+public class GUIWindow implements Initializable {
 
   private boolean isInitialized = false;
 
@@ -27,11 +26,13 @@ public class GUIWindow implements ProxyInterface {
   }
 
   private void createFrame() {
-    GUICanvas canvas = new GUICanvas(getWidth(), getHeight());
+    GUICanvas canvas = new GUICanvas();
     canvas.setDefaultColor(0xFFE32636);
     canvas.setSize(getWidth(), getHeight());
 
     frame = new GUIFrame();
+    frame.setLayout(new BorderLayout());
+    frame.setSize(getWidth(), getHeight());
     frame.setCanvas(canvas);
     frame.initialize();
 

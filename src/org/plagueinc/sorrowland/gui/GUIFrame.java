@@ -1,11 +1,11 @@
 package org.plagueinc.sorrowland.gui;
 
-import org.plagueinc.sorrowland.core.common.ProxyInterface;
+import org.plagueinc.sorrowland.core.common.Initializable;
 import org.plagueinc.sorrowland.gui.canvas.GUICanvas;
 
 import javax.swing.*;
 
-public class GUIFrame extends JFrame implements ProxyInterface {
+public class GUIFrame extends JFrame implements Initializable {
 
   private boolean      isInitialized;
   private GUICanvas    canvas;
@@ -24,7 +24,9 @@ public class GUIFrame extends JFrame implements ProxyInterface {
   @Override
   public void initialize() {
     if (!isInitialized()) {
-      getContentPane().add(canvas);
+      JScrollPane scrollPane = new JScrollPane(canvas);
+      scrollPane.setSize(400, 500);
+      getContentPane().add(scrollPane);
       setResizable(false);
       setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
       pack();

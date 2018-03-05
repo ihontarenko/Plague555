@@ -1,20 +1,15 @@
 package org.plagueinc.sorrowland;
 
-import org.plagueinc.sorrowland.controller.MenuController;
-import org.plagueinc.sorrowland.core.controller.ControllerContainer;
-import org.plagueinc.sorrowland.core.controller.ControllerInterface;
 import org.plagueinc.sorrowland.core.entity.Loop;
-import org.plagueinc.sorrowland.core.renderer.RendererContainer;
+import org.plagueinc.sorrowland.core.gsm.AbstractStateManager;
 import org.plagueinc.sorrowland.gui.GUIWindow;
 
 public class GameLoop extends Loop {
 
-  private boolean             isInitialized;
-  private float               oneSecondElapsed;
-  private GUIWindow           gui;
-  private ControllerInterface activeController;
-  private ControllerContainer controllerContainer;
-  private RendererContainer   rendererContainer;
+  private boolean              isInitialized;
+  private float                oneSecondElapsed;
+  private GUIWindow            gui;
+  private AbstractStateManager stateManager;
 
   public GameLoop() {
     super();
@@ -29,36 +24,34 @@ public class GameLoop extends Loop {
   @Override
   public void initialize() {
     if (!isInitialized()) {
+      isInitialized = true;
       gui = new GUIWindow(800, 600);
       gui.initialize();
-
-      controllerContainer = new ControllerContainer();
-      rendererContainer = new RendererContainer();
-
-      activeController = controllerContainer.getObject(MenuController.class);
-
-      System.out.println(activeController);
-
-      isInitialized = true;
+      stateManager = new AbstractStateManager() { };
     }
   }
 
   @Override
   protected void update(float elapsedTime) {
+    // default code for update window title information
     oneSecondElapsed += elapsedTime;
-
-    if (oneSecondElapsed > (ONE_NANO_SECOND / 4)) {
+    if (oneSecondElapsed > (ONE_NANO_SECOND / 4) && null != getExecutionInfo()) {
       gui.setTitle(getExecutionInfo());
       oneSecondElapsed = 0;
     }
 
-    activeController.update(elapsedTime);
+    // custom code below
   }
 
   @Override
   protected void render() {
     gui.clearFrame();
-    activeController.draw(gui.getG2D());
+//    .draw(gui.getG2D());
     gui.swapBuffer();
   }
+
+  public AbstractStateManager getStateManager() {
+    return stateManager;
+  }
+
 }
