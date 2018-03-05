@@ -1,8 +1,8 @@
 package org.plagueinc.sorrowland.core.controller;
 
 import org.plagueinc.sorrowland.core.container.ObjectContainer;
-import org.plagueinc.sorrowland.core.gsm.AbstractState;
-import org.plagueinc.sorrowland.core.gsm.AbstractStateManager;
+import org.plagueinc.sorrowland.core.state.AbstractState;
+import org.plagueinc.sorrowland.core.state.AbstractStateManager;
 import org.plagueinc.sorrowland.core.renderer.AbstractRenderer;
 
 import java.awt.*;

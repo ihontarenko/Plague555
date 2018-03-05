@@ -1,4 +1,4 @@
-package org.plagueinc.sorrowland.core.gsm;
+package org.plagueinc.sorrowland.core.state;
 
 import org.plagueinc.sorrowland.core.common.Drawable;
 import org.plagueinc.sorrowland.core.common.Updateable;
@@ -9,9 +9,22 @@ import java.awt.*;
 abstract public class AbstractStateManager<State extends AbstractState> implements Drawable, Updateable {
 
   private ObjectContainer<State> states;
+  private State                  activeState;
 
   public AbstractStateManager() {
     states = new ObjectContainer<>();
+  }
+
+  public State getActiveState() {
+    return activeState;
+  }
+
+  public void setActiveState(State activeState) {
+    this.activeState = activeState;
+  }
+
+  public void setActiveState(String name) {
+    setActiveState(getState(name));
   }
 
   public void registerState(String name, State state) {

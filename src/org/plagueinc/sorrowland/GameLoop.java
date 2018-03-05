@@ -1,7 +1,7 @@
 package org.plagueinc.sorrowland;
 
 import org.plagueinc.sorrowland.core.entity.Loop;
-import org.plagueinc.sorrowland.core.gsm.AbstractStateManager;
+import org.plagueinc.sorrowland.core.state.AbstractStateManager;
 import org.plagueinc.sorrowland.gui.GUIWindow;
 
 public class GameLoop extends Loop {

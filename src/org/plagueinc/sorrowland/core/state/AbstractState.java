@@ -1,4 +1,4 @@
-package org.plagueinc.sorrowland.core.gsm;
+package org.plagueinc.sorrowland.core.state;
 
 import org.plagueinc.sorrowland.core.common.RunnableProcess;
 import org.plagueinc.sorrowland.core.container.ObjectContainer;
@@ -86,7 +86,7 @@ abstract public class AbstractState<Manager extends AbstractStateManager, Contro
   }
 
   public enum ProcessMode {
-    BATCH, ACTIVE;
+    BATCH, ACTIVE
   }
 
 }
