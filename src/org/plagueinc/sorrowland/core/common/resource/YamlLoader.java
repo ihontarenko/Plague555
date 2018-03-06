@@ -12,10 +12,9 @@ public class YamlLoader extends FileResourceLoader {
   }
 
   public List<String> load() throws IOException {
-    Yaml yaml new Yaml();
-    yaml.load(get)
+    Yaml yaml = new Yaml();
 
-    return properties;
+    return (List<String>)yaml.load(getFileStream());
   }
 
 }
