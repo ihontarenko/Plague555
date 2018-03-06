@@ -8,17 +8,20 @@ import org.plagueinc.sorrowland.core.state.AbstractStateManager;
 
 import java.awt.*;
 
-abstract public class AbstractRenderer<Manager extends AbstractStateManager, State extends AbstractState, Controller extends AbstractController, RendererType extends AbstractRenderer> implements Renderer<RendererType, ObjectContainer<RendererType>>, Initializable {
+abstract public class AbstractRenderer<Manager extends AbstractStateManager, State extends AbstractState, Controller extends AbstractController, RendererType extends AbstractRenderer>
+    implements Renderer<RendererType, ObjectContainer<RendererType>>, Initializable, Comparable<RendererType> {
 
   private ObjectContainer<RendererType> innerRenderers;
   private Controller                    controller;
   private Manager                       stateManager;
   private State                         state;
+  private RendererType                  parent;
   private boolean                       isInitialized;
+  private int                           priority;
 
-  public AbstractRenderer(Manager stateManager, State state, Controller controller) {
+  public AbstractRenderer(Manager sm, State state, Controller controller) {
     this.controller = controller;
-    this.stateManager = stateManager;
+    this.stateManager = sm;
     this.state = state;
     this.innerRenderers = new ObjectContainer<>();
     initialize();
@@ -39,13 +42,18 @@ abstract public class AbstractRenderer<Manager extends AbstractStateManager, Sta
   }
 
   @Override
+  public int compareTo(RendererType renderer) {
+    return this.getPriority() - renderer.getPriority();
+  }
+
+  @Override
   public RendererType getParent() {
-    return null;
+    return parent;
   }
 
   @Override
   public void setParent(RendererType renderer) {
-
+    parent = renderer;
   }
 
   @Override
@@ -64,9 +72,9 @@ abstract public class AbstractRenderer<Manager extends AbstractStateManager, Sta
   }
 
   @Override
-  public void draw(Graphics2D g2d) {
+  public void render(Graphics2D g2d) {
     if (getInnerRenderers().size() > 0) {
-      getInnerRenderers().forEach((s, renderer) -> renderer.draw(g2d));
+      getInnerRenderers().forEach((s, renderer) -> renderer.render(g2d));
     }
   }
 
@@ -80,6 +88,14 @@ abstract public class AbstractRenderer<Manager extends AbstractStateManager, Sta
 
   public State getState() {
     return state;
+  }
+
+  public int getPriority() {
+    return priority;
+  }
+
+  public void setPriority(int priority) {
+    this.priority = priority;
   }
 
 }

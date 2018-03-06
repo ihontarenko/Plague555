@@ -1,10 +1,10 @@
 package org.plagueinc.sorrowland.core.renderer;
 
-import org.plagueinc.sorrowland.core.common.Drawable;
+import org.plagueinc.sorrowland.core.common.Renderable;
 
 import java.util.Map;
 
-public interface Renderer<R extends Renderer, M extends Map<String, R>> extends Drawable {
+public interface Renderer<R extends Renderer, M extends Map<String, R>> extends Renderable {
 
   public R getParent();
 

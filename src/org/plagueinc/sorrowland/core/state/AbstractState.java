@@ -64,13 +64,13 @@ abstract public class AbstractState<Manager extends AbstractStateManager, Contro
   }
 
   @Override
-  public void draw(Graphics2D g2d) {
+  public void render(Graphics2D g2d) {
     switch (getProcessMode()) {
       case BATCH:
-        getControllers().forEach((s, controller) -> controller.draw(g2d));
+        getControllers().forEach((s, controller) -> controller.render(g2d));
         break;
       case ACTIVE:
-        getActiveController().draw(g2d);
+        getActiveController().render(g2d);
         break;
     }
   }

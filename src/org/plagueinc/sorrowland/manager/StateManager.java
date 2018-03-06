@@ -4,7 +4,7 @@ import org.plagueinc.sorrowland.core.state.AbstractState;
 import org.plagueinc.sorrowland.core.state.AbstractStateManager;
 import org.plagueinc.sorrowland.state.IntroState;
 
-public class GameStateManager extends AbstractStateManager<AbstractState> {
+public class StateManager extends AbstractStateManager<AbstractState> {
 
   final static public String INTRO = "INTRO";
   final static public String GAME_PLAY = "GAME_PLAY";

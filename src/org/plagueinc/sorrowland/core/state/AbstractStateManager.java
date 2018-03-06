@@ -1,13 +1,13 @@
 package org.plagueinc.sorrowland.core.state;
 
-import org.plagueinc.sorrowland.core.common.Drawable;
+import org.plagueinc.sorrowland.core.common.Renderable;
 import org.plagueinc.sorrowland.core.common.Initializable;
 import org.plagueinc.sorrowland.core.common.Updateable;
 import org.plagueinc.sorrowland.core.container.ObjectContainer;
 
 import java.awt.*;
 
-abstract public class AbstractStateManager<State extends AbstractState> implements Drawable, Updateable, Initializable {
+abstract public class AbstractStateManager<State extends AbstractState> implements Renderable, Updateable, Initializable {
 
   protected boolean                isInitialized;
   private   ObjectContainer<State> states;
@@ -67,13 +67,13 @@ abstract public class AbstractStateManager<State extends AbstractState> implemen
   }
 
   @Override
-  public void draw(Graphics2D g2d) {
+  public void render(Graphics2D g2d) {
     switch (getProcessMode()) {
       case BATCH:
-        getStates().forEach((keyName, state) -> state.draw(g2d));
+        getStates().forEach((keyName, state) -> state.render(g2d));
         break;
       case ACTIVE:
-        getActiveState().draw(g2d);
+        getActiveState().render(g2d);
         break;
     }
 

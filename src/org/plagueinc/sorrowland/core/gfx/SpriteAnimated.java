@@ -1,55 +1,98 @@
 package org.plagueinc.sorrowland.core.gfx;
 
+import org.plagueinc.sorrowland.core.common.Drawable;
 import org.plagueinc.sorrowland.core.common.Time;
 
 import java.awt.*;
 
-public class SpriteAnimated {
+public class SpriteAnimated implements Drawable {
 
-  protected Sprite[] sprites;
-  protected SpriteSheet sheet;
-  protected int scale;
-  protected int lastIndex;
-  protected int speedAnimation;
-  protected long lastTimeUpdate;
+  private Sprite[]    sprites;
+  private SpriteSheet sheet;
+  private int         scale;
+  private int         lastIndex;
+  private int         speedAnimation;
+  private long        lastTimeUpdate;
+  private int         transparentColor;
+  private float       opacity;
+
 
   public SpriteAnimated(SpriteSheet sheet, int speedAnimation, int scale) {
-    this(sheet, speedAnimation, scale, 0, sheet.size());
+    this(sheet, speedAnimation, scale, 0, sheet.count());
   }
 
   public SpriteAnimated(SpriteSheet sheet, int speedAnimation, int scale, int startIndex, int lastIndex) {
     this.sheet = sheet;
     this.scale = scale;
-    this.lastTimeUpdate = Time.nano();
-    this.lastIndex = 0;
+    this.lastIndex = lastIndex;
     this.speedAnimation = speedAnimation;
     this.sprites = new Sprite[lastIndex - startIndex];
+    this.transparentColor = 0x00000000;
+    this.transparentColor = 0x00000000;
     this.loadSprites(startIndex, lastIndex);
   }
 
-  protected void loadSprites(int startIndex, int lastIndex) {
+  private void loadSprites(int startIndex, int lastIndex) {
     int count = 0;
     for (int i = startIndex; i < lastIndex; i++) {
-      this.sprites[count++] = new Sprite(this.sheet, this.scale, i);
+      sprites[count++] = new Sprite(sheet, scale, i);
     }
   }
 
-  public void nextIndex() {
-    long elapsedTime = Time.nano() - this.lastTimeUpdate;
+  private void nextIndex() {
+    long elapsedTime = Time.nano() - lastTimeUpdate;
 
     if ((elapsedTime / (Time.ONE_NANO_SECOND / speedAnimation)) >= 1) {
-      this.lastTimeUpdate = Time.nano();
-      this.lastIndex = (this.lastIndex + 1) % this.sprites.length;
+      lastTimeUpdate = Time.nano();
+      lastIndex = (lastIndex + 1) % sprites.length;
     }
   }
 
-  public Sprite getSprite() {
-    this.nextIndex();
-    return this.sprites[this.lastIndex];
+  public Sprite activeSprite() {
+    nextIndex();
+    return getSprite(lastIndex);
   }
 
-  public void draw(Graphics graphics, int x, int y) {
-    this.getSprite().draw(graphics, x, y);
+  @Override
+  public void draw(Graphics2D g2d, int x, int y) {
+    Sprite sprite = activeSprite();
+    sprite.transparentColor(getTransparentColor(), getOpacity());
+    sprite.draw(g2d, x, y);
   }
 
+  public Sprite getSprite(int index) {
+    return sprites[index];
+  }
+
+  public Sprite[] getSprites() {
+    return sprites;
+  }
+
+  public SpriteSheet getSheet() {
+    return sheet;
+  }
+
+  public int getScale() {
+    return scale;
+  }
+
+  public int getSpeedAnimation() {
+    return speedAnimation;
+  }
+
+  public int getTransparentColor() {
+    return transparentColor;
+  }
+
+  public void setTransparentColor(int transparentColor) {
+    this.transparentColor = transparentColor;
+  }
+
+  public float getOpacity() {
+    return opacity;
+  }
+
+  public void setOpacity(float opacity) {
+    this.opacity = opacity;
+  }
 }

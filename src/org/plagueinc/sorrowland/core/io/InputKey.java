@@ -4,29 +4,31 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 
-public class Input extends JComponent {
+public class InputKey extends JComponent {
 
-  boolean[] map;
+  private boolean[] keyCodeMap = new boolean[256];
 
-  public Input() {
-    this.map = new boolean[256];
+  public InputKey() {
 
-    for (int i = 0; i < map.length; i++) {
+    InputMap inputMap = this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+    ActionMap actionMap = this.getActionMap();
+
+    for (int i = 0; i < keyCodeMap.length; i++) {
 
       final int KEY_CODE = i;
 
-      this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(i, 0, false), i);
-      this.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW).put(KeyStroke.getKeyStroke(i, 0, true), ~i);
+      inputMap.put(KeyStroke.getKeyStroke(i, 0, false), i);
+      inputMap.put(KeyStroke.getKeyStroke(i, 0, true), ~i);
 
-      this.getActionMap().put(i, new AbstractAction() {
+      actionMap.put(i, new AbstractAction() {
         public void actionPerformed(ActionEvent actionEvent) {
-          Input.this.map[KEY_CODE] = true;
+          InputKey.this.keyCodeMap[KEY_CODE] = true;
         }
       });
 
-      this.getActionMap().put(~i, new AbstractAction() {
+      actionMap.put(~i, new AbstractAction() {
         public void actionPerformed(ActionEvent actionEvent) {
-          Input.this.map[KEY_CODE] = false;
+          InputKey.this.keyCodeMap[KEY_CODE] = false;
         }
       });
 
@@ -34,7 +36,7 @@ public class Input extends JComponent {
   }
 
   public boolean getKey(int keyCode) {
-    return this.map[keyCode];
+    return this.keyCodeMap[keyCode];
   }
 
   public boolean getUp() {

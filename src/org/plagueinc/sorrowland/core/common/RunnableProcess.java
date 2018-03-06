@@ -1,5 +1,5 @@
 package org.plagueinc.sorrowland.core.common;
 
-public interface RunnableProcess<C> extends Drawable, Updateable, Comparable<C> {
+public interface RunnableProcess<C> extends Renderable, Updateable, Comparable<C> {
 
 }

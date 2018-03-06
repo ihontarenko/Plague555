@@ -1,5 +1,6 @@
 package org.plagueinc.sorrowland.core.common.resource;
 
+import java.io.FileReader;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,8 +16,11 @@ abstract public class FileResourceLoader <CacheObject> {
   }
 
   public InputStream getFileStream() {
-//    return ClassLoader.getSystemClassLoader().getResourceAsStream(getFilename());
     return getClass().getResourceAsStream(filename);
+  }
+
+  public FileReader getFileReader() {
+    return null;
   }
 
   public CacheObject getCache(String name) {

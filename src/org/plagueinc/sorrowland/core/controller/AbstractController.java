@@ -2,19 +2,19 @@ package org.plagueinc.sorrowland.core.controller;
 
 import org.plagueinc.sorrowland.core.common.Initializable;
 import org.plagueinc.sorrowland.core.container.ObjectContainer;
+import org.plagueinc.sorrowland.core.renderer.AbstractRenderer;
 import org.plagueinc.sorrowland.core.state.AbstractState;
 import org.plagueinc.sorrowland.core.state.AbstractStateManager;
-import org.plagueinc.sorrowland.core.renderer.AbstractRenderer;
 
 import java.awt.*;
 
 abstract public class AbstractController<Manager extends AbstractStateManager, State extends AbstractState, Renderer extends AbstractRenderer>
-    implements Controller<Renderer>, Initializable {
+    implements Controller<AbstractController>, Initializable {
 
   private Manager                   stateManager;
   private State                     state;
   private ObjectContainer<Renderer> renderers;
-  private boolean                     isInitialized;
+  private boolean                   isInitialized;
 
   public AbstractController(Manager stateManager, State state) {
     this.renderers = new ObjectContainer<>();
@@ -44,13 +44,13 @@ abstract public class AbstractController<Manager extends AbstractStateManager, S
   }
 
   @Override
-  public int compareTo(Renderer renderer) {
+  public int compareTo(AbstractController controller) {
     return 0;
   }
 
   @Override
-  public void draw(Graphics2D g2d) {
-    renderers.forEach((s, renderer) -> renderer.draw(g2d));
+  public void render(Graphics2D g2d) {
+    renderers.forEach((s, renderer) -> renderer.render(g2d));
   }
 
   @Override

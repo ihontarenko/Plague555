@@ -3,7 +3,7 @@ package org.plagueinc.sorrowland;
 import org.plagueinc.sorrowland.core.entity.Loop;
 import org.plagueinc.sorrowland.core.state.AbstractStateManager;
 import org.plagueinc.sorrowland.gui.GUIWindow;
-import org.plagueinc.sorrowland.manager.GameStateManager;
+import org.plagueinc.sorrowland.manager.StateManager;
 
 public class GameLoop extends Loop {
 
@@ -28,7 +28,7 @@ public class GameLoop extends Loop {
       isInitialized = true;
       gui = new GUIWindow(800, 600);
       gui.initialize();
-      stateManager = new GameStateManager();
+      stateManager = new StateManager();
     }
   }
 
@@ -48,7 +48,7 @@ public class GameLoop extends Loop {
   @Override
   protected void render() {
     getGUI().clearFrame();
-    getStateManager().draw(getGUI().getG2D());
+    getStateManager().render(getGUI().getG2D());
     getGUI().swapBuffer();
   }
 
