@@ -7,9 +7,9 @@ import java.awt.image.BufferedImage;
 
 public class Sprite implements Drawable {
 
-  protected BufferedImage image;
-  protected SpriteSheet sheet;
-  protected int index;
+  private BufferedImage image;
+  private SpriteSheet   sheet;
+  private int           index;
 
   public Sprite(SpriteSheet sheet, int scale, int index) {
     this.sheet = sheet;
@@ -31,7 +31,7 @@ public class Sprite implements Drawable {
   }
 
   public void transparentColor(int color, float opacity) {
-    int opacityRate = (int) ((0xff / 100.0f) * (opacity * 100));
+    int opacityRate = (int) (0xff * opacity) % 0xff;
 
     int[] pixels = image.getRGB(0, 0, image.getWidth(), image.getHeight(), null, 0, image.getWidth());
 

@@ -10,7 +10,7 @@ public class SpriteAnimated implements Drawable {
   private Sprite[]    sprites;
   private SpriteSheet sheet;
   private int         scale;
-  private int         lastIndex;
+  private int         activeIndex;
   private int         speedAnimation;
   private long        lastTimeUpdate;
   private int         transparentColor;
@@ -24,7 +24,6 @@ public class SpriteAnimated implements Drawable {
   public SpriteAnimated(SpriteSheet sheet, int speedAnimation, int scale, int startIndex, int lastIndex) {
     this.sheet = sheet;
     this.scale = scale;
-    this.lastIndex = lastIndex;
     this.speedAnimation = speedAnimation;
     this.sprites = new Sprite[lastIndex - startIndex];
     this.transparentColor = 0x00000000;
@@ -44,13 +43,13 @@ public class SpriteAnimated implements Drawable {
 
     if ((elapsedTime / (Time.ONE_NANO_SECOND / speedAnimation)) >= 1) {
       lastTimeUpdate = Time.nano();
-      lastIndex = (lastIndex + 1) % sprites.length;
+      activeIndex = (activeIndex + 1) % sprites.length;
     }
   }
 
   public Sprite activeSprite() {
     nextIndex();
-    return getSprite(lastIndex);
+    return getSprite(activeIndex);
   }
 
   @Override
