@@ -3,22 +3,23 @@ package org.plagueinc.sorrowland.core.state;
 import org.plagueinc.sorrowland.core.common.Initializable;
 import org.plagueinc.sorrowland.core.common.RunnableProcess;
 import org.plagueinc.sorrowland.core.container.ObjectContainer;
-import org.plagueinc.sorrowland.core.controller.AbstractController;
+import org.plagueinc.sorrowland.core.process.AbstractProcess;
 
 import java.awt.*;
 
-abstract public class AbstractState<Manager extends AbstractStateManager, Controller extends AbstractController>
-    implements RunnableProcess<Controller>, Initializable {
+abstract public class AbstractState<Manager extends AbstractManager, Process extends AbstractProcess>
+    implements RunnableProcess<AbstractState>, Initializable {
 
-  private ObjectContainer<Controller> controllers;
-  private Manager                     stateManager;
-  private Controller                  activeController;
-  private ProcessMode                 processMode;
-  private boolean                     isInitialized;
+  private ObjectContainer<Process> processes;
+  private Manager                  appManager;
+  private Process                  activeProcess;
+  private ProcessMode              processMode;
+  private boolean                  isInitialized;
+  private int                      priority;
 
-  public AbstractState(Manager stateManager) {
-    this.controllers = new ObjectContainer<>();
-    this.stateManager = stateManager;
+  public AbstractState(Manager appManager) {
+    this.processes = new ObjectContainer<>();
+    this.appManager = appManager;
     initialize();
   }
 
@@ -30,47 +31,55 @@ abstract public class AbstractState<Manager extends AbstractStateManager, Contro
     this.processMode = processMode;
   }
 
-  public Controller getActiveController() {
-    return activeController;
+  public Process getActiveProcess() {
+    return activeProcess;
   }
 
-  public void setActiveController(String name) {
-    setActiveController(getController(name));
+  public void setActiveProcess(Process process) {
+    activeProcess = process;
   }
 
-  public void setActiveController(Controller controller) {
-    activeController = controller;
+  public void setActiveProcess(String name) {
+    setActiveProcess(getProcess(name));
   }
 
-  public void registerController(String name, Controller controller) {
-    controllers.setObject(name, controller);
+  public void registerProcess(String name, Process controller) {
+    processes.setObject(name, controller);
   }
 
-  public Controller getController(String name) {
-    return controllers.getObject(name);
+  public int getPriority() {
+    return priority;
   }
 
-  public ObjectContainer<Controller> getControllers() {
-    return controllers;
+  public void setPriority(int priority) {
+    this.priority = priority;
   }
 
-  public Manager getStateManager() {
-    return stateManager;
+  public Process getProcess(String name) {
+    return processes.getObject(name);
+  }
+
+  public ObjectContainer<Process> getProcesses() {
+    return processes;
+  }
+
+  public Manager getAppManager() {
+    return appManager;
   }
 
   @Override
-  public int compareTo(Controller controller) {
-    return 0;
+  public int compareTo(AbstractState state) {
+    return this.getPriority() - state.getPriority();
   }
 
   @Override
   public void render(Graphics2D g2d) {
     switch (getProcessMode()) {
       case BATCH:
-        getControllers().forEach((s, controller) -> controller.render(g2d));
+        getProcesses().forEach((s, controller) -> controller.render(g2d));
         break;
       case ACTIVE:
-        getActiveController().render(g2d);
+        getActiveProcess().render(g2d);
         break;
     }
   }
@@ -79,10 +88,10 @@ abstract public class AbstractState<Manager extends AbstractStateManager, Contro
   public void update(float nanoSeconds) {
     switch (getProcessMode()) {
       case BATCH:
-        getControllers().forEach((s, controller) -> controller.update(nanoSeconds));
+        getProcesses().forEach((s, controller) -> controller.update(nanoSeconds));
         break;
       case ACTIVE:
-        getActiveController().update(nanoSeconds);
+        getActiveProcess().update(nanoSeconds);
         break;
     }
   }

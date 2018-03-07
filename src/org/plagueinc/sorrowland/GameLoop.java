@@ -1,16 +1,15 @@
 package org.plagueinc.sorrowland;
 
 import org.plagueinc.sorrowland.core.entity.Loop;
-import org.plagueinc.sorrowland.core.state.AbstractStateManager;
 import org.plagueinc.sorrowland.gui.GUIWindow;
-import org.plagueinc.sorrowland.manager.StateManager;
+import org.plagueinc.sorrowland.manager.AppManager;
 
 public class GameLoop extends Loop {
 
-  private boolean              isInitialized;
-  private float                oneSecondElapsed;
-  private GUIWindow            gui;
-  private AbstractStateManager stateManager;
+  private boolean    isInitialized;
+  private float      oneSecondElapsed;
+  private GUIWindow  gui;
+  private AppManager appManager;
 
   public GameLoop() {
     super();
@@ -28,7 +27,7 @@ public class GameLoop extends Loop {
       isInitialized = true;
       gui = new GUIWindow(800, 600);
       gui.initialize();
-      stateManager = new StateManager();
+      appManager = new AppManager();
     }
   }
 
@@ -42,18 +41,18 @@ public class GameLoop extends Loop {
     }
 
     // custom code below
-    getStateManager().update(nano);
+    getAppManager().update(nano);
   }
 
   @Override
   protected void render() {
     getGUI().clearFrame();
-    getStateManager().render(getGUI().getG2D());
+    getAppManager().render(getGUI().getG2D());
     getGUI().swapBuffer();
   }
 
-  public AbstractStateManager getStateManager() {
-    return stateManager;
+  public AppManager getAppManager() {
+    return appManager;
   }
 
   public GUIWindow getGUI() {

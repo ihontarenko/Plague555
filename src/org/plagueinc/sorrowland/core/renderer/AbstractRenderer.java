@@ -2,26 +2,26 @@ package org.plagueinc.sorrowland.core.renderer;
 
 import org.plagueinc.sorrowland.core.common.Initializable;
 import org.plagueinc.sorrowland.core.container.ObjectContainer;
-import org.plagueinc.sorrowland.core.controller.AbstractController;
+import org.plagueinc.sorrowland.core.process.AbstractProcess;
 import org.plagueinc.sorrowland.core.state.AbstractState;
-import org.plagueinc.sorrowland.core.state.AbstractStateManager;
+import org.plagueinc.sorrowland.core.state.AbstractManager;
 
 import java.awt.*;
 
-abstract public class AbstractRenderer<Manager extends AbstractStateManager, State extends AbstractState, Controller extends AbstractController, RendererType extends AbstractRenderer>
+abstract public class AbstractRenderer<Manager extends AbstractManager, State extends AbstractState, Process extends AbstractProcess, RendererType extends AbstractRenderer>
     implements Renderer<RendererType, ObjectContainer<RendererType>>, Initializable, Comparable<RendererType> {
 
   private ObjectContainer<RendererType> innerRenderers;
-  private Controller                    controller;
-  private Manager                       stateManager;
+  private Process                       process;
+  private Manager                       appManager;
   private State                         state;
   private RendererType                  parent;
   private boolean                       isInitialized;
   private int                           priority;
 
-  public AbstractRenderer(Manager sm, State state, Controller controller) {
-    this.controller = controller;
-    this.stateManager = sm;
+  public AbstractRenderer(Manager appManager, State state, Process process) {
+    this.process = process;
+    this.appManager = appManager;
     this.state = state;
     this.innerRenderers = new ObjectContainer<>();
     initialize();
@@ -78,12 +78,12 @@ abstract public class AbstractRenderer<Manager extends AbstractStateManager, Sta
     }
   }
 
-  public Controller getController() {
-    return controller;
+  public Process getProcess() {
+    return process;
   }
 
-  public Manager getStateManager() {
-    return stateManager;
+  public Manager getAppManager() {
+    return appManager;
   }
 
   public State getState() {

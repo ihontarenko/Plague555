@@ -1,20 +1,22 @@
 package org.plagueinc.sorrowland.core.state;
 
-import org.plagueinc.sorrowland.core.common.Renderable;
 import org.plagueinc.sorrowland.core.common.Initializable;
+import org.plagueinc.sorrowland.core.common.Renderable;
 import org.plagueinc.sorrowland.core.common.Updateable;
 import org.plagueinc.sorrowland.core.container.ObjectContainer;
+import org.plagueinc.sorrowland.service.AppContext;
 
 import java.awt.*;
 
-abstract public class AbstractStateManager<State extends AbstractState> implements Renderable, Updateable, Initializable {
+abstract public class AbstractManager<State extends AbstractState> implements Renderable, Updateable, Initializable {
 
-  protected boolean                isInitialized;
-  private   ObjectContainer<State> states;
-  private   State                  activeState;
-  private   ProcessMode            processMode;
+  private boolean                isInitialized;
+  private ObjectContainer<State> states;
+  private State                  activeState;
+  private ProcessMode            processMode;
+  private AppContext             appContext;
 
-  public AbstractStateManager() {
+  public AbstractManager() {
     states = new ObjectContainer<>();
     initialize();
   }
@@ -46,16 +48,24 @@ abstract public class AbstractStateManager<State extends AbstractState> implemen
     return activeState;
   }
 
-  public void setActiveState(String name) {
-    setActiveState(getState(name));
-  }
-
   public void setActiveState(State activeState) {
     this.activeState = activeState;
   }
 
+  public void setActiveState(String name) {
+    setActiveState(getState(name));
+  }
+
   public State getState(String name) {
     return states.getObject(name);
+  }
+
+  public AppContext getAppContext() {
+    return appContext;
+  }
+
+  public void setAppContext(AppContext appContext) {
+    this.appContext = appContext;
   }
 
   public void registerState(String name, State state) {

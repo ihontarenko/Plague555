@@ -1,24 +1,31 @@
 package org.plagueinc.sorrowland.state;
 
-import org.plagueinc.sorrowland.controller.intro.IntroController;
-import org.plagueinc.sorrowland.core.controller.AbstractController;
+import org.plagueinc.sorrowland.process.intro.IntroProcess;
+import org.plagueinc.sorrowland.core.process.AbstractProcess;
 import org.plagueinc.sorrowland.core.state.AbstractState;
 import org.plagueinc.sorrowland.core.state.ProcessMode;
-import org.plagueinc.sorrowland.manager.StateManager;
+import org.plagueinc.sorrowland.manager.AppManager;
 
-public class IntroState extends AbstractState<StateManager, AbstractController> {
+public class IntroState extends AbstractState<AppManager, AbstractProcess> {
 
   final static public String INTRO_ANIMATION = "INTRO_ANIMATION";
 
-  public IntroState(StateManager sm) {
+  public IntroState(AppManager sm) {
     super(sm);
   }
 
   @Override
   protected void doInitialize() {
-    registerController(INTRO_ANIMATION, new IntroController(getStateManager(), this));
     setProcessMode(ProcessMode.ACTIVE);
-    setActiveController(INTRO_ANIMATION);
+    setIntroActiveProcess();
+  }
+
+  public void setIntroActiveProcess()
+  {
+    IntroProcess process = new IntroProcess(getAppManager(), this);
+    setProcessMode(ProcessMode.BATCH);
+    registerProcess(INTRO_ANIMATION, process);
+    setActiveProcess(process);
   }
 
 }

@@ -1,16 +1,16 @@
 package org.plagueinc.sorrowland.renderer.intro;
 
-import org.plagueinc.sorrowland.controller.intro.IntroController;
+import org.plagueinc.sorrowland.process.intro.IntroProcess;
 import org.plagueinc.sorrowland.core.renderer.AbstractRenderer;
-import org.plagueinc.sorrowland.manager.StateManager;
+import org.plagueinc.sorrowland.manager.AppManager;
 import org.plagueinc.sorrowland.state.IntroState;
 
 import java.awt.*;
 
-public class Animation1Renderer extends AbstractRenderer<StateManager, IntroState, IntroController, AbstractRenderer> {
+public class Animation1Renderer extends AbstractRenderer<AppManager, IntroState, IntroProcess, AbstractRenderer> {
 
-  public Animation1Renderer(StateManager stateManager, IntroState state, IntroController controller) {
-    super(stateManager, state, controller);
+  public Animation1Renderer(AppManager appManager, IntroState state, IntroProcess process) {
+    super(appManager, state, process);
   }
 
   @Override
