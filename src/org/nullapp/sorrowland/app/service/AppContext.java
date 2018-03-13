@@ -4,13 +4,15 @@ import org.nullapp.sorrowland.core.io.InputKey;
 import org.nullapp.sorrowland.app.gfx.text.StringDrawer;
 import org.nullapp.sorrowland.app.gui.GUIWindow;
 import org.nullapp.sorrowland.app.manager.AppManager;
+import org.nullapp.sorrowland.core.loop.Loop;
 
 public class AppContext {
 
-  private AppManager appManager;
-  private InputKey inputKey;
-  private GUIWindow guiWindow;
+  private AppManager   appManager;
+  private InputKey     inputKey;
+  private GUIWindow    guiWindow;
   private StringDrawer stringDrawer;
+  private Loop         loop;
 
   public InputKey getInputKey() {
     return inputKey;
@@ -44,4 +46,11 @@ public class AppContext {
     this.appManager = appManager;
   }
 
+  public Loop getLoop() {
+    return loop;
+  }
+
+  public void setLoop(Loop loop) {
+    this.loop = loop;
+  }
 }

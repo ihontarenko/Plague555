@@ -48,9 +48,13 @@ public class ServiceLocator<Clazz> extends AbstractObjectContainer<Clazz> {
   }
 
   public Clazz resolveService(String name) {
-    Service service = getService(name);
+    return getService(name).resolve();
+  }
 
-    return (Clazz) Instantiator.createInstance(service.getClassObject(), service.getArguments());
+  public void resolveAll() {
+    getServices().forEach((name, service) -> {
+      setObject(name, (Clazz) service.resolve());
+    });
   }
 
   public boolean hasService(String name) {
@@ -74,7 +78,7 @@ public class ServiceLocator<Clazz> extends AbstractObjectContainer<Clazz> {
     return hasService(name) ? getSharedObject(name) : super.getObject(name);
   }
 
-  public static class Service {
+  public class Service {
 
     private Class<?> clazz;
     private Object[] arguments;
@@ -94,6 +98,10 @@ public class ServiceLocator<Clazz> extends AbstractObjectContainer<Clazz> {
 
     public Service(Class<?> clazz) {
       this(clazz, clazz.getName());
+    }
+
+    public Clazz resolve() {
+      return (Clazz) Instantiator.createInstance(getClassObject(), getArguments());
     }
 
     public boolean hasArguments() {
@@ -138,7 +146,6 @@ public class ServiceLocator<Clazz> extends AbstractObjectContainer<Clazz> {
 
       try {
         instance = constructor.newInstance(arguments);
-        System.out.printf("CreateInstance: %s %n", clazz.getSimpleName());
       } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
         e.printStackTrace();
       }

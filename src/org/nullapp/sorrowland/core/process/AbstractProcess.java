@@ -31,6 +31,10 @@ abstract public class AbstractProcess<Manager extends AbstractManager, State ext
     renderers.setObject(name, renderer);
   }
 
+  public void registerRenderer(String name, Class rendererClass, Object... arguments) {
+    renderers.registerService(name, rendererClass, arguments);
+  }
+
   public Renderer getRenderer(String name) {
     return renderers.getObject(name);
   }

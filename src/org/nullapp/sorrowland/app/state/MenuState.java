@@ -17,14 +17,8 @@ public class MenuState extends AbstractState<AppManager, AbstractProcess> {
   @Override
   protected void doInitialize() {
     setProcessMode(ProcessMode.ACTIVE);
-    setMenuActiveProcess();
-  }
-
-  public void setMenuActiveProcess()
-  {
-    MenuProcess process = new MenuProcess(getAppManager(), this);
-    registerProcess(MENU_PROCESS, process);
-    setActiveProcess(process);
+    registerProcess(MENU_PROCESS, MenuProcess.class, getAppManager(), this);
+    setActiveProcess(MENU_PROCESS);
   }
 
 }

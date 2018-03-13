@@ -47,6 +47,10 @@ abstract public class AbstractState<Manager extends AbstractManager, Process ext
     processes.setObject(name, controller);
   }
 
+  public void registerProcess(String name, Class clazz, Object... arguments) {
+    processes.registerService(name, clazz, arguments);
+  }
+
   public int getPriority() {
     return priority;
   }

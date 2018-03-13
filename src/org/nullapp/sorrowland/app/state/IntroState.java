@@ -16,13 +16,7 @@ public class IntroState extends AbstractState<AppManager, AbstractProcess> {
 
   @Override
   protected void doInitialize() {
-    setProcessMode(ProcessMode.ACTIVE);
-    setIntroActiveProcess();
-  }
-
-  public void setIntroActiveProcess()
-  {
-    getProcesses().registerService(INTRO_ANIMATION, IntroProcess.class, getAppManager(), this);
+    registerProcess(INTRO_ANIMATION, IntroProcess.class, getAppManager(), this);
     setActiveProcess(INTRO_ANIMATION);
   }
 

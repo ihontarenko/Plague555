@@ -1,9 +1,11 @@
 package org.nullapp.sorrowland.app.gfx.text;
 
-import org.nullapp.sorrowland.app.gfx.font.BoxySpriteFontMap;
+import org.nullapp.sorrowland.core.gfx.SpriteFontMap;
 
 public class StringDrawer {
 
-  private BoxySpriteFontMap fontMap;
+  private SpriteFontMap fontMap;
+
+
 
 }

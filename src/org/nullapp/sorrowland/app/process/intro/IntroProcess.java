@@ -24,9 +24,10 @@ public class IntroProcess extends AbstractProcess<AppManager, IntroState, Abstra
   protected void doInitialize() {
     delay = Time.ONE_NANO_SECOND * 2;
 
-    registerRenderer(ANIMATION2, new Animation2Renderer(getAppManager(), getState(), this));
-    registerRenderer(ANIMATION1, new Animation1Renderer(getAppManager(), getState(), this));
+    registerRenderer(ANIMATION1, Animation1Renderer.class, getAppManager(), getState(), this);
+    registerRenderer(ANIMATION2, Animation2Renderer.class, getAppManager(), getState(), this);
 
+    getRenderers().resolveAll();
   }
 
   @Override

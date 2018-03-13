@@ -1,14 +1,13 @@
 package org.nullapp.sorrowland.app;
 
-import org.nullapp.sorrowland.core.entity.Loop;
 import org.nullapp.sorrowland.app.gui.GUIWindow;
 import org.nullapp.sorrowland.app.manager.AppManager;
 import org.nullapp.sorrowland.app.service.AppContext;
+import org.nullapp.sorrowland.core.loop.Loop;
 
 public class GameLoop extends Loop {
 
   private boolean    isInitialized;
-  private float      oneSecondElapsed;
   private AppContext appContext;
 
   public GameLoop() {
@@ -33,21 +32,19 @@ public class GameLoop extends Loop {
       appContext.setGuiWindow(guiWindow);
       appContext.setAppManager(new AppManager(appContext));
 
+      appContext.setLoop(this);
+
       isInitialized = true;
     }
   }
 
   @Override
-  protected void update(float nano) {
+  protected void update(float elapsed) {
     // default code for update window title information
-    oneSecondElapsed += nano;
-    if (oneSecondElapsed > (ONE_NANO_SECOND / 4) && null != getExecutionInfo()) {
-      getGUI().setTitle(getExecutionInfo());
-      oneSecondElapsed = 0;
-    }
+    getGUI().setTitle(getExecutionInfo());
 
     // custom code below
-    getAppManager().update(nano);
+    getAppManager().update(elapsed);
   }
 
   @Override
