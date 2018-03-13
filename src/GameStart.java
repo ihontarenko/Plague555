@@ -1,5 +1,4 @@
-import org.plagueinc.sorrowland.GameLoop;
-import org.plagueinc.sorrowland.gui.GUIWindow;
+import org.nullapp.sorrowland.app.GameLoop;
 
 public class GameStart {
 
