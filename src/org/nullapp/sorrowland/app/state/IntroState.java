@@ -22,7 +22,7 @@ public class IntroState extends AbstractState<AppManager, AbstractProcess> {
 
   public void setIntroActiveProcess()
   {
-    registerProcess(INTRO_ANIMATION, new IntroProcess(getAppManager(), this));
+    getProcesses().registerService(INTRO_ANIMATION, IntroProcess.class, getAppManager(), this);
     setActiveProcess(INTRO_ANIMATION);
   }
 

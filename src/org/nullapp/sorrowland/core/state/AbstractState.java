@@ -2,7 +2,7 @@ package org.nullapp.sorrowland.core.state;
 
 import org.nullapp.sorrowland.core.common.Initializable;
 import org.nullapp.sorrowland.core.common.RunnableProcess;
-import org.nullapp.sorrowland.core.container.ObjectContainer;
+import org.nullapp.sorrowland.core.container.ServiceLocator;
 import org.nullapp.sorrowland.core.process.AbstractProcess;
 
 import java.awt.*;
@@ -10,15 +10,15 @@ import java.awt.*;
 abstract public class AbstractState<Manager extends AbstractManager, Process extends AbstractProcess>
     implements RunnableProcess<AbstractState>, Initializable {
 
-  private ObjectContainer<Process> processes;
-  private Manager                  appManager;
-  private Process                  activeProcess;
-  private ProcessMode              processMode;
-  private boolean                  isInitialized;
-  private int                      priority;
+  private ServiceLocator<Process> processes;
+  private Manager                 appManager;
+  private Process                 activeProcess;
+  private ProcessMode             processMode;
+  private boolean                 isInitialized;
+  private int                     priority;
 
   public AbstractState(Manager appManager) {
-    this.processes = new ObjectContainer<>();
+    this.processes = new ServiceLocator<>();
     this.appManager = appManager;
     initialize();
   }
@@ -59,7 +59,7 @@ abstract public class AbstractState<Manager extends AbstractManager, Process ext
     return processes.getObject(name);
   }
 
-  public ObjectContainer<Process> getProcesses() {
+  public ServiceLocator<Process> getProcesses() {
     return processes;
   }
 

@@ -1,7 +1,7 @@
 package org.nullapp.sorrowland.core.renderer;
 
 import org.nullapp.sorrowland.core.common.Initializable;
-import org.nullapp.sorrowland.core.container.ObjectContainer;
+import org.nullapp.sorrowland.core.container.ServiceLocator;
 import org.nullapp.sorrowland.core.process.AbstractProcess;
 import org.nullapp.sorrowland.core.state.AbstractState;
 import org.nullapp.sorrowland.core.state.AbstractManager;
@@ -9,21 +9,21 @@ import org.nullapp.sorrowland.core.state.AbstractManager;
 import java.awt.*;
 
 abstract public class AbstractRenderer<Manager extends AbstractManager, State extends AbstractState, Process extends AbstractProcess, RendererType extends AbstractRenderer>
-    implements Renderer<RendererType, ObjectContainer<RendererType>>, Initializable, Comparable<RendererType> {
+    implements Renderer<RendererType, ServiceLocator<RendererType>>, Initializable, Comparable<RendererType> {
 
-  private ObjectContainer<RendererType> innerRenderers;
-  private Process                       process;
-  private Manager                       appManager;
-  private State                         state;
-  private RendererType                  parent;
-  private boolean                       isInitialized;
-  private int                           priority;
+  private ServiceLocator<RendererType> innerRenderers;
+  private Process                      process;
+  private Manager                      appManager;
+  private State                        state;
+  private RendererType                 parent;
+  private boolean                      isInitialized;
+  private int                          priority;
 
   public AbstractRenderer(Manager appManager, State state, Process process) {
     this.process = process;
     this.appManager = appManager;
     this.state = state;
-    this.innerRenderers = new ObjectContainer<>();
+    this.innerRenderers = new ServiceLocator<>();
     initialize();
   }
 
@@ -57,7 +57,7 @@ abstract public class AbstractRenderer<Manager extends AbstractManager, State ex
   }
 
   @Override
-  public ObjectContainer<RendererType> getInnerRenderers() {
+  public ServiceLocator<RendererType> getInnerRenderers() {
     return innerRenderers;
   }
 

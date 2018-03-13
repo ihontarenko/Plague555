@@ -18,8 +18,8 @@ public class AppManager extends AbstractManager<AbstractState> {
 
   @Override
   public void doInitialize() {
-    registerState(STATE_INTRO, new IntroState(this));
-    registerState(STATE_MENU, new MenuState(this));
+    registerState(STATE_INTRO, IntroState.class, this);
+    registerState(STATE_MENU, MenuState.class, this);
 
     setActiveState(STATE_INTRO);
   }

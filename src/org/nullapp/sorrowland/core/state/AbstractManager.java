@@ -1,23 +1,23 @@
 package org.nullapp.sorrowland.core.state;
 
+import org.nullapp.sorrowland.app.service.AppContext;
 import org.nullapp.sorrowland.core.common.Initializable;
 import org.nullapp.sorrowland.core.common.Renderable;
 import org.nullapp.sorrowland.core.common.Updateable;
-import org.nullapp.sorrowland.core.container.ObjectContainer;
-import org.nullapp.sorrowland.app.service.AppContext;
+import org.nullapp.sorrowland.core.container.ServiceLocator;
 
 import java.awt.*;
 
 abstract public class AbstractManager<S extends AbstractState> implements Renderable, Updateable, Initializable {
 
-  private boolean                            isInitialized;
-  private ObjectContainer<S> states;
-  private S                                  activeState;
-  private ProcessMode                        processMode;
-  private AppContext                         appContext;
+  private boolean           isInitialized;
+  private ServiceLocator<S> states;
+  private S                 activeState;
+  private ProcessMode       processMode;
+  private AppContext        appContext;
 
   public AbstractManager(AppContext context) {
-    states = new ObjectContainer<>();
+    states = new ServiceLocator<>();
     setAppContext(context);
     initialize();
   }
@@ -73,7 +73,11 @@ abstract public class AbstractManager<S extends AbstractState> implements Render
     states.setObject(name, state);
   }
 
-  public ObjectContainer<S> getStates() {
+  public void registerState(String name, Class clazz, Object... arguments) {
+    states.registerService(name, clazz, arguments);
+  }
+
+  public ServiceLocator<S> getStates() {
     return states;
   }
 

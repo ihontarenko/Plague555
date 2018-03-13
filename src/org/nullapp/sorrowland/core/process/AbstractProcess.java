@@ -1,7 +1,7 @@
 package org.nullapp.sorrowland.core.process;
 
 import org.nullapp.sorrowland.core.common.Initializable;
-import org.nullapp.sorrowland.core.container.ObjectContainer;
+import org.nullapp.sorrowland.core.container.ServiceLocator;
 import org.nullapp.sorrowland.core.renderer.AbstractRenderer;
 import org.nullapp.sorrowland.core.state.AbstractManager;
 import org.nullapp.sorrowland.core.state.AbstractState;
@@ -11,15 +11,15 @@ import java.awt.*;
 abstract public class AbstractProcess<Manager extends AbstractManager, State extends AbstractState, Renderer extends AbstractRenderer>
     implements Process<AbstractProcess>, Initializable {
 
-  private Manager                   appManager;
-  private State                     state;
-  private ObjectContainer<Renderer> renderers;
-  private boolean                   isInitialized;
-  private boolean                   isPaused;
-  private int                       priority;
+  private Manager                  appManager;
+  private State                    state;
+  private ServiceLocator<Renderer> renderers;
+  private boolean                  isInitialized;
+  private boolean                  isPaused;
+  private int                      priority;
 
   public AbstractProcess(Manager appManager, State state) {
-    this.renderers = new ObjectContainer<>();
+    this.renderers = new ServiceLocator<>();
     this.appManager = appManager;
     this.state = state;
     initialize();
@@ -35,7 +35,7 @@ abstract public class AbstractProcess<Manager extends AbstractManager, State ext
     return renderers.getObject(name);
   }
 
-  public ObjectContainer<Renderer> getRenderers() {
+  public ServiceLocator<Renderer> getRenderers() {
     return renderers;
   }
 

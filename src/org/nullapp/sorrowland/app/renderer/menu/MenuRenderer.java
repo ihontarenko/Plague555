@@ -2,7 +2,7 @@ package org.nullapp.sorrowland.app.renderer.menu;
 
 import org.nullapp.sorrowland.app.state.IntroState;
 import org.nullapp.sorrowland.core.common.resource.ImageLoader;
-import org.nullapp.sorrowland.core.container.ObjectContainer;
+import org.nullapp.sorrowland.core.container.ServiceLocator;
 import org.nullapp.sorrowland.core.gfx.Sprite;
 import org.nullapp.sorrowland.core.gfx.SpriteSheet;
 import org.nullapp.sorrowland.core.process.AbstractProcess;
@@ -14,8 +14,6 @@ import org.nullapp.sorrowland.app.manager.AppManager;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.IOException;
-import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 
 public class MenuRenderer extends AbstractRenderer<AppManager, AbstractState, AbstractProcess, AbstractRenderer> {
@@ -30,9 +28,6 @@ public class MenuRenderer extends AbstractRenderer<AppManager, AbstractState, Ab
   @Override
   public void doInitialize() {
     spriteFontMap = new BoxySpriteFontMap();
-
-    IntroState state = (IntroState)ObjectContainer.Instantiator.createInstance(IntroState.class.getName(), getAppManager());
-    System.out.println(state);
 
     try {
       sheet = new SpriteSheet(ImageIO.read(new ImageLoader("ui/fonts/boxy.png").getFileStream()), 18, 16);
