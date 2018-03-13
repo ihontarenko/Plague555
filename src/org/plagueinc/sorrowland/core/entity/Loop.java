@@ -58,27 +58,33 @@ abstract public class Loop implements Runnable, Initializable {
 
   @Override
   public void run() {
-    long  lastTime         = System.nanoTime();
-    float lostTime         = 0;
-    float totalElapsedTime = 0;
-    int[] counters         = {0, 0, 0, 0};
+    float   lagTime        = 0;
+    float   nanoPerUpdate  = 0;
+    float[] counters       = {0, 0, 0, 0, 0};
+    long    previousTime   = System.nanoTime();
+    long    oneSecondTimer = 0;
+    long    totalFrames    = 0;
+    long    currentTime;
+    long    elapsed;
 
     this.initialize();
 
     while (isRunning) {
 
-      long nowTime     = System.nanoTime();
-      long elapsedTime = nowTime - lastTime;
-      lastTime = nowTime;
+      currentTime = System.nanoTime();
+      elapsed = currentTime - previousTime;
 
-      lostTime += (elapsedTime / (ONE_NANO_SECOND / updateRate));
-      totalElapsedTime += elapsedTime;
+      oneSecondTimer += elapsed;
+
+      previousTime = currentTime;
+      lagTime += elapsed / (ONE_NANO_SECOND / updateRate);
+      nanoPerUpdate = elapsed / lagTime;
 
       boolean readyToRender = false;
 
-      while (lostTime > 1) {
-        update(elapsedTime);
-        lostTime--;
+      while (lagTime > 1) {
+        update(nanoPerUpdate);
+        lagTime--;
 
         counters[1]++;
         if (readyToRender) {
@@ -100,9 +106,12 @@ abstract public class Loop implements Runnable, Initializable {
         }
       }
 
-      if (totalElapsedTime >= ONE_NANO_SECOND) {
-        executionInfo = String.format(" [FPS: %d, UPD: %d, LOST: %d, FREE %d]", counters[0], counters[1], counters[2], counters[3]);
-        totalElapsedTime = 0;
+      if (oneSecondTimer >= ONE_NANO_SECOND) {
+        totalFrames += counters[0];
+        executionInfo = String.format("fps:%.0f, upd:%.0f, lost:%.0f, free:%.0f upd:%.4fs, render:%.4fs, frames:%d",
+            counters[0], counters[1], counters[2], counters[3],
+            nanoPerUpdate / ONE_NANO_SECOND, elapsed / ONE_NANO_SECOND, totalFrames);
+        oneSecondTimer = 0;
         Arrays.fill(counters, 0);
       }
 

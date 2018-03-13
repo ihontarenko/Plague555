@@ -15,4 +15,9 @@ abstract public class AbstractObjectContainer<C> extends HashMap<String, C> impl
     put(name, object);
   }
 
+  @Override
+  public boolean hasObject(String name) {
+    return containsKey(name);
+  }
+
 }

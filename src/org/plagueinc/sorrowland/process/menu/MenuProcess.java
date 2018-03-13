@@ -16,7 +16,7 @@ public class MenuProcess extends AbstractProcess<AppManager, MenuState, Abstract
 
   @Override
   public void doUpdate(float nano) {
-
+    getAppManager().getAppContext().getGuiWindow().getCanvas().setDefaultColor(0xff333333);
   }
 
   @Override

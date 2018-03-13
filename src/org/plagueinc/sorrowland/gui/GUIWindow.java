@@ -58,7 +58,7 @@ public class GUIWindow implements Initializable {
   }
 
   public void setTitle(String title) {
-    this.getMainFrame().setTitle(this.title + title);
+    this.getMainFrame().setTitle(String.format("%s [%s]", this.title, title));
   }
 
   public int getWidth() {

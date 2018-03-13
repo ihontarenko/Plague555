@@ -22,10 +22,8 @@ public class IntroState extends AbstractState<AppManager, AbstractProcess> {
 
   public void setIntroActiveProcess()
   {
-    IntroProcess process = new IntroProcess(getAppManager(), this);
-    setProcessMode(ProcessMode.BATCH);
-    registerProcess(INTRO_ANIMATION, process);
-    setActiveProcess(process);
+    registerProcess(INTRO_ANIMATION, new IntroProcess(getAppManager(), this));
+    setActiveProcess(INTRO_ANIMATION);
   }
 
 }

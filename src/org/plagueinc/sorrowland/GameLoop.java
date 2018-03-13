@@ -3,13 +3,13 @@ package org.plagueinc.sorrowland;
 import org.plagueinc.sorrowland.core.entity.Loop;
 import org.plagueinc.sorrowland.gui.GUIWindow;
 import org.plagueinc.sorrowland.manager.AppManager;
+import org.plagueinc.sorrowland.service.AppContext;
 
 public class GameLoop extends Loop {
 
   private boolean    isInitialized;
   private float      oneSecondElapsed;
-  private GUIWindow  gui;
-  private AppManager appManager;
+  private AppContext appContext;
 
   public GameLoop() {
     super();
@@ -24,10 +24,16 @@ public class GameLoop extends Loop {
   @Override
   public void initialize() {
     if (!isInitialized()) {
+
+      GUIWindow guiWindow = new GUIWindow(800, 600);
+      guiWindow.initialize();
+
+      appContext = new AppContext();
+
+      appContext.setGuiWindow(guiWindow);
+      appContext.setAppManager(new AppManager(appContext));
+
       isInitialized = true;
-      gui = new GUIWindow(800, 600);
-      gui.initialize();
-      appManager = new AppManager();
     }
   }
 
@@ -36,7 +42,7 @@ public class GameLoop extends Loop {
     // default code for update window title information
     oneSecondElapsed += nano;
     if (oneSecondElapsed > (ONE_NANO_SECOND / 4) && null != getExecutionInfo()) {
-      gui.setTitle(getExecutionInfo());
+      getGUI().setTitle(getExecutionInfo());
       oneSecondElapsed = 0;
     }
 
@@ -52,10 +58,15 @@ public class GameLoop extends Loop {
   }
 
   public AppManager getAppManager() {
-    return appManager;
+    return getAppContext().getAppManager();
   }
 
   public GUIWindow getGUI() {
-    return gui;
+    return getAppContext().getGuiWindow();
   }
+
+  public AppContext getAppContext() {
+    return appContext;
+  }
+
 }

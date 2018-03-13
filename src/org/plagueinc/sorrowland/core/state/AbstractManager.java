@@ -8,16 +8,17 @@ import org.plagueinc.sorrowland.service.AppContext;
 
 import java.awt.*;
 
-abstract public class AbstractManager<State extends AbstractState> implements Renderable, Updateable, Initializable {
+abstract public class AbstractManager<S extends AbstractState> implements Renderable, Updateable, Initializable {
 
-  private boolean                isInitialized;
-  private ObjectContainer<State> states;
-  private State                  activeState;
-  private ProcessMode            processMode;
-  private AppContext             appContext;
+  private boolean                            isInitialized;
+  private ObjectContainer<S> states;
+  private S                                  activeState;
+  private ProcessMode                        processMode;
+  private AppContext                         appContext;
 
-  public AbstractManager() {
+  public AbstractManager(AppContext context) {
     states = new ObjectContainer<>();
+    setAppContext(context);
     initialize();
   }
 
@@ -44,11 +45,11 @@ abstract public class AbstractManager<State extends AbstractState> implements Re
     this.processMode = processMode;
   }
 
-  public State getActiveState() {
+  public S getActiveState() {
     return activeState;
   }
 
-  public void setActiveState(State activeState) {
+  public void setActiveState(S activeState) {
     this.activeState = activeState;
   }
 
@@ -56,7 +57,7 @@ abstract public class AbstractManager<State extends AbstractState> implements Re
     setActiveState(getState(name));
   }
 
-  public State getState(String name) {
+  public S getState(String name) {
     return states.getObject(name);
   }
 
@@ -68,11 +69,11 @@ abstract public class AbstractManager<State extends AbstractState> implements Re
     this.appContext = appContext;
   }
 
-  public void registerState(String name, State state) {
+  public void registerState(String name, S state) {
     states.setObject(name, state);
   }
 
-  public ObjectContainer<State> getStates() {
+  public ObjectContainer<S> getStates() {
     return states;
   }
 

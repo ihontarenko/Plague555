@@ -1,4 +1,7 @@
 package org.plagueinc.sorrowland.core.container;
 
-public class ObjectContainer<C> extends AbstractObjectContainer<C> {
+import org.plagueinc.sorrowland.core.common.Callback;
+
+public class ObjectContainer<Clazz> extends AbstractObjectContainer<Clazz> {
+
 }

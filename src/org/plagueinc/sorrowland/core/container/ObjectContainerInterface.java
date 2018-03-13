@@ -6,4 +6,6 @@ public interface ObjectContainerInterface<C> {
 
   public void setObject(String name, C object);
 
+  public boolean hasObject(String name);
+
 }
