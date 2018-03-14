@@ -1,2 +1,2 @@
-# Plague Inc.
-## SorrowLand
+# NULLion Apps
+## SorrowLand Indie Java Game
