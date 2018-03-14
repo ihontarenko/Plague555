@@ -1,29 +1,51 @@
 package com.nullion.appcore.gfx;
 
 import com.nullion.appcore.common.Drawable;
+import com.nullion.appcore.geometry.Dimension;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+@SuppressWarnings("unused")
 public class Sprite implements Drawable {
 
-  private BufferedImage image;
-  private SpriteSheet   sheet;
-  private int           index;
+  private BufferedImage bufferedImage;
+  private Dimension     dimension;
 
-  public Sprite(SpriteSheet sheet, int scale, int index) {
-    this.sheet = sheet;
-    this.index = index % sheet.count();
+  public Sprite(BufferedImage bufferedImage, Dimension dimension) {
+    setBufferedImage(bufferedImage);
+    setDimension(dimension);
+    convertToARGB();
+  }
 
-    BufferedImage origin = getSheet().getSprite(this.index);
-    BufferedImage actual = new BufferedImage(origin.getWidth() * scale, origin.getHeight() * scale, BufferedImage.TYPE_INT_ARGB);
-    actual.getGraphics().drawImage(origin, 0, 0, actual.getWidth(), actual.getHeight(), null);
+  public Sprite(BufferedImage bufferedImage) {
+    this(bufferedImage, new Dimension(bufferedImage.getWidth(), bufferedImage.getHeight()));
+  }
 
-    this.image = actual;
+  public Sprite(SpriteSheet spriteSheet, int scale, int position) {
+    this(spriteSheet.getBufferedImage(position % spriteSheet.count()));
+    setDimension(bufferedImage.getWidth() * scale, bufferedImage.getHeight() * scale);
+  }
+
+  public Sprite(SpriteSheet spriteSheet, int position) {
+    this(spriteSheet.getBufferedImage(position % spriteSheet.count()));
+  }
+
+  public Sprite(SpriteSheet spriteSheet) {
+    this(spriteSheet.getBufferedImage(1));
+  }
+
+  private void convertToARGB() {
+    BufferedImage bufferedImage     = getBufferedImage();
+    BufferedImage argbBufferedImage = new BufferedImage(bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+    Graphics      graphics          = argbBufferedImage.getGraphics();
+
+    graphics.drawImage(bufferedImage, 0, 0, bufferedImage.getWidth(), bufferedImage.getHeight(), null);
+    setBufferedImage(argbBufferedImage);
   }
 
   public void draw(Graphics2D g2d, int x, int y) {
-    g2d.drawImage(getImage(), x, y, getImage().getWidth(), getImage().getHeight(), null);
+    g2d.drawImage(getBufferedImage(), x, y, getWidth(), getHeight(), null);
   }
 
   public void transparentColor(Color color, float opacity) {
@@ -33,7 +55,7 @@ public class Sprite implements Drawable {
   public void transparentColor(int color, float opacity) {
     int opacityRate = (int) (0xff * opacity) % 0xff;
 
-    int[] pixels = image.getRGB(0, 0, image.getWidth(), image.getHeight(), null, 0, image.getWidth());
+    int[] pixels = bufferedImage.getRGB(0, 0, bufferedImage.getWidth(), bufferedImage.getHeight(), null, 0, bufferedImage.getWidth());
 
     for (int i = 0; i < pixels.length; i++) {
       if (pixels[i] == color) {
@@ -41,14 +63,35 @@ public class Sprite implements Drawable {
       }
     }
 
-    image.setRGB(0, 0, image.getWidth(), image.getHeight(), pixels, 0, image.getWidth());
+    bufferedImage.setRGB(0, 0, bufferedImage.getWidth(), bufferedImage.getHeight(), pixels, 0, bufferedImage.getWidth());
   }
 
-  public BufferedImage getImage() {
-    return image;
+  public BufferedImage getBufferedImage() {
+    return bufferedImage;
   }
 
-  public SpriteSheet getSheet() {
-    return sheet;
+  public void setBufferedImage(BufferedImage bufferedImage) {
+    this.bufferedImage = bufferedImage;
   }
+
+  public int getWidth() {
+    return getDimension().getWidth();
+  }
+
+  public int getHeight() {
+    return getDimension().getHeight();
+  }
+
+  public Dimension getDimension() {
+    return dimension;
+  }
+
+  public void setDimension(Dimension dimension) {
+    this.dimension = dimension;
+  }
+
+  public void setDimension(int width, int height) {
+    setDimension(new Dimension(width, height));
+  }
+
 }

@@ -25,6 +25,14 @@ public class InputKey extends JComponent {
     return this.keyCodeMap[keyCode];
   }
 
+  public boolean getWithShift(int keyCode) {
+    return getKey(keyCode) && getKey(KeyEvent.VK_SHIFT);
+  }
+
+  public boolean getWithControl(int keyCode) {
+    return getKey(keyCode) && getKey(KeyEvent.VK_CONTROL);
+  }
+
   public boolean getUp() {
     return this.getKey(KeyEvent.VK_UP);
   }

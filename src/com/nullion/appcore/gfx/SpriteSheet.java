@@ -4,19 +4,23 @@ import java.awt.image.BufferedImage;
 
 public class SpriteSheet {
 
-  private BufferedImage sheet;
+  private BufferedImage bufferedImage;
   private int           sizeX;
   private int           sizeY;
   private int           spriteCount;
   private int           spritesInWidth;
   private int           spritesInHeight;
 
+  public SpriteSheet(BufferedImage sheet) {
+    this(sheet, sheet.getWidth(), sheet.getHeight());
+  }
+
   public SpriteSheet(BufferedImage sheet, int size) {
     this(sheet, size, size);
   }
 
   public SpriteSheet(BufferedImage sheet, int sizeX, int sizeY) {
-    this.sheet = sheet;
+    this.bufferedImage = sheet;
     this.sizeX = sizeX;
     this.sizeY = sizeY;
     this.spritesInWidth = sheet.getWidth() / sizeX;
@@ -24,13 +28,21 @@ public class SpriteSheet {
     this.spriteCount = this.spritesInWidth * this.spritesInHeight;
   }
 
-  public BufferedImage getSprite(int index) {
+  public BufferedImage getBufferedImage() {
+    return bufferedImage;
+  }
+
+  public BufferedImage getBufferedImage(int index) {
     index = index % count();
 
     int x = index % inWidth() * getSizeX();
     int y = index / inWidth() * getSizeY();
 
-    return getSheet().getSubimage(x, y, getSizeX(), getSizeY());
+    return getBufferedImage().getSubimage(x, y, getSizeX(), getSizeY());
+  }
+
+  public Sprite getSprite(int index) {
+    return new Sprite(getBufferedImage(index));
   }
 
   public int inHeight() {
@@ -45,15 +57,19 @@ public class SpriteSheet {
     return this.spriteCount;
   }
 
+  public int getWidth() {
+    return getBufferedImage().getWidth();
+  }
+
+  public int getHeight() {
+    return getBufferedImage().getHeight();
+  }
+
   public int getSizeX() {
     return sizeX;
   }
 
   public int getSizeY() {
     return sizeY;
-  }
-
-  public BufferedImage getSheet() {
-    return sheet;
   }
 }

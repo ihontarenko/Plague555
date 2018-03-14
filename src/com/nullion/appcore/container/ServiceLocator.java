@@ -83,10 +83,6 @@ public class ServiceLocator<Clazz> extends AbstractObjectContainer<Clazz> {
 
   @Override
   public void setObject(String name, Clazz object) {
-    if (object instanceof Initializable) {
-      ((Initializable) object).initialize();
-    }
-
     super.setObject(name, object);
   }
 
@@ -212,4 +208,23 @@ public class ServiceLocator<Clazz> extends AbstractObjectContainer<Clazz> {
 
   }
 
+  @Override
+  public String toString() {
+    //super.toString();
+    StringBuilder stringBuilder = new StringBuilder();
+
+    stringBuilder.append("==============\n");
+    stringBuilder.append(String.format("Container [%s]\n", this.getClass().getSimpleName()));
+    this.forEach((key, object) -> {
+      stringBuilder.append(String.format("'%s': [%s]\n", key, object.getClass().getSimpleName()));
+    });
+
+    stringBuilder.append(String.format("\nServices [%s]\n", getServices().getClass().getSimpleName()));
+    getServices().forEach((key, object) -> {
+      stringBuilder.append(String.format("'%s': Service[%s]\n", key, object.getClassObject().getSimpleName()));
+    });
+    stringBuilder.append("==============\n");
+
+    return stringBuilder.toString();
+  }
 }

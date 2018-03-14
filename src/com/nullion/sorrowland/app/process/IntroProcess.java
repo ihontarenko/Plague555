@@ -2,6 +2,7 @@ package com.nullion.sorrowland.app.process;
 
 import com.nullion.sorrowland.app.renderer.intro.Animation1Renderer;
 import com.nullion.sorrowland.app.renderer.intro.Animation2Renderer;
+import com.nullion.sorrowland.app.renderer.intro.LogoRenderer;
 import com.nullion.sorrowland.app.state.IntroState;
 import com.nullion.appcore.renderer.AbstractRenderer;
 import com.nullion.sorrowland.app.manager.AppManager;
@@ -14,6 +15,7 @@ public class IntroProcess extends AbstractProcess<IntroState, AbstractRenderer> 
 
   final static public String ANIMATION1 = "ANIMATION1";
   final static public String ANIMATION2 = "ANIMATION2";
+  final static public String LOGO = "LOGO";
 
   public IntroProcess(AppContext context, IntroState state) {
     super(context, state);
@@ -23,6 +25,7 @@ public class IntroProcess extends AbstractProcess<IntroState, AbstractRenderer> 
   protected void doInitialize() {
     registerRenderer(ANIMATION1, Animation1Renderer.class, getContext(), getState(), this);
     registerRenderer(ANIMATION2, Animation2Renderer.class, getContext(), getState(), this);
+    registerRenderer(LOGO, LogoRenderer.class, getContext(), getState(), this);
     getRenderers().resolveAll();
   }
 

@@ -8,7 +8,7 @@ abstract public class SpriteFontMap {
   private Map<Integer, Integer> map;
 
   public SpriteFontMap() {
-    map = new HashMap<>();
+    this.map = new HashMap<>();
 
     int[] chars     = getChars();
     int[] positions = getPositions();

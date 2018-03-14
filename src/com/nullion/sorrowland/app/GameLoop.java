@@ -1,11 +1,16 @@
 package com.nullion.sorrowland.app;
 
+import com.nullion.sorrowland.app.config.AppConfiguration;
+import com.nullion.sorrowland.app.gfx.font.BoxySpriteFontMap;
+import com.nullion.sorrowland.app.gfx.text.StringDrawer;
 import com.nullion.sorrowland.app.manager.AppManager;
 import com.nullion.appcore.gui.GUIWindow;
 import com.nullion.appcore.io.InputKey;
 import com.nullion.appcore.loop.Loop;
 import com.nullion.appcore.service.AppContext;
 import com.nullion.appcore.service.AppContextAware;
+
+import javax.swing.*;
 
 public class GameLoop extends Loop implements AppContextAware {
 
@@ -26,19 +31,31 @@ public class GameLoop extends Loop implements AppContextAware {
   public void initialize() {
     if (!isInitialized()) {
 
+      AppContext appContext = new AppContext();
+      AppConfiguration appConfiguration;
+
+      appContext.registerService(AppContext.CONFIG_OBJECT, AppConfiguration.class, "config/app.properties");
+      appContext.getConfiguration().initialize();
+
+      appConfiguration = (AppConfiguration) appContext.getConfiguration();
+
       InputKey  inputKey = new InputKey();
-      GUIWindow gui      = new GUIWindow(800, 600, getClass().getSimpleName());
+      GUIWindow gui      = new GUIWindow(appConfiguration.getWidth(), appConfiguration.getHeight(), getClass().getSimpleName());
 
       gui.initialize();
       gui.getMainFrame().add(inputKey);
 
-      appContext = new AppContext();
+      appContext.registerService(AppContext.STRING_DRAWER, StringDrawer.class, new BoxySpriteFontMap());
 
       appContext.setGuiWindow(gui);
       appContext.setInputKey(inputKey);
       appContext.setAppManager(new AppManager(appContext));
 
       appContext.setLoop(this);
+
+      this.appContext = appContext;
+
+      gui.setTitlePrefix(appConfiguration.getAppFullName());
 
       isInitialized = true;
     }

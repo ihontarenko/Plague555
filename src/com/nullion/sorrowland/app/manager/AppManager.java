@@ -1,10 +1,14 @@
 package com.nullion.sorrowland.app.manager;
 
+import com.nullion.appcore.io.InputKey;
 import com.nullion.sorrowland.app.state.IntroState;
 import com.nullion.sorrowland.app.state.MenuState;
 import com.nullion.appcore.state.AbstractManager;
 import com.nullion.appcore.state.AbstractState;
 import com.nullion.appcore.service.AppContext;
+
+import javax.swing.*;
+import java.awt.event.KeyEvent;
 
 public class AppManager extends AbstractManager<AbstractState> {
 
@@ -23,5 +27,4 @@ public class AppManager extends AbstractManager<AbstractState> {
 
     setActiveState(STATE_INTRO);
   }
-
 }
