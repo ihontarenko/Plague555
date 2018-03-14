@@ -14,6 +14,10 @@ public class AppConfiguration extends AbstractConfiguration {
     super(properties);
   }
 
+  public String getLogoPath() {
+    return getProperty("sprites.logo");
+  }
+
   public Integer getWidth() {
     return Integer.valueOf(getProperty("app.window.width"));
   }

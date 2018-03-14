@@ -1,11 +1,11 @@
 package com.nullion.sorrowland.app.state;
 
-import com.nullion.sorrowland.app.process.IntroProcess;
-import com.nullion.appcore.process.AbstractProcess;
+import com.nullion.sorrowland.app.controller.IntroController;
+import com.nullion.appcore.controller.Controller;
 import com.nullion.appcore.service.AppContext;
 import com.nullion.appcore.state.AbstractState;
 
-public class IntroState extends AbstractState<AbstractProcess> {
+public class IntroState extends AbstractState<Controller> {
 
   final static public String INTRO_ANIMATION = "INTRO_ANIMATION";
 
@@ -15,8 +15,8 @@ public class IntroState extends AbstractState<AbstractProcess> {
 
   @Override
   protected void doInitialize() {
-    registerProcess(INTRO_ANIMATION, IntroProcess.class, getContext(), this);
-    setActiveProcess(INTRO_ANIMATION);
+    registerController(INTRO_ANIMATION, IntroController.class, getContext(), this);
+    setActiveController(INTRO_ANIMATION);
   }
 
 }

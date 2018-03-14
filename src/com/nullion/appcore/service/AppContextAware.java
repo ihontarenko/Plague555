@@ -2,7 +2,7 @@ package com.nullion.appcore.service;
 
 import com.nullion.appcore.gui.GUIWindow;
 import com.nullion.appcore.state.AbstractManager;
-import com.nullion.sorrowland.app.gfx.text.StringDrawer;
+import com.nullion.appcore.gfx.StringDrawer;
 import com.nullion.appcore.io.InputKey;
 import com.nullion.appcore.loop.Loop;
 

@@ -1,5 +1,5 @@
 package com.nullion.appcore.common;
 
-public interface RunnableProcess<C> extends Renderable, Updateable, Comparable<C> {
+public interface RunnableProcess extends Renderable, Updateable, Comparable {
 
 }

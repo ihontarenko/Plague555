@@ -1,4 +1,4 @@
-package com.nullion.appcore.gfx;
+package com.nullion.appcore.gfx.sprite;
 
 import java.util.HashMap;
 import java.util.Map;

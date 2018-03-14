@@ -1,6 +1,6 @@
 package com.nullion.sorrowland.app.gfx.font;
 
-import com.nullion.appcore.gfx.SpriteFontMap;
+import com.nullion.appcore.gfx.sprite.SpriteFontMap;
 
 public class BoxySpriteFontMap extends SpriteFontMap {
 

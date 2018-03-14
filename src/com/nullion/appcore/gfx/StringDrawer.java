@@ -1,7 +1,7 @@
-package com.nullion.sorrowland.app.gfx.text;
+package com.nullion.appcore.gfx;
 
 import com.nullion.appcore.common.Drawable;
-import com.nullion.appcore.gfx.SpriteFont;
+import com.nullion.appcore.gfx.sprite.SpriteFont;
 
 import java.awt.*;
 

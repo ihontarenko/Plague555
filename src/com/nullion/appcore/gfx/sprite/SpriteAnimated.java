@@ -1,4 +1,4 @@
-package com.nullion.appcore.gfx;
+package com.nullion.appcore.gfx.sprite;
 
 import com.nullion.appcore.common.Drawable;
 import com.nullion.appcore.common.Time;

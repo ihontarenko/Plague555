@@ -1,12 +1,12 @@
 package com.nullion.sorrowland.app.state;
 
-import com.nullion.appcore.process.AbstractProcess;
+import com.nullion.appcore.controller.Controller;
 import com.nullion.appcore.service.AppContext;
 import com.nullion.appcore.state.AbstractState;
 import com.nullion.appcore.state.ProcessMode;
-import com.nullion.sorrowland.app.process.MenuProcess;
+import com.nullion.sorrowland.app.controller.MenuController;
 
-public class MenuState extends AbstractState<AbstractProcess> {
+public class MenuState extends AbstractState<Controller> {
 
   final static public String MENU_PROCESS = "MENU_PROCESS";
 
@@ -17,12 +17,8 @@ public class MenuState extends AbstractState<AbstractProcess> {
   @Override
   protected void doInitialize() {
     setProcessMode(ProcessMode.ACTIVE);
-    registerProcess(MENU_PROCESS, MenuProcess.class, getContext(), this);
-    setActiveProcess(MENU_PROCESS);
+    registerController(MENU_PROCESS, MenuController.class, getContext(), this);
+    setActiveController(MENU_PROCESS);
   }
 
-  @Override
-  public void reinitialize() {
-    getProcesses().values().forEach(AbstractProcess::reinitialize);
-  }
 }

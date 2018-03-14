@@ -2,15 +2,13 @@ package com.nullion.sorrowland.app;
 
 import com.nullion.sorrowland.app.config.AppConfiguration;
 import com.nullion.sorrowland.app.gfx.font.BoxySpriteFontMap;
-import com.nullion.sorrowland.app.gfx.text.StringDrawer;
+import com.nullion.appcore.gfx.StringDrawer;
 import com.nullion.sorrowland.app.manager.AppManager;
 import com.nullion.appcore.gui.GUIWindow;
 import com.nullion.appcore.io.InputKey;
 import com.nullion.appcore.loop.Loop;
 import com.nullion.appcore.service.AppContext;
 import com.nullion.appcore.service.AppContextAware;
-
-import javax.swing.*;
 
 public class GameLoop extends Loop implements AppContextAware {
 

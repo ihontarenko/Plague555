@@ -1,8 +1,8 @@
-package com.nullion.appcore.process;
+package com.nullion.appcore.controller;
 
 import com.nullion.appcore.common.RunnableProcess;
 
-public interface Process<P> extends RunnableProcess<P> {
+public interface ControllerInterface extends RunnableProcess {
 
   public void pause();
 

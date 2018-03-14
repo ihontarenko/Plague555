@@ -25,8 +25,6 @@ abstract public class AbstractManager<S extends AbstractState>
     initialize();
   }
 
-
-
   abstract protected void doInitialize();
 
   public ProcessMode getProcessMode() {
