@@ -4,6 +4,7 @@ import org.nullapp.appCore.common.resource.ImageLoader;
 import org.nullapp.appCore.service.AppContext;
 import org.nullapp.appCore.process.view.AbstractView;
 import org.nullapp.gameCore.gfx.sprite.Sprite;
+import org.nullapp.gameCore.gfx.sprite.SpriteAnimated;
 import org.nullapp.gameCore.gfx.sprite.SpriteSheet;
 import org.nullapp.sorrowland.app.config.AppConfiguration;
 import org.nullapp.sorrowland.app.controller.MenuController;
@@ -16,9 +17,9 @@ import java.io.InputStream;
 
 public class MenuView extends AbstractView<MenuController, AbstractView> {
 
-  private SpriteSheet       sheet;
-  private BoxySpriteFontMap spriteFontMap;
-  private AppConfiguration  configuration;
+  private SpriteSheet      sheet;
+  private SpriteAnimated   spriteAnimated;
+  private AppConfiguration configuration;
 
   public MenuView(AppContext context, MenuController controller) {
     super(context, controller);
@@ -26,17 +27,18 @@ public class MenuView extends AbstractView<MenuController, AbstractView> {
 
   @Override
   public void doInitialize() {
-    spriteFontMap = new BoxySpriteFontMap();
     configuration = (AppConfiguration) getContext().getConfiguration();
     configuration.initialize();
 
-    InputStream inputStream = new ImageLoader("ui/fonts/boxy.png").getFileStream();
+    InputStream inputStream = new ImageLoader("common/newchar03-3.png").getFileStream();
 
     try {
-      sheet = new SpriteSheet(ImageIO.read(inputStream), 18, 16);
+      sheet = new SpriteSheet(ImageIO.read(inputStream), 32, 32);
     } catch (IOException e) {
       e.printStackTrace();
     }
+
+    spriteAnimated = new SpriteAnimated(sheet, 5, 1, 0, 2);
   }
 
   @Override
@@ -44,15 +46,6 @@ public class MenuView extends AbstractView<MenuController, AbstractView> {
 
     super.render(g2d);
 
-    g2d.setColor(Color.ORANGE);
-    g2d.drawOval(50, 50, 150, 150);
-
-    String string = configuration.getAppFullName();
-
-    int scale = 1;
-
-    for (int i = 0; i < string.length(); i++) {
-      new Sprite(sheet, scale, spriteFontMap.getPosition(string.charAt(i))).draw(g2d, 50 + (sheet.getSizeX() * scale) * i, 300);
-    }
+    spriteAnimated.draw(g2d, 10, 10);
   }
 }

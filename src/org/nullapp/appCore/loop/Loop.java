@@ -59,7 +59,7 @@ abstract public class Loop implements Runnable, Initializable {
 
   @Override
   public void run() {
-    String  executionInfoTemplate = "fps:%.0f, upd:%.0f, lost:%.0f, free:%.0f, render:%.4fs, frames:%d, time: %.2fs";
+    String  executionInfoTemplate = "fps:%.0f, upd:%.0f+%.0f, free:%.0f, render:%.4fs, frames:%d, time: %.2fs";
     float   delayed               = 0;
     float   nanoPerUpdate         = ONE_NANO_SECOND / updateRate;
     float   totalTime             = 0;

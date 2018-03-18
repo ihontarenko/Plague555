@@ -25,7 +25,7 @@ public class SpriteAnimated implements Drawable {
     this.sheet = sheet;
     this.scale = scale;
     this.speedAnimation = speedAnimation;
-    this.sprites = new Sprite[lastIndex - startIndex];
+    this.sprites = new Sprite[lastIndex - startIndex + 1];
     this.transparentColor = 0x00000000;
     this.transparentColor = 0x00000000;
     this.loadSprites(startIndex, lastIndex);
@@ -33,7 +33,7 @@ public class SpriteAnimated implements Drawable {
 
   private void loadSprites(int startIndex, int lastIndex) {
     int count = 0;
-    for (int i = startIndex; i < lastIndex; i++) {
+    for (int i = startIndex; i <= lastIndex; i++) {
       sprites[count++] = new Sprite(sheet, scale, i);
     }
   }
