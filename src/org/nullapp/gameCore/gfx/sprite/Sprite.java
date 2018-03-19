@@ -87,7 +87,7 @@ public class Sprite implements Drawable {
   }
 
   public void setScale(int scale) {
-    setDimension(new Dimension(bufferedImage.getWidth(), bufferedImage.getHeight()));
+    setDimension(new Dimension(bufferedImage.getWidth() * scale, bufferedImage.getHeight() * scale));
   }
 
   public void setDimension(Dimension dimension) {

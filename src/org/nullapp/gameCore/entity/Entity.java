@@ -1,76 +1,24 @@
 package org.nullapp.gameCore.entity;
 
 
-import org.nullapp.gameCore.geometry.Bounds2D;
+import org.nullapp.gameCore.geometry.Bound2D;
 import org.nullapp.gameCore.geometry.Vector2D;
-import org.nullapp.gameCore.geometry.intersection.Object2D;
+import org.nullapp.gameCore.geometry.Object2D;
 
-abstract public class Entity<T extends Entity> implements Object2D {
+abstract public class Entity<T extends Entity> extends Object2D {
 
   protected int width = 0;
   protected int height = 0;
   protected Vector2D    position;
   protected Vector2D    velocity;
-  protected Bounds2D    bounds;
+  protected Bound2D     bounds;
   protected EntityState state;
 
-  public Entity(int width, int height, Vector2D position, Vector2D velocity, Bounds2D bounds2D) {
-    this.width = width;
-    this.height = height;
-    this.bounds = bounds2D;
-    this.position = position;
+  public Entity(int x, int y, int width, int height, Vector2D position, Vector2D velocity, Bound2D bound2D) {
+    super(x, y, width, height);
+    this.bounds = bound2D;
     this.velocity = velocity;
     this.state = new EntityState();
-  }
-
-  @Override
-  public double x() {
-    return this.position.x();
-  }
-
-  @Override
-  public void setX(double x) {
-    this.position.setX(x);
-  }
-
-  @Override
-  public double y() {
-    return this.position.y();
-  }
-
-  @Override
-  public void setY(double y) {
-    this.position.setY(y);
-  }
-
-  @Override
-  public double maxX() {
-    return this.position.x() + this.width;
-  }
-
-  @Override
-  public double maxY() {
-    return this.position.y() + this.height;
-  }
-
-  @Override
-  public double width() {
-    return this.width;
-  }
-
-  @Override
-  public double height() {
-    return this.height;
-  }
-
-  @Override
-  public double centreX() {
-    return (this.x() + this.maxX()) / 2;
-  }
-
-  @Override
-  public double centreY() {
-    return (this.y() + this.maxY()) / 2;
   }
 
   public Vector2D position() {
@@ -81,17 +29,12 @@ abstract public class Entity<T extends Entity> implements Object2D {
     return this.velocity;
   }
 
-  public Bounds2D bounds() {
+  public Bound2D bounds() {
     return bounds;
   }
 
   public EntityState state() {
     return this.state;
-  }
-
-  @Override
-  public int compareTo(Object2D entity) {
-    return Double.compare(this.x(), entity.x());
   }
 
   @Override
@@ -107,7 +50,7 @@ abstract public class Entity<T extends Entity> implements Object2D {
 
   @Override
   public String toString() {
-    return String.format("%s: x: %s, y: %s, size: %sx%s", this.getClass().getSimpleName(), x(), y(), width(), height());
+    return String.format("%s: getX: %s, getY: %s, size: %sx%s", this.getClass().getSimpleName(), getX(), getY(), getWidth(), getHeight());
   }
 
 }

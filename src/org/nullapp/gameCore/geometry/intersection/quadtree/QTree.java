@@ -1,7 +1,7 @@
 package org.nullapp.gameCore.geometry.intersection.quadtree;
 
-import org.nullapp.gameCore.geometry.intersection.Bound2D;
-import org.nullapp.gameCore.geometry.intersection.Object2D;
+import org.nullapp.gameCore.geometry.Bound2D;
+import org.nullapp.gameCore.geometry.Object2D;
 
 import java.util.Set;
 
@@ -11,7 +11,7 @@ public class QTree {
   private QTreeNode     root;
   private Set<Object2D> items;
 
-  public QTree(double minX, double minY, double maxX, double maxY) {
+  public QTree(int minX, int minY, int maxX, int maxY) {
     root = new QTreeNode(new Bound2D(minX, minY, maxX, maxY), 0);
   }
 

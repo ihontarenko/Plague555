@@ -1,33 +1,43 @@
 package org.nullapp.gameCore.gfx.sprite;
 
 import org.nullapp.appCore.common.Drawable;
-import org.nullapp.appCore.common.Time;
+import org.nullapp.appCore.common.SystemTime;
 
 import java.awt.*;
 
 public class SpriteAnimated implements Drawable {
 
+  public enum Direction {
+    LOOPED, PINPONG;
+  }
+
   private Sprite[]    sprites;
   private SpriteSheet sheet;
+  private Direction   direction;
   private int         scale;
   private int         activeIndex;
-  private int         speedAnimation;
-  private long        lastTimeUpdate;
+  private int         incrementer;
+  private int         fps;
+  private long        previousTime;
   private int         transparentColor;
   private float       opacity;
 
-
-  public SpriteAnimated(SpriteSheet sheet, int speedAnimation, int scale) {
-    this(sheet, speedAnimation, scale, 0, sheet.count());
+  public SpriteAnimated(SpriteSheet sheet, int fps, int scale) {
+    this(sheet, fps, scale, 0, sheet.count(), Direction.LOOPED);
   }
 
-  public SpriteAnimated(SpriteSheet sheet, int speedAnimation, int scale, int startIndex, int lastIndex) {
+  public SpriteAnimated(SpriteSheet sheet, int fps, int scale, int startIndex, int lastIndex) {
+    this(sheet, fps, scale, startIndex, lastIndex, Direction.LOOPED);
+  }
+
+  public SpriteAnimated(SpriteSheet sheet, int fps, int scale, int startIndex, int lastIndex, Direction direction) {
     this.sheet = sheet;
     this.scale = scale;
-    this.speedAnimation = speedAnimation;
+    this.fps = fps;
     this.sprites = new Sprite[lastIndex - startIndex + 1];
     this.transparentColor = 0x00000000;
-    this.transparentColor = 0x00000000;
+    this.incrementer = 1;
+    this.direction = direction;
     this.loadSprites(startIndex, lastIndex);
   }
 
@@ -39,11 +49,26 @@ public class SpriteAnimated implements Drawable {
   }
 
   private void nextIndex() {
-    long elapsedTime = Time.nano() - lastTimeUpdate;
+    long elapsed = SystemTime.nano() - previousTime;
 
-    if ((elapsedTime / (Time.ONE_NANO_SECOND / speedAnimation)) >= 1) {
-      lastTimeUpdate = Time.nano();
-      activeIndex = (activeIndex + 1) % sprites.length;
+    if ((elapsed / (SystemTime.ONE_NANO_SECOND / fps)) >= 1) {
+      updateIncrementer();
+      previousTime = SystemTime.nano();
+      activeIndex = (activeIndex + incrementer) % sprites.length;
+    }
+  }
+
+  private void updateIncrementer() {
+    switch (direction) {
+      case PINPONG:
+        if (activeIndex == sprites.length - 1) {
+          incrementer = -1;
+        } else if (activeIndex == 0) {
+          incrementer = 1;
+        }
+        break;
+      case LOOPED:
+        // default
     }
   }
 
@@ -75,8 +100,8 @@ public class SpriteAnimated implements Drawable {
     return scale;
   }
 
-  public int getSpeedAnimation() {
-    return speedAnimation;
+  public int getFps() {
+    return fps;
   }
 
   public int getTransparentColor() {
@@ -94,4 +119,13 @@ public class SpriteAnimated implements Drawable {
   public void setOpacity(float opacity) {
     this.opacity = opacity;
   }
+
+  public Direction getDirection() {
+    return direction;
+  }
+
+  public void setDirection(Direction direction) {
+    this.direction = direction;
+  }
+
 }

@@ -20,6 +20,6 @@ public class Manager extends ControllerManager<Controller> {
   public void doInitialize() {
     registerController(STATE_INTRO, IntroController.class, getContext());
     registerController(STATE_MENU, MenuController.class, getContext());
-    setActiveController(STATE_INTRO);
+    setActiveController(STATE_MENU);
   }
 }

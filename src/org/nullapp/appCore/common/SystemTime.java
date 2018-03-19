@@ -1,6 +1,6 @@
 package org.nullapp.appCore.common;
 
-public class Time {
+public class SystemTime {
 
   public static final float ONE_NANO_SECOND = 1000000000F;
 

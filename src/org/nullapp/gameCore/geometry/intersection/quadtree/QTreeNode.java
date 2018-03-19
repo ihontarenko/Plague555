@@ -1,8 +1,8 @@
 package org.nullapp.gameCore.geometry.intersection.quadtree;
 
-import org.nullapp.gameCore.geometry.intersection.Bound2D;
+import org.nullapp.gameCore.geometry.Bound2D;
 import org.nullapp.gameCore.geometry.intersection.IntersectionInterface;
-import org.nullapp.gameCore.geometry.intersection.Object2D;
+import org.nullapp.gameCore.geometry.Object2D;
 
 import java.awt.*;
 import java.util.*;
@@ -32,11 +32,11 @@ public class QTreeNode implements IntersectionInterface<Object2D> {
     this(null, bounds, depth);
   }
 
-  public QTreeNode(double minX, double minY, double maxX, double maxY, int depth) {
+  public QTreeNode(int minX, int minY, int maxX, int maxY, int depth) {
     this(null, minX, minY, maxX, maxY, depth);
   }
 
-  public QTreeNode(QTreeNode parentNode, double minX, double minY, double maxX, double maxY, int depth) {
+  public QTreeNode(QTreeNode parentNode, int minX, int minY, int maxX, int maxY, int depth) {
     this(parentNode, new Bound2D(minX, minY, maxX, maxY), depth);
   }
 
@@ -97,7 +97,7 @@ public class QTreeNode implements IntersectionInterface<Object2D> {
   }
 
   public boolean isBelong(Object2D leaf) {
-    return this.getBounds().contains(leaf.x(), leaf.y());
+    return this.getBounds().contains(leaf.getX(), leaf.getY());
   }
 
   public void clear() {
@@ -117,10 +117,6 @@ public class QTreeNode implements IntersectionInterface<Object2D> {
     treeBound.intersects(this.bounds);
     // not implemented yet
     return null;
-  }
-
-  public Set<Object2D> search(Rectangle rectangle) {
-    return this.search(new Bound2D(rectangle.x, rectangle.y, rectangle.getMaxX(), rectangle.getMaxY()));
   }
 
   public void insertToParent(Object2D object2D) throws RuntimeException {
@@ -167,14 +163,14 @@ public class QTreeNode implements IntersectionInterface<Object2D> {
   }
 
   public void splitNode() {
-    QTreeNode nodeNorthWest = new QTreeNode(this.bounds.minX, this.bounds.minY, this.bounds.centreX,
-        this.bounds.centreY, this.depth + 1);
-    QTreeNode nodeNorthEast = new QTreeNode(this.bounds.centreX, this.bounds.minY, this.bounds.maxX,
-        this.bounds.centreY, this.depth + 1);
-    QTreeNode nodeSouthEast = new QTreeNode(this.bounds.centreX, this.bounds.centreY, this.bounds.maxX,
-        this.bounds.maxY, this.depth + 1);
-    QTreeNode nodeSouthWest = new QTreeNode(this.bounds.minX, this.bounds.centreY, this.bounds.centreX,
-        this.bounds.maxY, this.depth + 1);
+    QTreeNode nodeNorthWest = new QTreeNode(this.bounds.getX(), this.bounds.getY(), this.bounds.getCentreX(),
+        this.bounds.getCentreY(), this.depth + 1);
+    QTreeNode nodeNorthEast = new QTreeNode(this.bounds.getCentreX(), this.bounds.getY(), this.bounds.getMaxX(),
+        this.bounds.getCentreY(), this.depth + 1);
+    QTreeNode nodeSouthEast = new QTreeNode(this.bounds.getCentreX(), this.bounds.getCentreY(), this.bounds.getMaxX(),
+        this.bounds.getMaxY(), this.depth + 1);
+    QTreeNode nodeSouthWest = new QTreeNode(this.bounds.getX(), this.bounds.getCentreY(), this.bounds.getCentreX(),
+        this.bounds.getMaxY(), this.depth + 1);
 
     this.nodes.put(QTreeNodeType.NW, nodeNorthWest);
     this.nodes.put(QTreeNodeType.NE, nodeNorthEast);
@@ -192,16 +188,16 @@ public class QTreeNode implements IntersectionInterface<Object2D> {
   }
 
   public QTreeNodeType detectNodeType(Object2D object2D) {
-    return this.detectNodeType(object2D.x(), object2D.y());
+    return this.detectNodeType(object2D.getX(), object2D.getY());
   }
 
   public QTreeNodeType detectNodeType(double x, double y) {
     QTreeNodeType qtreeNodeType;
 
-    if (x > this.bounds.centreX) {
-      qtreeNodeType = y > this.bounds.centreY ? QTreeNodeType.SE : QTreeNodeType.NE;
+    if (x > this.bounds.getCentreX()) {
+      qtreeNodeType = y > this.bounds.getCentreY() ? QTreeNodeType.SE : QTreeNodeType.NE;
     } else {
-      qtreeNodeType = y > this.bounds.centreY ? QTreeNodeType.SW : QTreeNodeType.NW;
+      qtreeNodeType = y > this.bounds.getCentreY() ? QTreeNodeType.SW : QTreeNodeType.NW;
     }
 
     return qtreeNodeType;

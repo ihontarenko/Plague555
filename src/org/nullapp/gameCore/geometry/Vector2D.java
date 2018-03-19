@@ -105,7 +105,7 @@ public class Vector2D {
   }
 
   public String toString() {
-    return String.format("%s {x:%s, y:%s}", this.getClass().getSimpleName(), this.x, this.y);
+    return String.format("%s {getX:%s, getY:%s}", this.getClass().getSimpleName(), this.x, this.y);
   }
 
   @Override

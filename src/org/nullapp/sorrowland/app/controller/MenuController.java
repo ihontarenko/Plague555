@@ -18,7 +18,7 @@ public class MenuController extends Controller<AbstractView> {
 
   @Override
   public void doUpdate(float nano) {
-    getGuiWindow().getCanvas().setDefaultColor(0xff962222);
+    getGuiWindow().getCanvas().setDefaultColor(0xffcccccc);
 
     if (getInputKey().getKey(KeyEvent.VK_ESCAPE)) {
       getAppManager().setActiveController(Manager.STATE_INTRO);

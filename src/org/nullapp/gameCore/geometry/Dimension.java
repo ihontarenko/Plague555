@@ -44,6 +44,6 @@ public class Dimension {
 
   @Override
   public String toString() {
-    return String.format("[%s]: (width: %d, height: %d)", getClass().getName(), getWidth(), getHeight());
+    return String.format("[%s]: (getWidth: %d, getHeight: %d)", getClass().getName(), getWidth(), getHeight());
   }
 }
