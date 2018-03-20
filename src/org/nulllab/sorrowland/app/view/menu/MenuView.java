@@ -1,19 +1,22 @@
 package org.nulllab.sorrowland.app.view.menu;
 
-import org.nulllab.appCore.common.resource.ImageLoader;
-import org.nulllab.appCore.process.view.AbstractView;
-import org.nulllab.appCore.service.AppContext;
-import org.nulllab.gameCore.geometry.Bound2D;
-import org.nulllab.gameCore.geometry.Object2D;
-import org.nulllab.gameCore.geometry.intersection.spatialhash.SpatialHash;
-import org.nulllab.gameCore.gfx.StringDrawer;
-import org.nulllab.gameCore.gfx.sprite.SpriteAnimated;
-import org.nulllab.gameCore.gfx.sprite.SpriteSheet;
+import org.nulllab.ui.process.view.AbstractView;
+import org.nulllab.ui.service.AppContext;
+import org.nulllab.nullengine.core.common.time.Timer;
+import org.nulllab.nullengine.core.geometry.Bound2D;
+import org.nulllab.nullengine.core.geometry.Object2D;
+import org.nulllab.nullengine.core.geometry.intersection.spatialhash.SpatialHash;
+import org.nulllab.nullengine.core.graphics.StringDrawer;
+import org.nulllab.nullengine.core.graphics.sprite.SpriteAnimated;
+import org.nulllab.nullengine.core.graphics.sprite.SpriteSheet;
+import org.nulllab.nullengine.core.input.Keyboard;
+import org.nulllab.nullengine.core.common.resource.ImageLoader;
 import org.nulllab.sorrowland.app.config.AppConfiguration;
 import org.nulllab.sorrowland.app.controller.MenuController;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Set;
@@ -30,6 +33,8 @@ public class MenuView extends AbstractView<MenuController, AbstractView> {
   private Object2D         object1;
   private Object2D         object2;
   private Object2D         object3;
+  private Timer            timer;
+  private Keyboard         keyboard;
 
   private int velocity = 1;
 
@@ -39,6 +44,10 @@ public class MenuView extends AbstractView<MenuController, AbstractView> {
 
   @Override
   public void doInitialize() {
+    timer = new Timer(0.1);
+
+    keyboard = getContext().getInputKey();
+
     spriteFontMap = getContext().getStringDrawer();
 
     configuration = (AppConfiguration) getContext().getConfiguration();
@@ -53,7 +62,7 @@ public class MenuView extends AbstractView<MenuController, AbstractView> {
     spatialHash.insert(new Object2D(250, 190, 200, 200));
 
     for (int i = 0; i < 10000; i++) {
-      spatialHash.insert(new Object2D(10 , 150 , 50, 50));
+      spatialHash.insert(new Object2D(10, 150, 50, 50));
     }
 
     integerList = spatialHash.calculateObjectKeys(object1);
@@ -75,7 +84,11 @@ public class MenuView extends AbstractView<MenuController, AbstractView> {
 
     super.render(g2d);
 
-    spriteFontMap.setString("NULLLab.io");
+    if (keyboard.isPressed(KeyEvent.VK_1, true)) {
+      System.out.println("one is pressed...");
+    }
+
+    spriteFontMap.setString("NULLLab.input");
 
     spriteAnimated.draw(g2d, 10, 10);
 
@@ -114,7 +127,7 @@ public class MenuView extends AbstractView<MenuController, AbstractView> {
 //      g2d.drawRect(object2D.getX(), object2D.getY(), object2D.getWidth(), object2D.getHeight());
 //    }
 
-    System.out.println("retrieved: " + spatialHash.retrieve(object1).size());
+//    System.out.println("retrieved: " + spatialHash.retrieve(object1).size());
 
 //    g2d.setColor(Color.RED);
 //    g2d.drawRect(object1.getX(), object1.getY(), object1.getWidth(), object1.getHeight());

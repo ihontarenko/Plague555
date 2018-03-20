@@ -1,10 +1,10 @@
 package org.nulllab.sorrowland.app.controller;
 
 import org.nulllab.sorrowland.app.view.intro.LogoView;
-import org.nulllab.appCore.process.view.AbstractView;
+import org.nulllab.ui.process.view.AbstractView;
 import org.nulllab.sorrowland.app.manager.Manager;
-import org.nulllab.appCore.process.controller.Controller;
-import org.nulllab.appCore.service.AppContext;
+import org.nulllab.ui.process.controller.Controller;
+import org.nulllab.ui.service.AppContext;
 
 import java.awt.event.KeyEvent;
 
@@ -24,7 +24,7 @@ public class IntroController extends Controller<AbstractView> {
 
   @Override
   public void doUpdate(float nano) {
-    if (getInputKey().getKey(KeyEvent.VK_2)) {
+    if (getInputKey().isPressed(KeyEvent.VK_2)) {
       getAppManager().setActiveController(Manager.STATE_MENU);
     }
   }

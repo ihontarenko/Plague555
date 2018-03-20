@@ -1,8 +1,8 @@
 package org.nulllab.sorrowland.app.manager;
 
-import org.nulllab.appCore.process.controller.Controller;
-import org.nulllab.appCore.service.AppContext;
-import org.nulllab.appCore.process.ControllerManager;
+import org.nulllab.ui.process.controller.Controller;
+import org.nulllab.ui.service.AppContext;
+import org.nulllab.ui.process.ControllerManager;
 import org.nulllab.sorrowland.app.controller.IntroController;
 import org.nulllab.sorrowland.app.controller.MenuController;
 

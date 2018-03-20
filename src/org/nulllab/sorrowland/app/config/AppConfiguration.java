@@ -1,6 +1,6 @@
 package org.nulllab.sorrowland.app.config;
 
-import org.nulllab.appCore.config.AbstractConfiguration;
+import org.nulllab.nullengine.core.config.AbstractConfiguration;
 
 import java.util.Properties;
 

@@ -1,17 +1,17 @@
 package org.nulllab.sorrowland.app;
 
-import org.nulllab.appCore.common.resource.ImageLoader;
-import org.nulllab.gameCore.gfx.sprite.SpriteFont;
-import org.nulllab.gameCore.gfx.sprite.SpriteSheet;
+import org.nulllab.nullengine.core.common.resource.ImageLoader;
+import org.nulllab.nullengine.core.graphics.sprite.SpriteFont;
+import org.nulllab.nullengine.core.graphics.sprite.SpriteSheet;
 import org.nulllab.sorrowland.app.config.AppConfiguration;
 import org.nulllab.sorrowland.app.gfx.font.BoxySpriteFontMap;
-import org.nulllab.gameCore.gfx.StringDrawer;
+import org.nulllab.nullengine.core.graphics.StringDrawer;
 import org.nulllab.sorrowland.app.manager.Manager;
-import org.nulllab.appCore.gui.GUIWindow;
-import org.nulllab.appCore.io.InputKey;
-import org.nulllab.appCore.loop.Loop;
-import org.nulllab.appCore.service.AppContext;
-import org.nulllab.appCore.service.AppContextAware;
+import org.nulllab.ui.gui.GUIWindow;
+import org.nulllab.nullengine.core.input.Keyboard;
+import org.nulllab.nullengine.core.loop.Loop;
+import org.nulllab.ui.service.AppContext;
+import org.nulllab.ui.service.AppContextAware;
 
 import javax.imageio.ImageIO;
 import java.io.IOException;
@@ -44,7 +44,7 @@ public class GameLoop extends Loop implements AppContextAware {
 
       appConfiguration = (AppConfiguration) appContext.getConfiguration();
 
-      InputKey  inputKey = new InputKey();
+      Keyboard  inputKey = new Keyboard();
       GUIWindow gui      = new GUIWindow(appConfiguration.getWidth(), appConfiguration.getHeight(), getClass().getSimpleName());
 
       gui.initialize();

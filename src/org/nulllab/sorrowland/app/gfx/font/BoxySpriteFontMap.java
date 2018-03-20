@@ -1,6 +1,6 @@
 package org.nulllab.sorrowland.app.gfx.font;
 
-import org.nulllab.gameCore.gfx.sprite.SpriteFontMap;
+import org.nulllab.nullengine.core.graphics.sprite.SpriteFontMap;
 
 public class BoxySpriteFontMap extends SpriteFontMap {
 
