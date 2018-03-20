@@ -1,4 +1,4 @@
-import org.nullapp.sorrowland.app.GameLoop;
+import org.nulllab.sorrowland.app.GameLoop;
 
 public class GameStart {
 
