@@ -4,15 +4,10 @@ import org.nulllab.nullengine.core.common.time.Timer;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyEvent;
 
 @SuppressWarnings("unused")
-public class Keyboard extends JComponent {
+public class Keyboard extends JComponent implements Input {
 
-  public final static int       LEFT       = KeyEvent.VK_LEFT;
-  public final static int       RIGHT      = KeyEvent.VK_RIGHT;
-  public final static int       UP         = KeyEvent.VK_UP;
-  public final static int       DOWN       = KeyEvent.VK_DOWN;
   private             boolean[] keyCodeMap = new boolean[256];
   private             Timer     timer      = new Timer(Timer.Factor.MILLI, 500D);
   private             State     state      = State.RELEASED;
@@ -47,6 +42,7 @@ public class Keyboard extends JComponent {
     return timer;
   }
 
+  @Override
   public boolean isPressed(int keyCode, boolean withTimer) {
     boolean isPressed = this.keyCodeMap[keyCode];
 
@@ -57,10 +53,12 @@ public class Keyboard extends JComponent {
     return isPressed;
   }
 
+  @Override
   public boolean isPressed(int keyCode) {
     return isPressed(keyCode, false);
   }
 
+  @Override
   public boolean isReleased(int keyCode) {
     return !isPressed(keyCode);
   }

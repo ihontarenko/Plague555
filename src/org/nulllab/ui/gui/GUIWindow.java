@@ -88,7 +88,7 @@ public class GUIWindow implements Initializable {
   }
 
   public Graphics2D getG2D() {
-    return (Graphics2D)getCanvas().getG2D();
+    return getCanvas().getG2D();
   }
 
   public String getTitle() {

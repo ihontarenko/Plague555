@@ -1,11 +1,12 @@
 package org.nulllab.ui.process.view;
 
+import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.Renderable;
 
 import java.awt.*;
 import java.util.Map;
 
-public interface View<V extends View, M extends Map<String, V>> extends Renderable<Graphics2D> {
+public interface View<V extends View, M extends Map<String, V>> extends Renderable<Canvas> {
 
   public V getParent();
 

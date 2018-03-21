@@ -1,18 +1,18 @@
-package org.nulllab.sorrowland.app.controller;
+package org.nulllab.sorrowland.app.scene;
 
 import org.nulllab.sorrowland.app.manager.Manager;
 import org.nulllab.sorrowland.app.view.menu.MenuView;
 import org.nulllab.ui.process.view.AbstractView;
-import org.nulllab.ui.service.AppContext;
-import org.nulllab.ui.process.controller.Controller;
+import org.nulllab.ui.service.Context;
+import org.nulllab.ui.process.scene.Scene;
 
 import java.awt.event.KeyEvent;
 
-public class MenuController extends Controller<AbstractView> {
+public class MenuScene extends Scene<AbstractView> {
 
   final static public String MENU = "MENU";
 
-  public MenuController(AppContext context) {
+  public MenuScene(Context context) {
     super(context);
   }
 
@@ -21,7 +21,7 @@ public class MenuController extends Controller<AbstractView> {
     getGuiWindow().getCanvas().setDefaultColor(0xffcccccc);
 
     if (getInputKey().isPressed(KeyEvent.VK_ESCAPE)) {
-      getAppManager().setActiveController(Manager.STATE_INTRO);
+      getControllerManager().setActiveScene(Manager.STATE_INTRO);
     }
   }
 

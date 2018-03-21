@@ -1,13 +1,13 @@
 package org.nulllab.nullengine.core.graphics;
 
-import java.awt.*;
+import org.nulllab.nullengine.core.geometry.Point2D;
 
-public interface Drawable {
+public interface Drawable<Graphics extends Canvas> {
 
-  public void draw(Graphics2D g2d, int x, int y);
+  public void draw(Graphics graphics, int x, int y);
 
-  default void draw(Graphics2D g2d, Point point) {
-    draw(g2d, point.x, point.y);
+  default void draw(Graphics graphics, Point2D point) {
+    draw(graphics, point.getX(), point.getX());
   }
 
 }

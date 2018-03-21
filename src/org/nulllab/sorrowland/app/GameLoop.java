@@ -1,26 +1,28 @@
 package org.nulllab.sorrowland.app;
 
 import org.nulllab.nullengine.core.common.resource.ImageLoader;
+import org.nulllab.nullengine.core.graphics.AWTGraphicsCanvas;
 import org.nulllab.nullengine.core.graphics.sprite.SpriteFont;
 import org.nulllab.nullengine.core.graphics.sprite.SpriteSheet;
-import org.nulllab.sorrowland.app.config.AppConfiguration;
-import org.nulllab.sorrowland.app.gfx.font.BoxySpriteFontMap;
+import org.nulllab.sorrowland.app.config.Configuration;
+import org.nulllab.sorrowland.app.graphics.font.BoxySpriteFontMap;
 import org.nulllab.nullengine.core.graphics.StringDrawer;
 import org.nulllab.sorrowland.app.manager.Manager;
 import org.nulllab.ui.gui.GUIWindow;
 import org.nulllab.nullengine.core.input.Keyboard;
 import org.nulllab.nullengine.core.loop.Loop;
-import org.nulllab.ui.service.AppContext;
-import org.nulllab.ui.service.AppContextAware;
+import org.nulllab.ui.service.Context;
+import org.nulllab.ui.service.ContextAware;
 
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class GameLoop extends Loop implements AppContextAware {
+public class GameLoop extends Loop implements ContextAware {
 
-  private boolean    isInitialized;
-  private AppContext appContext;
+  private boolean isInitialized;
+  private Context context;
 
   public GameLoop() {
     super();
@@ -36,16 +38,16 @@ public class GameLoop extends Loop implements AppContextAware {
   public void initialize() {
     if (!isInitialized()) {
 
-      AppContext appContext = new AppContext();
-      AppConfiguration appConfiguration;
+      Context       context = new Context();
+      Configuration configuration;
 
-      appContext.registerService(AppContext.CONFIG_OBJECT, AppConfiguration.class, "config/app.properties");
-      appContext.getConfiguration().initialize();
+      context.registerService(Context.CONFIG_OBJECT, Configuration.class, "config/app.properties");
+      context.getConfiguration().initialize();
 
-      appConfiguration = (AppConfiguration) appContext.getConfiguration();
+      configuration = (Configuration) context.getConfiguration();
 
       Keyboard  inputKey = new Keyboard();
-      GUIWindow gui      = new GUIWindow(appConfiguration.getWidth(), appConfiguration.getHeight(), getClass().getSimpleName());
+      GUIWindow gui      = new GUIWindow(configuration.getWidth(), configuration.getHeight(), getClass().getSimpleName());
 
       gui.initialize();
       gui.getMainFrame().add(inputKey);
@@ -59,17 +61,19 @@ public class GameLoop extends Loop implements AppContextAware {
         e.printStackTrace();
       }
 
-      appContext.registerService(AppContext.STRING_DRAWER, StringDrawer.class, new SpriteFont(spriteSheet, new BoxySpriteFontMap()));
+      context.registerService(Context.STRING_DRAWER, StringDrawer.class, new SpriteFont(spriteSheet, new BoxySpriteFontMap()));
 
-      appContext.setGuiWindow(gui);
-      appContext.setInputKey(inputKey);
-      appContext.setAppManager(new Manager(appContext));
+      context.setGuiWindow(gui);
+      context.setInputKey(inputKey);
+      context.setAppManager(new Manager(context));
 
-      appContext.setLoop(this);
+      context.registerService(Context.AWT_GRAPHICS, AWTGraphicsCanvas.class, (Graphics2D)gui.getG2D());
 
-      this.appContext = appContext;
+      context.setLoop(this);
 
-      gui.setTitlePrefix(appConfiguration.getAppFullName());
+      this.context = context;
+
+      gui.setTitlePrefix(configuration.getAppFullName());
 
       isInitialized = true;
     }
@@ -84,7 +88,7 @@ public class GameLoop extends Loop implements AppContextAware {
   protected void update(float elapsed) {
     // default code for update window title information
     GUIWindow window  = getGuiWindow();
-    Manager   manager = (Manager) getAppManager();
+    Manager   manager = (Manager) getControllerManager();
 
     window.setTitle(getExecutionInfo());
     manager.update(elapsed);
@@ -96,16 +100,16 @@ public class GameLoop extends Loop implements AppContextAware {
   @Override
   protected void render() {
     GUIWindow window  = getGuiWindow();
-    Manager   manager = (Manager) getAppManager();
+    Manager   manager = (Manager) getControllerManager();
 
     window.clearFrame();
-    manager.render(window.getG2D());
+    manager.render(getCanvas());
     window.swapBuffer();
   }
 
   @Override
-  public AppContext getContext() {
-    return appContext;
+  public Context getContext() {
+    return context;
   }
 
 }

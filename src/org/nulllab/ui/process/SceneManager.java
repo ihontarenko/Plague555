@@ -1,27 +1,26 @@
 package org.nulllab.ui.process;
 
 import org.nulllab.nullengine.core.common.Initializable;
+import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.Renderable;
 import org.nulllab.nullengine.core.loop.Updateable;
 import org.nulllab.nullengine.core.container.ServiceLocator;
-import org.nulllab.ui.process.controller.Controller;
-import org.nulllab.ui.service.AppContext;
-import org.nulllab.ui.service.AppContextAware;
+import org.nulllab.ui.process.scene.Scene;
+import org.nulllab.ui.service.Context;
+import org.nulllab.ui.service.ContextAware;
 
-import java.awt.*;
-
-abstract public class ControllerManager<C extends Controller>
-    implements Renderable<Graphics2D>, Updateable, Initializable, AppContextAware {
+abstract public class SceneManager<C extends Scene>
+    implements Renderable<Canvas>, Updateable, Initializable, ContextAware {
 
   private boolean           isInitialized;
-  private ServiceLocator<C> controllers;
-  private C                 activeController;
+  private ServiceLocator<C> scenes;
+  private C                 activeScene;
   private ProcessMode       processMode;
-  private AppContext        context;
+  private Context           context;
 
-  public ControllerManager(AppContext context) {
+  public SceneManager(Context context) {
     this.context = context;
-    this.controllers = new ServiceLocator<>();
+    this.scenes = new ServiceLocator<>();
     initialize();
   }
 
@@ -36,34 +35,32 @@ abstract public class ControllerManager<C extends Controller>
   }
 
   public void registerController(String name, C controller) {
-    controllers.setObject(name, controller);
+    scenes.setObject(name, controller);
   }
 
   public void registerController(String name, Class clazz, Object... arguments) {
-    controllers.registerService(name, clazz, arguments);
+    scenes.registerService(name, clazz, arguments);
   }
 
-  public ServiceLocator<C> getControllers() {
-    return controllers;
+  public ServiceLocator<C> getScenes() {
+    return scenes;
   }
 
-  public C getActiveController() {
-    return activeController;
+  public C getActiveScene() {
+    return activeScene;
   }
 
-  public void setActiveController(String name) {
-    setActiveController(getController(name));
+  public void setActiveScene(String name) {
+    setActiveScene(getScene(name));
   }
 
-  public void setActiveController(C activeController) {
-    this.activeController = activeController;
+  public void setActiveScene(C activeController) {
+    this.activeScene = activeController;
   }
 
-  public C getController(String name) {
-    return controllers.getObject(name);
+  public C getScene(String name) {
+    return scenes.getObject(name);
   }
-
-
 
   @Override
   public boolean isInitialized() {
@@ -85,31 +82,31 @@ abstract public class ControllerManager<C extends Controller>
   }
 
   @Override
-  public void render(Graphics2D g2d) {
+  public void render(Canvas canvas) {
     switch (getProcessMode()) {
       case BATCH:
-        getControllers().forEach((s, controller) -> controller.render(g2d));
+        getScenes().forEach((s, scene) -> scene.render(canvas));
         break;
       case ACTIVE:
-        getActiveController().render(g2d);
+        getActiveScene().render(canvas);
         break;
     }
   }
 
   @Override
-  public void update(float nanoSeconds) {
+  public void update(float nano) {
     switch (getProcessMode()) {
       case BATCH:
-        getControllers().forEach((s, controller) -> controller.update(nanoSeconds));
+        getScenes().forEach((s, scene) -> scene.update(nano));
         break;
       case ACTIVE:
-        getActiveController().update(nanoSeconds);
+        getActiveScene().update(nano);
         break;
     }
   }
 
   @Override
-  public AppContext getContext() {
+  public Context getContext() {
     return context;
   }
 }

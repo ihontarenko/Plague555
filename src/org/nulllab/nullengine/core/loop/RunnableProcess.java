@@ -1,9 +1,8 @@
 package org.nulllab.nullengine.core.loop;
 
+import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.Renderable;
 
-import java.awt.*;
-
-public interface RunnableProcess extends Renderable<Graphics2D>, Updateable {
+public interface RunnableProcess extends Renderable<Canvas>, Updateable {
 
 }

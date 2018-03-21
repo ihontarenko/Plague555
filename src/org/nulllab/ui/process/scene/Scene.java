@@ -1,17 +1,16 @@
-package org.nulllab.ui.process.controller;
+package org.nulllab.ui.process.scene;
 
 import org.nulllab.nullengine.core.common.Initializable;
 import org.nulllab.nullengine.core.container.ServiceLocator;
-import org.nulllab.ui.service.AppContext;
-import org.nulllab.ui.service.AppContextAware;
+import org.nulllab.nullengine.core.graphics.Canvas;
+import org.nulllab.ui.service.Context;
+import org.nulllab.ui.service.ContextAware;
 import org.nulllab.ui.process.ProcessMode;
 import org.nulllab.ui.process.view.AbstractView;
 
-import java.awt.*;
+abstract public class Scene<V extends AbstractView> implements SceneInterface, Initializable, ContextAware {
 
-abstract public class Controller<V extends AbstractView> implements ControllerInterface, Initializable, AppContextAware {
-
-  private AppContext        context;
+  private Context           context;
   private ServiceLocator<V> views;
   private V                 activeView;
   private ProcessMode       processMode;
@@ -19,7 +18,7 @@ abstract public class Controller<V extends AbstractView> implements ControllerIn
   private boolean           isPaused;
   private int               priority;
 
-  public Controller(AppContext context) {
+  public Scene(Context context) {
     this.context = context;
     this.views = new ServiceLocator<>();
     initialize();
@@ -91,13 +90,13 @@ abstract public class Controller<V extends AbstractView> implements ControllerIn
   }
 
   @Override
-  public void render(Graphics2D g2d) {
+  public void render(Canvas canvas) {
     switch (getProcessMode()) {
       case BATCH:
-        getViews().forEach((s, controller) -> controller.render(g2d));
+        getViews().forEach((s, controller) -> controller.render(canvas));
         break;
       case ACTIVE:
-        getActiveView().render(g2d);
+        getActiveView().render(canvas);
         break;
     }
   }
@@ -127,7 +126,7 @@ abstract public class Controller<V extends AbstractView> implements ControllerIn
   public abstract void doUpdate(float nano);
 
   @Override
-  public AppContext getContext() {
+  public Context getContext() {
     return context;
   }
 

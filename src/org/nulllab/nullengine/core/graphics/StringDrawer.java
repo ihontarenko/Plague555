@@ -5,7 +5,7 @@ import org.nulllab.nullengine.core.graphics.sprite.SpriteFont;
 
 import java.awt.*;
 
-public class StringDrawer implements Drawable {
+public class StringDrawer implements Drawable<Canvas> {
 
   private SpriteFont spriteFont;
   private String     string;
@@ -14,13 +14,13 @@ public class StringDrawer implements Drawable {
     this.spriteFont = spriteFont;
   }
 
-  public void draw(Graphics2D g2d, String string, int x, int y) {
+  public void draw(Canvas g2d, String string, int x, int y) {
     setString(string);
     draw(g2d, x, y);
   }
 
   @Override
-  public void draw(Graphics2D g2d, int x, int y) {
+  public void draw(Canvas g2d, int x, int y) {
     String string  = getString();
     int    offsetX;
 

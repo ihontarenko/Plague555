@@ -1,4 +1,4 @@
-package org.nulllab.sorrowland.app.gfx.font;
+package org.nulllab.sorrowland.app.graphics.font;
 
 import org.nulllab.nullengine.core.graphics.sprite.SpriteFontMap;
 

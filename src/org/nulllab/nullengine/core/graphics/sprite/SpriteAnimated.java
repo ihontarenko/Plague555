@@ -1,11 +1,10 @@
 package org.nulllab.nullengine.core.graphics.sprite;
 
+import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.Drawable;
 import org.nulllab.nullengine.core.common.time.Timer;
 
-import java.awt.*;
-
-public class SpriteAnimated implements Drawable {
+public class SpriteAnimated implements Drawable<Canvas> {
 
   public enum Direction {
     LOOPED, PINGPONG;
@@ -74,10 +73,10 @@ public class SpriteAnimated implements Drawable {
   }
 
   @Override
-  public void draw(Graphics2D g2d, int x, int y) {
+  public void draw(Canvas canvas, int x, int y) {
     Sprite sprite = activeSprite();
     sprite.transparentColor(getTransparentColor(), getOpacity());
-    sprite.draw(g2d, x, y);
+    sprite.draw(canvas, x, y);
   }
 
   public Sprite getSprite(int index) {

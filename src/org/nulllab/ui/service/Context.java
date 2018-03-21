@@ -3,15 +3,17 @@ package org.nulllab.ui.service;
 import org.nulllab.nullengine.core.common.Initializable;
 import org.nulllab.nullengine.core.config.AbstractConfiguration;
 import org.nulllab.nullengine.core.container.ServiceLocator;
-import org.nulllab.ui.gui.GUIWindow;
-import org.nulllab.nullengine.core.input.Keyboard;
-import org.nulllab.nullengine.core.loop.Loop;
-import org.nulllab.ui.process.ControllerManager;
+import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.StringDrawer;
+import org.nulllab.nullengine.core.input.Input;
+import org.nulllab.nullengine.core.loop.Loop;
+import org.nulllab.ui.gui.GUIWindow;
+import org.nulllab.ui.process.SceneManager;
 
-public class AppContext extends ServiceLocator<Object> implements AppContextAware, Initializable {
+public class Context extends ServiceLocator<Object> implements ContextAware, Initializable {
 
   public final static String CONFIG_OBJECT = "CONFIG_OBJECT";
+  public final static String AWT_GRAPHICS  = "AWT_GRAPHICS";
   public final static String INPUT_KEY     = "INPUT_KEY";
   public final static String STRING_DRAWER = "STRING_DRAWER";
   public final static String GUI_WINDOW    = "GUI_WINDOW";
@@ -28,11 +30,11 @@ public class AppContext extends ServiceLocator<Object> implements AppContextAwar
     setObject(CONFIG_OBJECT, configuration);
   }
 
-  public Keyboard getInputKey() {
-    return (Keyboard) getObject(INPUT_KEY);
+  public Input getInputKey() {
+    return (Input) getObject(INPUT_KEY);
   }
 
-  public void setInputKey(Keyboard inputKey) {
+  public void setInputKey(Input inputKey) {
     setObject(INPUT_KEY, inputKey);
   }
 
@@ -48,15 +50,19 @@ public class AppContext extends ServiceLocator<Object> implements AppContextAwar
     return (GUIWindow) getObject(GUI_WINDOW);
   }
 
+  public Canvas getCanvas() {
+    return (Canvas) getObject(AWT_GRAPHICS);
+  }
+
   public void setGuiWindow(GUIWindow guiWindow) {
     setObject(GUI_WINDOW, guiWindow);
   }
 
-  public ControllerManager getAppManager() {
-    return (ControllerManager) getObject(APP_MANAGER);
+  public SceneManager getControllerManager() {
+    return (SceneManager) getObject(APP_MANAGER);
   }
 
-  public void setAppManager(ControllerManager appManager) {
+  public void setAppManager(SceneManager appManager) {
     setObject(APP_MANAGER, appManager);
   }
 
@@ -69,7 +75,7 @@ public class AppContext extends ServiceLocator<Object> implements AppContextAwar
   }
 
   @Override
-  public AppContext getContext() {
+  public Context getContext() {
     return this;
   }
 

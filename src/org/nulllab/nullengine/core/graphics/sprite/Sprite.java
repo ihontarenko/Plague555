@@ -1,5 +1,6 @@
 package org.nulllab.nullengine.core.graphics.sprite;
 
+import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.Drawable;
 import org.nulllab.nullengine.core.geometry.Dimension;
 
@@ -7,7 +8,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 @SuppressWarnings("unused")
-public class Sprite implements Drawable {
+public class Sprite implements Drawable<Canvas> {
 
   private BufferedImage bufferedImage;
   private Dimension     dimension;
@@ -44,8 +45,8 @@ public class Sprite implements Drawable {
     setBufferedImage(argbBufferedImage);
   }
 
-  public void draw(Graphics2D g2d, int x, int y) {
-    g2d.drawImage(getBufferedImage(), x, y, getWidth(), getHeight(), null);
+  public void draw(Canvas canvas, int x, int y) {
+    canvas.drawImage(getBufferedImage(), x, y, getWidth(), getHeight());
   }
 
   public void transparentColor(Color color, float opacity) {

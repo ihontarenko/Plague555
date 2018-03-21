@@ -100,7 +100,7 @@ abstract public class Loop implements Runnable, Initializable {
         // flip previous-current variables
         updateTimer[0] = updateTimer[1];
 
-        // controller update method
+        // scene update method
         update(updateTimer[2]);
         delayed--;
 
@@ -112,11 +112,11 @@ abstract public class Loop implements Runnable, Initializable {
           counters[2]++;
         }
 
-        // after all updates controller ready to render
+        // after all updates scene ready to render
         readyToRender = true;
       }
 
-      // controller render if ready
+      // scene render if ready
       if (readyToRender) {
         render();
         // fps counter
@@ -124,7 +124,7 @@ abstract public class Loop implements Runnable, Initializable {
       } else {
         // free frame counter
         counters[3]++;
-        // let's rest for controller
+        // let's rest for scene
         try {
           Thread.sleep(THREAD_IDLE_TIME);
         } catch (InterruptedException e) {

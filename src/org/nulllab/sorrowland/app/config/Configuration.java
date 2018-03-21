@@ -4,13 +4,13 @@ import org.nulllab.nullengine.core.config.AbstractConfiguration;
 
 import java.util.Properties;
 
-public class AppConfiguration extends AbstractConfiguration {
+public class Configuration extends AbstractConfiguration {
 
-  public AppConfiguration(String propertiesFilename) {
+  public Configuration(String propertiesFilename) {
     super(propertiesFilename);
   }
 
-  public AppConfiguration(Properties properties) {
+  public Configuration(Properties properties) {
     super(properties);
   }
 

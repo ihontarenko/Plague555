@@ -1,26 +1,25 @@
 package org.nulllab.ui.process.view;
 
-import org.nulllab.ui.service.AppContextAware;
+import org.nulllab.nullengine.core.graphics.Canvas;
+import org.nulllab.ui.service.ContextAware;
 import org.nulllab.nullengine.core.common.Initializable;
 import org.nulllab.nullengine.core.container.ServiceLocator;
-import org.nulllab.ui.process.controller.Controller;
-import org.nulllab.ui.service.AppContext;
+import org.nulllab.ui.process.scene.Scene;
+import org.nulllab.ui.service.Context;
 
-import java.awt.*;
+abstract public class AbstractView<S extends Scene, R extends AbstractView>
+    implements View<R, ServiceLocator<R>>, Initializable, Comparable<R>, ContextAware {
 
-abstract public class AbstractView<C extends Controller, R extends AbstractView>
-    implements View<R, ServiceLocator<R>>, Initializable, Comparable<R>, AppContextAware {
-
-  private AppContext        context;
+  private Context           context;
   private ServiceLocator<R> innerViews;
-  private C                 controller;
+  private S                 controller;
   private R                 parent;
   private boolean           isInitialized;
   private int               priority;
 
-  public AbstractView(AppContext context, C controller) {
+  public AbstractView(Context context, S scene) {
     this.context = context;
-    this.controller = controller;
+    this.controller = scene;
     this.innerViews = new ServiceLocator<>();
 
     initialize();
@@ -77,18 +76,18 @@ abstract public class AbstractView<C extends Controller, R extends AbstractView>
   }
 
   @Override
-  public void render(Graphics2D g2d) {
+  public void render(Canvas canvas) {
     if (getInnerViews().size() > 0) {
-      getInnerViews().forEach((s, view) -> view.render(g2d));
+      getInnerViews().forEach((s, view) -> view.render(canvas));
     }
   }
 
   @Override
-  public AppContext getContext() {
+  public Context getContext() {
     return context;
   }
 
-  public C getController() {
+  public S getController() {
     return controller;
   }
 

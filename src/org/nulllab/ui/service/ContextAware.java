@@ -1,20 +1,21 @@
 package org.nulllab.ui.service;
 
+import org.nulllab.nullengine.core.graphics.Canvas;
+import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.ui.gui.GUIWindow;
-import org.nulllab.ui.process.ControllerManager;
+import org.nulllab.ui.process.SceneManager;
 import org.nulllab.nullengine.core.graphics.StringDrawer;
-import org.nulllab.nullengine.core.input.Keyboard;
 import org.nulllab.nullengine.core.loop.Loop;
 
-public interface AppContextAware {
+public interface ContextAware {
 
-  public AppContext getContext();
+  public Context getContext();
 
-  default public ControllerManager getAppManager() {
-    return getContext().getAppManager();
+  default public SceneManager getControllerManager() {
+    return getContext().getControllerManager();
   }
 
-  default public Keyboard getInputKey() {
+  default public Input getInputKey() {
     return getContext().getInputKey();
   }
 
@@ -24,6 +25,10 @@ public interface AppContextAware {
 
   default public GUIWindow getGuiWindow() {
     return getContext().getGuiWindow();
+  }
+
+  default public Canvas getCanvas() {
+    return getContext().getCanvas();
   }
 
   default public Loop getLoop() {
