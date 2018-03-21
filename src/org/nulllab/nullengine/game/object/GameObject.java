@@ -1,4 +1,4 @@
-package org.nulllab.nullengine.entity;
+package org.nulllab.nullengine.game.object;
 
 import org.nulllab.nullengine.component.Component;
 import org.nulllab.nullengine.component.ComponentCollection;
@@ -6,6 +6,7 @@ import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.Renderable;
 import org.nulllab.nullengine.core.input.Keyboard;
 import org.nulllab.nullengine.core.loop.Updateable;
+import org.nulllab.nullengine.game.state.GameObjectState;
 
 @SuppressWarnings("unused")
 abstract public class GameObject implements Renderable<Canvas>, Updateable {
