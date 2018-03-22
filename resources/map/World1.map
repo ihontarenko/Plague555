@@ -2,6 +2,9 @@
 Size
 1000:1000
 
+Sheets
+WorldTilesSpritePackage
+
 // default filling
 Fill
 2,5-7/2,9

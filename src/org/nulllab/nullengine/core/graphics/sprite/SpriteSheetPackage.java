@@ -63,6 +63,10 @@ abstract public class SpriteSheetPackage implements Initializable {
     return filename;
   }
 
+  public String getPackageUniqueName() {
+    return getClass().getSimpleName();
+  }
+
   abstract public SpriteSheetParameters[] getSpriteSheetParameters();
 
 }

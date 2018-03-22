@@ -8,6 +8,7 @@ import org.nulllab.nullengine.core.geometry.intersection.spatialhash.SpatialHash
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.StringDrawer;
 import org.nulllab.nullengine.core.graphics.sprite.SpriteAnimated;
+import org.nulllab.nullengine.core.graphics.sprite.SpriteManager;
 import org.nulllab.nullengine.core.graphics.sprite.SpriteSheet;
 import org.nulllab.nullengine.core.graphics.sprite.SpriteSheetPackage;
 import org.nulllab.nullengine.core.input.Input;
@@ -99,7 +100,13 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
       }
     }
 
-    spriteAnimated = new SpriteAnimated(sheetPackage.getSpriteSheet(1), 3, 2);
+    System.out.println(sheetPackage.getPackageUniqueName());
+
+    SpriteManager spriteManager = new SpriteManager();
+    spriteManager.addSheetPackage(sheetPackage);
+    spriteManager.getSheetPackage(WorldTilesSpritePackage.class);
+
+    spriteAnimated = new SpriteAnimated(spriteManager.getSheetFromPackage(WorldTilesSpritePackage.class, 1), 3, 5);
     spriteAnimated.setDirection(SpriteAnimated.Direction.PING_PONG);
   }
 
