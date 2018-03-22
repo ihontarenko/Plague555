@@ -7,7 +7,7 @@ import org.nulllab.nullengine.core.common.time.Timer;
 public class SpriteAnimated implements Drawable<Canvas> {
 
   public enum Direction {
-    LOOPED, PINGPONG;
+    LOOPED, PING_PONG
   }
 
   private Sprite[]    sprites;
@@ -55,7 +55,7 @@ public class SpriteAnimated implements Drawable<Canvas> {
 
   private void updateIncrementer() {
     switch (direction) {
-      case PINGPONG:
+      case PING_PONG:
         if (activeIndex == sprites.length - 1) {
           incrementer = -1;
         } else if (activeIndex == 0) {
@@ -73,7 +73,7 @@ public class SpriteAnimated implements Drawable<Canvas> {
   }
 
   @Override
-  public void draw(Canvas canvas, int x, int y) {
+  public void draw(Canvas canvas, double x, double y) {
     Sprite sprite = activeSprite();
     sprite.transparentColor(getTransparentColor(), getOpacity());
     sprite.draw(canvas, x, y);

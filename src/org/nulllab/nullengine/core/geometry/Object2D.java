@@ -5,7 +5,7 @@ public class Object2D extends Point2D {
   protected int width;
   protected int height;
 
-  public Object2D(int x, int y, int width, int height) {
+  public Object2D(double x, double y, int width, int height) {
     super(x, y);
 
     this.width = width;
@@ -20,19 +20,19 @@ public class Object2D extends Point2D {
     return this.height;
   }
 
-  public int getCentreX() {
+  public double getCentreX() {
     return (this.x + this.getMaxX()) / 2;
   }
 
-  public int getMaxX() {
+  public double getMaxX() {
     return this.x + this.width;
   }
 
-  public int getCentreY() {
+  public double getCentreY() {
     return (this.y + this.getMaxY()) / 2;
   }
 
-  public int getMaxY() {
+  public double getMaxY() {
     return this.y + this.height;
   }
 

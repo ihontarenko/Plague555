@@ -21,7 +21,7 @@ public class MenuScene extends Scene<AbstractView> {
     getGuiWindow().getCanvas().setDefaultColor(0xffcccccc);
 
     if (getInputKey().isPressed(KeyEvent.VK_ESCAPE)) {
-      getControllerManager().setActiveScene(Manager.STATE_INTRO);
+      getSceneManager().setActiveScene(Manager.STATE_INTRO);
     }
   }
 

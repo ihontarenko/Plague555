@@ -88,7 +88,7 @@ public class GameLoop extends Loop implements ContextAware {
   protected void update(float elapsed) {
     // default code for update window title information
     GUIWindow window  = getGuiWindow();
-    Manager   manager = (Manager) getControllerManager();
+    Manager   manager = (Manager) getSceneManager();
 
     window.setTitle(getExecutionInfo());
     manager.update(elapsed);
@@ -100,7 +100,7 @@ public class GameLoop extends Loop implements ContextAware {
   @Override
   protected void render() {
     GUIWindow window  = getGuiWindow();
-    Manager   manager = (Manager) getControllerManager();
+    Manager   manager = (Manager) getSceneManager();
 
     window.clearFrame();
     manager.render(getCanvas());

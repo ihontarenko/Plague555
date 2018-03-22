@@ -12,14 +12,14 @@ abstract public class AbstractView<S extends Scene, R extends AbstractView>
 
   private Context           context;
   private ServiceLocator<R> innerViews;
-  private S                 controller;
+  private S                 scene;
   private R                 parent;
   private boolean           isInitialized;
   private int               priority;
 
   public AbstractView(Context context, S scene) {
     this.context = context;
-    this.controller = scene;
+    this.scene = scene;
     this.innerViews = new ServiceLocator<>();
 
     initialize();
@@ -87,8 +87,8 @@ abstract public class AbstractView<S extends Scene, R extends AbstractView>
     return context;
   }
 
-  public S getController() {
-    return controller;
+  public S getScene() {
+    return scene;
   }
 
   public int getPriority() {

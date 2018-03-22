@@ -20,7 +20,7 @@ public class StringDrawer implements Drawable<Canvas> {
   }
 
   @Override
-  public void draw(Canvas g2d, int x, int y) {
+  public void draw(Canvas g2d, double x, double y) {
     String string  = getString();
     int    offsetX;
 

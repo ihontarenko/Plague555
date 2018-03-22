@@ -19,6 +19,22 @@ public class SpriteSheet {
     this(sheet, size, size);
   }
 
+  public SpriteSheet(BufferedImage sheet, int size, int offset, int count) {
+    this(sheet, size, size, offset, offset, count, count);
+  }
+
+  public SpriteSheet(BufferedImage sheet, int size, int offsetX, int offsetY, int count) {
+    this(sheet, size, size, offsetX, offsetY, count, count);
+  }
+
+  public SpriteSheet(BufferedImage sheet, int size, int offsetX, int offsetY, int countX, int countY) {
+    this(sheet, size, size, offsetX, offsetY, countX, countY);
+  }
+
+  public SpriteSheet(BufferedImage sheet, int sizeX, int sizeY, int offsetX, int offsetY, int countX, int countY) {
+    this(sheet.getSubimage(offsetX, offsetY, sizeX * countX, sizeY * countY), sizeX, sizeY);
+  }
+
   public SpriteSheet(BufferedImage sheet, int sizeX, int sizeY) {
     this.bufferedImage = sheet;
     this.sizeX = sizeX;

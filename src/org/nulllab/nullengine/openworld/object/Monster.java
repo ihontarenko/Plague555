@@ -1,6 +1,4 @@
-package org.nulllab.nullengine.game;
-
-import org.nulllab.nullengine.game.object.GameObject;
+package org.nulllab.nullengine.openworld.object;
 
 public class Monster extends GameObject {
 

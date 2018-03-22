@@ -1,0 +1,11 @@
+// world size
+Size
+1000:1000
+
+// default filling
+Fill
+2,5-7/2,9
+
+// coordinates; sheet ID, positionOffset-positionLength
+Terrain
+1:0; 23,0-3/2,5-7/2,9

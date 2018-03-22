@@ -2,7 +2,7 @@ package org.nulllab.nullengine.core.geometry;
 
 public class Bound2D extends Object2D {
 
-  public Bound2D(int x, int y, int width, int height) {
+  public Bound2D(double x, double y, int width, int height) {
     super(x, y, width, height);
   }
 

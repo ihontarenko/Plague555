@@ -1,41 +1,46 @@
 package org.nulllab.sorrowland.app.view.menu;
 
-import org.nulllab.nullengine.core.graphics.Canvas;
-import org.nulllab.nullengine.core.input.Input;
-import org.nulllab.ui.process.view.AbstractView;
-import org.nulllab.ui.service.Context;
+import org.nulllab.nullengine.core.common.resource.ImageLoader;
 import org.nulllab.nullengine.core.common.time.Timer;
 import org.nulllab.nullengine.core.geometry.Bound2D;
 import org.nulllab.nullengine.core.geometry.Object2D;
 import org.nulllab.nullengine.core.geometry.intersection.spatialhash.SpatialHash;
+import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.StringDrawer;
 import org.nulllab.nullengine.core.graphics.sprite.SpriteAnimated;
 import org.nulllab.nullengine.core.graphics.sprite.SpriteSheet;
-import org.nulllab.nullengine.core.common.resource.ImageLoader;
+import org.nulllab.nullengine.core.graphics.sprite.SpriteSheetPackage;
+import org.nulllab.nullengine.core.input.Input;
+import org.nulllab.nullengine.openworld.map.MapParser;
 import org.nulllab.sorrowland.app.config.Configuration;
+import org.nulllab.sorrowland.app.graphics.font.WorldTilesSpritePackage;
 import org.nulllab.sorrowland.app.scene.MenuScene;
+import org.nulllab.ui.process.view.AbstractView;
+import org.nulllab.ui.service.Context;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Set;
 
 public class MenuView extends AbstractView<MenuScene, AbstractView> {
 
-  private SpriteSheet    sheet;
-  private SpriteAnimated spriteAnimated;
-  private StringDrawer   spriteFontMap;
-  private Configuration  configuration;
-  private SpatialHash    spatialHash;
-  private Set<Integer>   integerList;
-  private Bound2D        bound2D;
-  private Object2D       object1;
-  private Object2D       object2;
-  private Object2D       object3;
-  private Timer          timer;
-  private Input          input;
+  private SpriteSheet        sheet;
+  private SpriteAnimated     spriteAnimated;
+  private StringDrawer       spriteFontMap;
+  private Configuration      configuration;
+  private SpatialHash        spatialHash;
+  private Set<Integer>       integerList;
+  private Bound2D            bound2D;
+  private Object2D           object1;
+  private Object2D           object2;
+  private Object2D           object3;
+  private Timer              timer;
+  private Input              input;
+  private SpriteSheetPackage sheetPackage;
 
   private int velocity = 1;
 
@@ -45,6 +50,13 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
 
   @Override
   public void doInitialize() {
+
+    MapParser reader = new MapParser("map/World1.map");
+    reader.loadMap();
+
+    sheetPackage = new WorldTilesSpritePackage();
+    sheetPackage.initialize();
+
     timer = new Timer(0.1);
 
     input = getContext().getInputKey();
@@ -76,8 +88,19 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
       e.printStackTrace();
     }
 
-    spriteAnimated = new SpriteAnimated(sheet, 5, 1, 9, 11);
-    spriteAnimated.setDirection(SpriteAnimated.Direction.PINGPONG);
+    int counter = 0;
+
+    for (SpriteSheet spriteSheet : sheetPackage.getSpriteSheets()) {
+      try {
+        File outputFile = new File(String.format("resources/cached/spriteSheet00%d.png", counter++));
+        ImageIO.write(spriteSheet.getBufferedImage(), "png", outputFile);
+      } catch (IOException e) {
+        e.printStackTrace();
+      }
+    }
+
+    spriteAnimated = new SpriteAnimated(sheetPackage.getSpriteSheet(1), 3, 2);
+    spriteAnimated.setDirection(SpriteAnimated.Direction.PING_PONG);
   }
 
   @Override
@@ -86,8 +109,13 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
     super.render(canvas);
 
     if (input.isPressed(KeyEvent.VK_1, true)) {
-      System.out.println("one is pressed...");
+      spriteAnimated = new SpriteAnimated(sheetPackage.getSpriteSheet(1), 3, 2);
+      spriteAnimated.setDirection(SpriteAnimated.Direction.PING_PONG);
+    } else if (input.isPressed(KeyEvent.VK_2, true)) {
+      spriteAnimated = new SpriteAnimated(sheetPackage.getSpriteSheet(0), 3, 2);
+      spriteAnimated.setDirection(SpriteAnimated.Direction.PING_PONG);
     }
+
 
     spriteFontMap.setString("exp: ");
 
@@ -119,7 +147,7 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
     spriteAnimated.draw(canvas, 10, 10);
 
     canvas.setColor(Color.RED.getRGB());
-    canvas.drawRectangle(bound2D.getX(), bound2D.getY(), bound2D.getWidth(), bound2D.getHeight());
+//    canvas.drawRectangle(bound2D.getX(), bound2D.getY(), bound2D.getWidth(), bound2D.getHeight());
 
 //    for (Object2D object2D : spatialHash.getObjects()) {
 //      g2d.setColor(Color.GREEN);

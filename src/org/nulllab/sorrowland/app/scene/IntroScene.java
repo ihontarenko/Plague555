@@ -25,7 +25,7 @@ public class IntroScene extends Scene<AbstractView> {
   @Override
   public void doUpdate(float nano) {
     if (getInputKey().isPressed(KeyEvent.VK_2)) {
-      getControllerManager().setActiveScene(Manager.STATE_MENU);
+      getSceneManager().setActiveScene(Manager.STATE_MENU);
     }
   }
 

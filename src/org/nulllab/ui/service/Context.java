@@ -17,7 +17,7 @@ public class Context extends ServiceLocator<Object> implements ContextAware, Ini
   public final static String INPUT_KEY     = "INPUT_KEY";
   public final static String STRING_DRAWER = "STRING_DRAWER";
   public final static String GUI_WINDOW    = "GUI_WINDOW";
-  public final static String APP_MANAGER   = "APP_MANAGER";
+  public final static String SCENE_MANAGER = "SCENE_MANAGER";
   public final static String LOOP_OBJECT   = "LOOP_OBJECT";
 
   private boolean initialized = false;
@@ -50,20 +50,20 @@ public class Context extends ServiceLocator<Object> implements ContextAware, Ini
     return (GUIWindow) getObject(GUI_WINDOW);
   }
 
-  public Canvas getCanvas() {
-    return (Canvas) getObject(AWT_GRAPHICS);
-  }
-
   public void setGuiWindow(GUIWindow guiWindow) {
     setObject(GUI_WINDOW, guiWindow);
   }
 
-  public SceneManager getControllerManager() {
-    return (SceneManager) getObject(APP_MANAGER);
+  public Canvas getCanvas() {
+    return (Canvas) getObject(AWT_GRAPHICS);
+  }
+
+  public SceneManager getSceneManager() {
+    return (SceneManager) getObject(SCENE_MANAGER);
   }
 
   public void setAppManager(SceneManager appManager) {
-    setObject(APP_MANAGER, appManager);
+    setObject(SCENE_MANAGER, appManager);
   }
 
   public Loop getLoop() {

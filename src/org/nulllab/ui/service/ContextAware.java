@@ -11,8 +11,8 @@ public interface ContextAware {
 
   public Context getContext();
 
-  default public SceneManager getControllerManager() {
-    return getContext().getControllerManager();
+  default public SceneManager getSceneManager() {
+    return getContext().getSceneManager();
   }
 
   default public Input getInputKey() {

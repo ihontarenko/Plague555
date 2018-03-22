@@ -45,7 +45,7 @@ public class Sprite implements Drawable<Canvas> {
     setBufferedImage(argbBufferedImage);
   }
 
-  public void draw(Canvas canvas, int x, int y) {
+  public void draw(Canvas canvas, double x, double y) {
     canvas.drawImage(getBufferedImage(), x, y, getWidth(), getHeight());
   }
 

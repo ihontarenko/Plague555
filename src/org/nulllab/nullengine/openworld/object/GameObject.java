@@ -1,22 +1,31 @@
-package org.nulllab.nullengine.game.object;
+package org.nulllab.nullengine.openworld.object;
 
 import org.nulllab.nullengine.component.Component;
 import org.nulllab.nullengine.component.ComponentCollection;
+import org.nulllab.nullengine.core.geometry.Object2D;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.Renderable;
 import org.nulllab.nullengine.core.input.Keyboard;
 import org.nulllab.nullengine.core.loop.Updateable;
-import org.nulllab.nullengine.game.state.GameObjectState;
+import org.nulllab.nullengine.openworld.state.GameObjectState;
+import org.nulllab.nullengine.openworld.state.NullState;
 
 @SuppressWarnings("unused")
-abstract public class GameObject implements Renderable<Canvas>, Updateable {
+abstract public class GameObject extends Object2D implements Renderable<Canvas>, Updateable {
 
   private boolean             active;
   private ComponentCollection components;
   private GameObjectState     objectState;
 
-  public GameObject() {
+  public GameObject(int x, int y, int width, int height) {
+    super(x, y, width, height);
     components = new ComponentCollection();
+    objectState = new NullState();
+  }
+
+  public GameObject() {
+    // stub setup
+    this(0, 0, 1 << 4, 1 << 4);
   }
 
   public Component getComponent(String name) {
@@ -45,7 +54,7 @@ abstract public class GameObject implements Renderable<Canvas>, Updateable {
 
   @Override
   public void render(Canvas canvas) {
-
+    objectState.render(canvas);
   }
 
   @Override

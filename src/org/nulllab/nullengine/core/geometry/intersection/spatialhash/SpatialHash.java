@@ -94,13 +94,13 @@ public class SpatialHash implements IntersectionInterface {
   public Set<Integer> calculateObjectKeys(Object2D object2D, int shift) {
     Set<Integer> keys = new HashSet<>();
 
-    int bx = bound2D.getX();
-    int by = bound2D.getY();
+    int bx = (int) bound2D.getX();
+    int by = (int) bound2D.getY();
 
-    int sx = (object2D.getX() - bx) >> shift;
-    int sy = (object2D.getY() - by) >> shift;
-    int ex = (object2D.getMaxX() - bx) >> shift;
-    int ey = (object2D.getMaxY() - by) >> shift;
+    int sx = ((int) object2D.getX() - bx) >> shift;
+    int sy = ((int) object2D.getY() - by) >> shift;
+    int ex = ((int) object2D.getMaxX() - bx) >> shift;
+    int ey = ((int) object2D.getMaxY() - by) >> shift;
 
     for (int y = sy; y <= ey; y++) {
       for (int x = sx; x <= ex; x++) {
@@ -119,11 +119,11 @@ public class SpatialHash implements IntersectionInterface {
     return key / inWidth();
   }
 
-  public int getXPixel(int key) {
+  public double getXPixel(int key) {
     return getXPosition(key) * getSize() + getBound2D().getX();
   }
 
-  public int getYPixel(int key) {
+  public double getYPixel(int key) {
     return getYPosition(key) * getSize() + getBound2D().getY();
   }
 

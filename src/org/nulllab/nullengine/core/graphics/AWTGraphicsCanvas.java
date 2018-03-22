@@ -14,8 +14,8 @@ public class AWTGraphicsCanvas implements Canvas {
   }
 
   @Override
-  public void drawImage(BufferedImage image, int x, int y, int width, int height) {
-    graphics.drawImage(image, x, y, width, height, null);
+  public void drawImage(BufferedImage image, double x, double y, int width, int height) {
+    graphics.drawImage(image, (int)x, (int)y, width, height, null);
   }
 
   @Override
@@ -24,8 +24,18 @@ public class AWTGraphicsCanvas implements Canvas {
   }
 
   @Override
+  public void drawFilledRectangle(int x, int y, int width, int height) {
+    graphics.fillRect(x, y, width, height);
+  }
+
+  @Override
   public void drawOval(int x, int y, int width, int height) {
     graphics.drawOval(x, y, width, height);
+  }
+
+  @Override
+  public void drawFilledOval(int x, int y, int width, int height) {
+    graphics.fillOval(x, y, width, height);
   }
 
   @Override
