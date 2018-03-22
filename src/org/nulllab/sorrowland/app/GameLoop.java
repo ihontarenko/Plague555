@@ -5,7 +5,7 @@ import org.nulllab.nullengine.core.graphics.AWTGraphicsCanvas;
 import org.nulllab.nullengine.core.graphics.sprite.SpriteFont;
 import org.nulllab.nullengine.core.graphics.sprite.SpriteSheet;
 import org.nulllab.sorrowland.app.config.Configuration;
-import org.nulllab.sorrowland.app.graphics.font.BoxySpriteFontMap;
+import org.nulllab.sorrowland.app.graphics.BoxySpriteFontMap;
 import org.nulllab.nullengine.core.graphics.StringDrawer;
 import org.nulllab.sorrowland.app.manager.Manager;
 import org.nulllab.ui.gui.GUIWindow;

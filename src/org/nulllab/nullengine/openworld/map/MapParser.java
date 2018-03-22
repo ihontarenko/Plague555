@@ -81,7 +81,7 @@ public class MapParser extends FileResourceLoader {
     }
 
     for (String tile : tiles) {
-
+      System.out.println(tile);
     }
 
     return layers;

@@ -14,7 +14,7 @@ import org.nulllab.nullengine.core.graphics.sprite.SpriteSheetPackage;
 import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.openworld.map.MapParser;
 import org.nulllab.sorrowland.app.config.Configuration;
-import org.nulllab.sorrowland.app.graphics.font.WorldTilesSpritePackage;
+import org.nulllab.sorrowland.app.graphics.WorldTilesSpritePackage;
 import org.nulllab.sorrowland.app.scene.MenuScene;
 import org.nulllab.ui.process.view.AbstractView;
 import org.nulllab.ui.service.Context;
@@ -124,7 +124,7 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
     }
 
 
-    spriteFontMap.setString("exp: ");
+    spriteFontMap.setString("exp: 90813");
 
     spriteAnimated.draw(canvas, 10, 10);
 

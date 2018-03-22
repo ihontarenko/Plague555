@@ -30,7 +30,7 @@ abstract public class SpriteSheetPackage implements Initializable {
 
   @Override
   public boolean isInitialized() {
-    return spriteSheets != null;
+    return spriteSheets.size() > 0;
   }
 
   @Override
