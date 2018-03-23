@@ -3,7 +3,7 @@ package org.nulllab.nullengine.core.event;
 import java.util.Map;
 
 @SuppressWarnings("unused")
-public class EventListener<T> {
+public class EventDispatcher<T> {
 
   private Map<String, Observable<T>> listeners;
 
