@@ -12,9 +12,9 @@ public class WorldTilesSpritePackage extends SpriteSheetPackage {
   @Override
   public SpriteSheetParameters[] getSpriteSheetParameters() {
     return new SpriteSheetParameters[] {
-        new SpriteSheetParameters(32, 32, 384, 288, 2, 1),
-        new SpriteSheetParameters(32, 32, 320, 288, 2, 1),
-        new SpriteSheetParameters(32, 32, 0, 288, 2, 1),
+        new SpriteSheetParameters("sheet1", 32, 32, 384, 288, 2, 1),
+        new SpriteSheetParameters("sheet2", 32, 32, 320, 288, 2, 1),
+        new SpriteSheetParameters("sheet3", 32, 32, 0, 288, 2, 1),
     };
   }
 

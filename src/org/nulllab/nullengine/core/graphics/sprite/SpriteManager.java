@@ -3,6 +3,7 @@ package org.nulllab.nullengine.core.graphics.sprite;
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("unused")
 public class SpriteManager {
 
   private Map<String, SpriteSheetPackage> sheetPackageMap;
@@ -23,12 +24,12 @@ public class SpriteManager {
     return sheetPackageMap.get(packageClassName);
   }
 
-  public SpriteSheet getSheetFromPackage(Class<? extends SpriteSheetPackage> packageClass, Integer index) {
-    return getSheetFromPackage(packageClass.getSimpleName(), index);
+  public SpriteSheet getSheetFromPackage(Class<? extends SpriteSheetPackage> packageClass, String name) {
+    return getSheetFromPackage(packageClass.getSimpleName(), name);
   }
 
-  public SpriteSheet getSheetFromPackage(String packageClassName, Integer index) {
-    return getSheetPackage(packageClassName).getSpriteSheet(index);
+  public SpriteSheet getSheetFromPackage(String packageClassName, String name) {
+    return getSheetPackage(packageClassName).getSpriteSheet(name);
   }
 
 }

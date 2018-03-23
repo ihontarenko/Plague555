@@ -91,7 +91,7 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
 
     int counter = 0;
 
-    for (SpriteSheet spriteSheet : sheetPackage.getSpriteSheets()) {
+    for (SpriteSheet spriteSheet : sheetPackage.getSpriteSheets().values()) {
       try {
         File outputFile = new File(String.format("resources/cached/spriteSheet00%d.png", counter++));
         ImageIO.write(spriteSheet.getBufferedImage(), "png", outputFile);
@@ -106,7 +106,7 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
     spriteManager.addSheetPackage(sheetPackage);
     spriteManager.getSheetPackage(WorldTilesSpritePackage.class);
 
-    spriteAnimated = new SpriteAnimated(spriteManager.getSheetFromPackage(WorldTilesSpritePackage.class, 1), 3, 5);
+    spriteAnimated = new SpriteAnimated(spriteManager.getSheetFromPackage(WorldTilesSpritePackage.class, "sheet1"), 3, 5);
     spriteAnimated.setDirection(SpriteAnimated.Direction.PING_PONG);
   }
 
@@ -116,10 +116,10 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
     super.render(canvas);
 
     if (input.isPressed(KeyEvent.VK_1, true)) {
-      spriteAnimated = new SpriteAnimated(sheetPackage.getSpriteSheet(1), 3, 2);
+      spriteAnimated = new SpriteAnimated(sheetPackage.getSpriteSheet("sheet2"), 3, 2);
       spriteAnimated.setDirection(SpriteAnimated.Direction.PING_PONG);
     } else if (input.isPressed(KeyEvent.VK_2, true)) {
-      spriteAnimated = new SpriteAnimated(sheetPackage.getSpriteSheet(0), 3, 2);
+      spriteAnimated = new SpriteAnimated(sheetPackage.getSpriteSheet("sheet3"), 3, 2);
       spriteAnimated.setDirection(SpriteAnimated.Direction.PING_PONG);
     }
 

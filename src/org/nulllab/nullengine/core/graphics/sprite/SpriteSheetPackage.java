@@ -8,23 +8,25 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 abstract public class SpriteSheetPackage implements Initializable {
 
-  private String            filename;
-  private List<SpriteSheet> spriteSheets;
+  private String                   filename;
+  private Map<String, SpriteSheet> spriteSheets;
 
   public SpriteSheetPackage(String filename) {
     this.filename = filename;
-    this.spriteSheets = new ArrayList<>();
+    this.spriteSheets = new HashMap<>();
   }
 
-  public SpriteSheet getSpriteSheet(int index) {
-    return spriteSheets.get(index);
+  public SpriteSheet getSpriteSheet(String name) {
+    return spriteSheets.get(name);
   }
 
-  public List<SpriteSheet> getSpriteSheets() {
+  public Map<String, SpriteSheet> getSpriteSheets() {
     return spriteSheets;
   }
 
@@ -50,7 +52,7 @@ abstract public class SpriteSheetPackage implements Initializable {
           parameters.getOffsetX(), parameters.getOffsetY(),
           parameters.getCountX(), parameters.getCountY()
       );
-      spriteSheets.add(sheet);
+      spriteSheets.put(parameters.getName(), sheet);
     }
   }
 

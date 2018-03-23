@@ -2,6 +2,8 @@ package org.nulllab.nullengine.core.graphics.sprite;
 
 public class SpriteSheetParameters {
 
+  private String name;
+
   private int sizeX;
   private int sizeY;
 
@@ -11,19 +13,20 @@ public class SpriteSheetParameters {
   private int countX;
   private int countY;
 
-  public SpriteSheetParameters(int size, int offset, int count) {
-    this(size, size, offset, offset, count, count);
+  public SpriteSheetParameters(String name, int size, int offset, int count) {
+    this(name, size, size, offset, offset, count, count);
   }
 
-  public SpriteSheetParameters(int sizeX, int sizeY, int offset, int count) {
-    this(sizeX, sizeY, offset, offset, count, count);
+  public SpriteSheetParameters(String name, int sizeX, int sizeY, int offset, int count) {
+    this(name, sizeX, sizeY, offset, offset, count, count);
   }
 
-  public SpriteSheetParameters(int sizeX, int sizeY, int offsetX, int offsetY, int count) {
-    this(sizeX, sizeY, offsetX, offsetY, count, count);
+  public SpriteSheetParameters(String name, int sizeX, int sizeY, int offsetX, int offsetY, int count) {
+    this(name, sizeX, sizeY, offsetX, offsetY, count, count);
   }
 
-  public SpriteSheetParameters(int sizeX, int sizeY, int offsetX, int offsetY, int countX, int countY) {
+  public SpriteSheetParameters(String name, int sizeX, int sizeY, int offsetX, int offsetY, int countX, int countY) {
+    this.name = name;
     this.sizeX = sizeX;
     this.sizeY = sizeY;
     this.offsetX = offsetX;
@@ -56,4 +59,7 @@ public class SpriteSheetParameters {
     return countY;
   }
 
+  public String getName() {
+    return name;
+  }
 }
