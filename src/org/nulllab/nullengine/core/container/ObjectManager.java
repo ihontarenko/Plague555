@@ -8,15 +8,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SuppressWarnings({"unchecked", "unused"})
-public class ServiceLocator<Clazz> extends AbstractObjectContainer<Clazz> {
+public class ObjectManager<Clazz> extends AbstractObjectContainer<Clazz> {
 
-  private Map<String, ServiceLocator.Service> services;
+  private Map<String, ObjectManager.Service> services;
 
-  public ServiceLocator() {
+  public ObjectManager() {
     services = new HashMap<>();
   }
 
-  public Map<String, ServiceLocator.Service> getServices() {
+  public Map<String, ObjectManager.Service> getServices() {
     return services;
   }
 
@@ -86,44 +86,14 @@ public class ServiceLocator<Clazz> extends AbstractObjectContainer<Clazz> {
     super.setObject(name, object);
   }
 
-  public class Service {
+  @Override
+  public String toString() {
+    StringBuilder stringBuilder = new StringBuilder();
 
-    private Class<?> clazz;
-    private Object[] arguments;
+    this.forEach((key, object) -> stringBuilder.append(String.format("'%s': [%s]\n", key, object.getClass().getSimpleName())));
+    getServices().forEach((key, object) -> stringBuilder.append(String.format("'%s': Service[%s]\n", key, object.getClassObject().getSimpleName())));
 
-    public Service(Class<?> clazz, Object... arguments) {
-      this.clazz = clazz;
-      this.arguments = arguments;
-    }
-
-    public Service(String className) throws ClassNotFoundException {
-      this(Class.forName(className), className);
-    }
-
-    public Service(String className, Object... arguments) throws ClassNotFoundException {
-      this(Class.forName(className), arguments);
-    }
-
-    public Service(Class<?> clazz) {
-      this(clazz, clazz.getName());
-    }
-
-    public Clazz resolve() {
-      return (Clazz) Instantiator.createInstance(getClassObject(), getArguments());
-    }
-
-    public boolean hasArguments() {
-      return null != arguments;
-    }
-
-    public Class<?> getClassObject() {
-      return clazz;
-    }
-
-    public Object[] getArguments() {
-      return arguments;
-    }
-
+    return stringBuilder.toString();
   }
 
   public static class Instantiator {
@@ -145,7 +115,7 @@ public class ServiceLocator<Clazz> extends AbstractObjectContainer<Clazz> {
     }
 
     public static Object createInstance(Class<?> clazz) {
-      return createInstance(clazz, clazz.getName());
+      return createInstance(clazz, null);
     }
 
     public static Object createInstance(Class<?> clazz, Object... arguments) {
@@ -154,7 +124,7 @@ public class ServiceLocator<Clazz> extends AbstractObjectContainer<Clazz> {
 
       try {
         instance = constructor.newInstance(arguments);
-        System.out.printf("[ServiceLocator.Instantiator]: Create new instance of: %s%n", clazz.getName());
+        System.out.printf("[ObjectManager.Instantiator]: Create new instance of: %s%n", clazz.getName());
       } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
         e.printStackTrace();
       }
@@ -196,11 +166,15 @@ public class ServiceLocator<Clazz> extends AbstractObjectContainer<Clazz> {
     }
 
     public static Class<?>[] toClassArray(Object... arguments) {
-      Class<?>[] classes = new Class[arguments.length];
-      int        counter = 0;
+      Class<?>[] classes = null;
 
-      for (Object object : arguments) {
-        classes[counter++] = object.getClass();
+      if (null != arguments) {
+        classes = new Class[arguments.length];
+        int counter = 0;
+
+        for (Object object : arguments) {
+          classes[counter++] = object.getClass();
+        }
       }
 
       return classes;
@@ -208,13 +182,43 @@ public class ServiceLocator<Clazz> extends AbstractObjectContainer<Clazz> {
 
   }
 
-  @Override
-  public String toString() {
-    StringBuilder stringBuilder = new StringBuilder();
+  public class Service {
 
-    this.forEach((key, object) -> stringBuilder.append(String.format("'%s': [%s]\n", key, object.getClass().getSimpleName())));
-    getServices().forEach((key, object) -> stringBuilder.append(String.format("'%s': Service[%s]\n", key, object.getClassObject().getSimpleName())));
+    private Class<?> clazz;
+    private Object[] arguments;
 
-    return stringBuilder.toString();
+    public Service(Class<?> clazz, Object... arguments) {
+      this.clazz = clazz;
+      this.arguments = arguments;
+    }
+
+    public Service(String className) throws ClassNotFoundException {
+      this(Class.forName(className), className);
+    }
+
+    public Service(String className, Object... arguments) throws ClassNotFoundException {
+      this(Class.forName(className), arguments);
+    }
+
+    public Service(Class<?> clazz) {
+      this(clazz, clazz.getName());
+    }
+
+    public Clazz resolve() {
+      return (Clazz) Instantiator.createInstance(getClassObject(), getArguments());
+    }
+
+    public boolean hasArguments() {
+      return null != arguments;
+    }
+
+    public Class<?> getClassObject() {
+      return clazz;
+    }
+
+    public Object[] getArguments() {
+      return arguments;
+    }
+
   }
 }

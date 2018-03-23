@@ -1,6 +1,6 @@
 package org.nulllab.ui.context;
 
-import org.nulllab.nullengine.core.container.ServiceLocator;
+import org.nulllab.nullengine.core.container.ObjectManager;
 
-abstract public class AbstractAppContext extends ServiceLocator {
+abstract public class AbstractAppContext extends ObjectManager {
 }

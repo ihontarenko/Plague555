@@ -2,7 +2,7 @@ package org.nulllab.ui.service;
 
 import org.nulllab.nullengine.core.common.Initializable;
 import org.nulllab.nullengine.core.config.AbstractConfiguration;
-import org.nulllab.nullengine.core.container.ServiceLocator;
+import org.nulllab.nullengine.core.container.ObjectManager;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.StringDrawer;
 import org.nulllab.nullengine.core.input.Input;
@@ -10,7 +10,7 @@ import org.nulllab.nullengine.core.loop.Loop;
 import org.nulllab.ui.gui.GUIWindow;
 import org.nulllab.ui.process.SceneManager;
 
-public class Context extends ServiceLocator<Object> implements ContextAware, Initializable {
+public class Context extends ObjectManager<Object> implements ContextAware, Initializable {
 
   public final static String CONFIG_OBJECT = "CONFIG_OBJECT";
   public final static String AWT_GRAPHICS  = "AWT_GRAPHICS";

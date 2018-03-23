@@ -1,10 +1,10 @@
 package org.nulllab.ui.process;
 
 import org.nulllab.nullengine.core.common.Initializable;
+import org.nulllab.nullengine.core.container.ObjectManager;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.Renderable;
 import org.nulllab.nullengine.core.loop.Updateable;
-import org.nulllab.nullengine.core.container.ServiceLocator;
 import org.nulllab.ui.process.scene.Scene;
 import org.nulllab.ui.service.Context;
 import org.nulllab.ui.service.ContextAware;
@@ -12,15 +12,15 @@ import org.nulllab.ui.service.ContextAware;
 abstract public class SceneManager<C extends Scene>
     implements Renderable<Canvas>, Updateable, Initializable, ContextAware {
 
-  private boolean           isInitialized;
-  private ServiceLocator<C> scenes;
-  private C                 activeScene;
-  private ProcessMode       processMode;
-  private Context           context;
+  private boolean          isInitialized;
+  private ObjectManager<C> scenes;
+  private C                activeScene;
+  private ProcessMode      processMode;
+  private Context          context;
 
   public SceneManager(Context context) {
     this.context = context;
-    this.scenes = new ServiceLocator<>();
+    this.scenes = new ObjectManager<>();
     initialize();
   }
 
@@ -42,7 +42,7 @@ abstract public class SceneManager<C extends Scene>
     scenes.registerService(name, clazz, arguments);
   }
 
-  public ServiceLocator<C> getScenes() {
+  public ObjectManager<C> getScenes() {
     return scenes;
   }
 

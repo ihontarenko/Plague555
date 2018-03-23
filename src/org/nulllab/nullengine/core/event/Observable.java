@@ -1,5 +1,9 @@
 package org.nulllab.nullengine.core.event;
 
+import org.nulllab.nullengine.core.event.Event;
+import org.nulllab.nullengine.core.event.NullEvent;
+import org.nulllab.nullengine.core.event.Observer;
+
 import java.util.Set;
 
 @SuppressWarnings("unused")

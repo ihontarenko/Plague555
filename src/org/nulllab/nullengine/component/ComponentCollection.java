@@ -1,7 +1,7 @@
 package org.nulllab.nullengine.component;
 
-import org.nulllab.nullengine.core.container.ServiceLocator;
+import org.nulllab.nullengine.core.container.ObjectManager;
 
-public class ComponentCollection extends ServiceLocator<Component> {
+public class ComponentCollection extends ObjectManager<Component> {
 
 }

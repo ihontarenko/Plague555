@@ -1,4 +1,4 @@
-package org.nulllab.nullengine.openworld.object;
+package org.nulllab.nullengine.openworld.object.character;
 
 public class Breed {
 
