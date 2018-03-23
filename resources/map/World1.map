@@ -9,6 +9,6 @@ WorldTilesSpritePackage
 Fill
 2,5-7/2,9
 
-// coordinates; sheet ID, positionOffset-positionLength
+// package.sheet
 Terrain
 1:0 0 0
