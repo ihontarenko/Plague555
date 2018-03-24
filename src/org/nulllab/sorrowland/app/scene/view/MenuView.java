@@ -1,5 +1,6 @@
 package org.nulllab.sorrowland.app.scene.view;
 
+import org.nulllab.nullengine.core.ServiceLocator;
 import org.nulllab.nullengine.core.common.resource.ImageLoader;
 import org.nulllab.nullengine.core.common.time.Timer;
 import org.nulllab.nullengine.core.geometry.Bound2D;
@@ -15,13 +16,14 @@ import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.openworld.map.MapParser;
 import org.nulllab.nullengine.openworld.map.Terrain;
 import org.nulllab.sorrowland.app.config.Configuration;
+import org.nulllab.sorrowland.app.graphics.CharactersSpritePackage;
+import org.nulllab.sorrowland.app.graphics.Characters1SheetPackage;
 import org.nulllab.sorrowland.app.graphics.WorldTilesSpritePackage;
 import org.nulllab.sorrowland.app.scene.MenuScene;
 import org.nulllab.ui.process.view.AbstractView;
 import org.nulllab.ui.service.Context;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
@@ -45,6 +47,8 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
   private SpriteSheetPackage sheetPackage;
   private Terrain[][]        worldMap;
 
+  private CharactersSpritePackage spritePackage;
+
   private int velocity = 1;
 
   public MenuView(Context context, MenuScene controller) {
@@ -53,6 +57,8 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
 
   @Override
   public void doInitialize() {
+
+    ServiceLocator.getInstance().addService(SpriteManager.class);
 
     MapParser reader = new MapParser("map/World1.map");
     reader.loadMap();
@@ -84,8 +90,8 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
     configuration = (Configuration) getContext().getConfiguration();
     configuration.initialize();
 
-    bound2D = new Bound2D(10, 10, 780, 580);
-    spatialHash = new SpatialHash(bound2D, 3);
+    bound2D = new Bound2D(0, 0, 800, 600);
+    spatialHash = new SpatialHash(bound2D, 5);
     object1 = new Object2D(120, 150, 40, 40);
 
     spatialHash.insert(object1);
@@ -121,7 +127,10 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
 
     SpriteManager spriteManager = new SpriteManager();
     spriteManager.addSheetPackage(sheetPackage);
+    spriteManager.addSheetPackage(new Characters1SheetPackage());
     spriteManager.getSheetPackage(WorldTilesSpritePackage.class);
+
+    spritePackage = new CharactersSpritePackage();
 
     spriteAnimated = new SpriteAnimated(spriteManager.getSheetFromPackage(WorldTilesSpritePackage.class, "sheet1"), 3, 5);
     spriteAnimated.setDirection(SpriteAnimated.Direction.PING_PONG);
@@ -143,7 +152,7 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
 
     spriteFontMap.setString("exp: 90813");
 
-    spriteAnimated.draw(canvas, 0, 0);
+//    spriteAnimated.draw(canvas, 0, 0);
 
     spriteFontMap.draw(canvas, 100, 100);
     if (object1.getMaxX() > bound2D.getMaxX()) {
@@ -162,15 +171,16 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
 
     //    canvas.setColor(Color.WHITE);
 
-    //    for (int x = bound2D.getX(); x < bound2D.getMaxX(); x += size) {
-    //      for (int y = bound2D.getY(); y < bound2D.getMaxY(); y += size) {
-    //        g2d.drawRect(x, y, size, size);
-    //      }
-    //    }
+    for (double x = bound2D.getX(); x < bound2D.getMaxX(); x += size) {
+      for (double y = bound2D.getY(); y < bound2D.getMaxY(); y += size) {
+//        canvas.drawRectangle((int)x, (int)y, size, size);
+        spriteAnimated.draw(canvas, x, y);
+      }
+    }
 
-    spriteAnimated.draw(canvas, 0, 32);
 
-    canvas.setColor(Color.RED.getRGB());
+
+//    canvas.setColor(Color.RED.getRGB());
     //    canvas.drawRectangle(bound2D.getX(), bound2D.getY(), bound2D.getWidth(), bound2D.getHeight());
 
     //    for (Object2D object2D : spatialHash.getObjects()) {

@@ -11,12 +11,10 @@ import java.util.Map;
 
 abstract public class SpritePackage implements Initializable {
 
-  private String              name;
   private SpriteSheet         spriteSheet;
   private Map<String, Sprite> sprites;
 
-  public SpritePackage(String name, SpriteSheet spriteSheet) {
-    this.name = name;
+  public SpritePackage(SpriteSheet spriteSheet) {
     this.spriteSheet = spriteSheet;
     this.sprites = new HashMap<>();
     initialize();

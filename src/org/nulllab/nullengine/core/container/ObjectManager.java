@@ -114,17 +114,13 @@ public class ObjectManager<Clazz> extends AbstractObjectContainer<Clazz> {
       return instance;
     }
 
-    public static Object createInstance(Class<?> clazz) {
-      return createInstance(clazz, null);
-    }
-
     public static Object createInstance(Class<?> clazz, Object... arguments) {
       Constructor<?> constructor = getConstructor(clazz, arguments);
       Object         instance    = null;
 
       try {
         instance = constructor.newInstance(arguments);
-        System.out.printf("[ObjectManager.Instantiator]: Create new instance of: %s%n", clazz.getName());
+        System.out.printf("[ObjectManager]: Create new instance of: %s%n", clazz.getName());
       } catch (InstantiationException | IllegalAccessException | InvocationTargetException e) {
         e.printStackTrace();
       }
@@ -155,9 +151,10 @@ public class ObjectManager<Clazz> extends AbstractObjectContainer<Clazz> {
 
     public static Constructor<?> getConstructor(Class<?> clazz, Object... arguments) {
       Constructor<?> constructor = null;
+      Class<?>[]     classes     = toClassArray(arguments);
 
       try {
-        constructor = clazz.getConstructor(toClassArray(arguments));
+        constructor = clazz.getConstructor(classes);
       } catch (NoSuchMethodException e) {
         e.printStackTrace();
       }
@@ -192,16 +189,8 @@ public class ObjectManager<Clazz> extends AbstractObjectContainer<Clazz> {
       this.arguments = arguments;
     }
 
-    public Service(String className) throws ClassNotFoundException {
-      this(Class.forName(className), className);
-    }
-
     public Service(String className, Object... arguments) throws ClassNotFoundException {
       this(Class.forName(className), arguments);
-    }
-
-    public Service(Class<?> clazz) {
-      this(clazz, clazz.getName());
     }
 
     public Clazz resolve() {

@@ -2,6 +2,7 @@ package org.nulllab.nullengine.core.graphics.spritesheet;
 
 import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheet;
 import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheetPackage;
+import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpritePackage;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +11,7 @@ import java.util.Map;
 public class SpriteManager {
 
   private Map<String, SpriteSheetPackage> sheetPackageMap;
+  private Map<String, SpritePackage>      spritePackageMap;
 
   public SpriteManager() {
     sheetPackageMap = new HashMap<>();
