@@ -1,7 +1,6 @@
 package org.nulllab.sorrowland.app.scene.view;
 
-import org.nulllab.nullengine.core.ServiceLocator;
-import org.nulllab.nullengine.core.common.resource.ImageLoader;
+import org.nulllab.nullengine.openworld.ServiceLocator;
 import org.nulllab.nullengine.core.common.time.Timer;
 import org.nulllab.nullengine.core.geometry.Bound2D;
 import org.nulllab.nullengine.core.geometry.Object2D;
@@ -26,11 +25,7 @@ import org.nulllab.sorrowland.app.scene.MenuScene;
 import org.nulllab.ui.process.view.AbstractView;
 import org.nulllab.ui.service.Context;
 
-import javax.imageio.ImageIO;
 import java.awt.event.KeyEvent;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Set;
 
 public class MenuView extends AbstractView<MenuScene, AbstractView> {
@@ -148,10 +143,10 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
     if (input.isPressed(KeyEvent.VK_1, true)) {
       sprite = spritePackage.getStandSouth();
     } else if (input.isPressed(KeyEvent.VK_DOWN, true)) {
-      sprite = spritePackage.getMoveNorth();
+      sprite = spritePackage.getMoveSouth();
     }
     else if (input.isPressed(KeyEvent.VK_UP, true)) {
-      sprite = spritePackage.getMoveSouth();
+      sprite = spritePackage.getMoveNorth();
     }
     else if (input.isPressed(KeyEvent.VK_RIGHT, true)) {
       sprite = spritePackage.getMoveEast();

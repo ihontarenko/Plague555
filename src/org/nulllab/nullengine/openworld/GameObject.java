@@ -2,7 +2,6 @@ package org.nulllab.nullengine.openworld;
 
 import org.nulllab.nullengine.component.Component;
 import org.nulllab.nullengine.component.ComponentCollection;
-import org.nulllab.nullengine.core.ServiceLocator;
 import org.nulllab.nullengine.core.geometry.Object2D;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.Renderable;
@@ -15,6 +14,7 @@ import org.nulllab.nullengine.openworld.state.NullState;
 abstract public class GameObject extends Object2D implements Renderable<Canvas>, Updateable {
 
   private boolean             active;
+  private int                 layerIndex;
   private ComponentCollection components;
   private GameObjectState     objectState;
   private ServiceLocator      serviceLocator;

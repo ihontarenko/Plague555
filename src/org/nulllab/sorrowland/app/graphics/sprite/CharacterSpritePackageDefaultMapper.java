@@ -15,12 +15,12 @@ public class CharacterSpritePackageDefaultMapper extends CharacterSpritePackage 
   @Override
   public SpriteMapper[] getSpriteMappers() {
     return new SpriteMapper[] {
-        new SpriteStaticMapper(KEY_STAND_SOUTH, 1, 9),
-        new SpriteStaticMapper(KEY_STAND_NORTH, 1, 1),
+        new SpriteStaticMapper(KEY_STAND_NORTH, 1, 9),
+        new SpriteStaticMapper(KEY_STAND_SOUTH, 1, 1),
         new SpriteStaticMapper(KEY_STAND_EAST, 1, 6),
         new SpriteStaticMapper(KEY_STAND_WEST, 1, 3),
-        new SpriteAnimatedMapper(KEY_MOVE_SOUTH, 1, 9, 11, 3),
-        new SpriteAnimatedMapper(KEY_MOVE_NORTH, 2, 0, 2, 3),
+        new SpriteAnimatedMapper(KEY_MOVE_NORTH, 1, 9, 11, 3),
+        new SpriteAnimatedMapper(KEY_MOVE_SOUTH, 1, 0, 2, 3),
         new SpriteAnimatedMapper(KEY_MOVE_EAST, 1, 6, 8, 3),
         new SpriteAnimatedMapper(KEY_MOVE_WEST, 1, 3, 5, 3),
     };

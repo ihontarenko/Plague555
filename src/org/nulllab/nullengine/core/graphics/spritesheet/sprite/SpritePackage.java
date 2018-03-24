@@ -1,6 +1,6 @@
 package org.nulllab.nullengine.core.graphics.spritesheet.sprite;
 
-import org.nulllab.nullengine.core.ServiceLocator;
+import org.nulllab.nullengine.openworld.ServiceLocator;
 import org.nulllab.nullengine.core.graphics.GraphicsPackage;
 import org.nulllab.nullengine.core.graphics.spritesheet.SpriteManager;
 import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheet;
