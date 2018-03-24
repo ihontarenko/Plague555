@@ -1,14 +1,14 @@
-package org.nulllab.nullengine.core.graphics.spritesheet.sprite.setup;
+package org.nulllab.nullengine.core.graphics.spritesheet.sprite.mapping;
 
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.Sprite;
 
-abstract public class SpriteSetup {
+abstract public class SpriteMapper {
 
   private String                  name;
   private Class<? extends Sprite> spriteClass;
   private double                  scale;
 
-  public SpriteSetup(Class<? extends Sprite> spriteClass, String name, double scale) {
+  public SpriteMapper(Class<? extends Sprite> spriteClass, String name, double scale) {
     this.spriteClass = spriteClass;
     this.name = name;
     this.scale = scale;

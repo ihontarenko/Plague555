@@ -19,6 +19,10 @@ abstract public class AbstractServiceLocator {
     return getService(clazz.getSimpleName());
   }
 
+  public <T> void addService(Class<?> clazz, T service) {
+    objectManager.setObject(clazz.getSimpleName(), service);
+  }
+
   public <T> void addService(String keyName, T service) {
     objectManager.setObject(keyName, service);
   }

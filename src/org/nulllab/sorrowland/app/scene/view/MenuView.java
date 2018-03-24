@@ -8,16 +8,17 @@ import org.nulllab.nullengine.core.geometry.Object2D;
 import org.nulllab.nullengine.core.geometry.intersection.spatialhash.SpatialHash;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.StringDrawer;
-import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpriteAnimated;
 import org.nulllab.nullengine.core.graphics.spritesheet.SpriteManager;
 import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheet;
 import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheetPackage;
+import org.nulllab.nullengine.core.graphics.spritesheet.sprite.Sprite;
+import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpriteAnimated;
 import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.openworld.map.MapParser;
 import org.nulllab.nullengine.openworld.map.Terrain;
 import org.nulllab.sorrowland.app.config.Configuration;
-import org.nulllab.sorrowland.app.graphics.CharactersSpritePackage;
 import org.nulllab.sorrowland.app.graphics.Characters1SheetPackage;
+import org.nulllab.sorrowland.app.graphics.CharactersSpritePackage;
 import org.nulllab.sorrowland.app.graphics.WorldTilesSpritePackage;
 import org.nulllab.sorrowland.app.scene.MenuScene;
 import org.nulllab.ui.process.view.AbstractView;
@@ -46,6 +47,7 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
   private Input              input;
   private SpriteSheetPackage sheetPackage;
   private Terrain[][]        worldMap;
+  private Sprite             sprite;
 
   private CharactersSpritePackage spritePackage;
 
@@ -58,14 +60,12 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
   @Override
   public void doInitialize() {
 
-    ServiceLocator.getInstance().addService(SpriteManager.class);
-
     MapParser reader = new MapParser("map/World1.map");
     reader.loadMap();
 
     System.out.println("before world map init...");
 
-    int width = 1200;
+    int width  = 1200;
     int height = 800;
 
     worldMap = new Terrain[width][height];
@@ -130,7 +130,11 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
     spriteManager.addSheetPackage(new Characters1SheetPackage());
     spriteManager.getSheetPackage(WorldTilesSpritePackage.class);
 
+    ServiceLocator.getInstance().addService(SpriteManager.class, spriteManager);
+
     spritePackage = new CharactersSpritePackage();
+
+    sprite = spritePackage.getSprite("turnUp");
 
     spriteAnimated = new SpriteAnimated(spriteManager.getSheetFromPackage(WorldTilesSpritePackage.class, "sheet1"), 3, 5);
     spriteAnimated.setDirection(SpriteAnimated.Direction.PING_PONG);
@@ -141,18 +145,25 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
 
     super.render(canvas);
 
-    if (input.isPressed(KeyEvent.VK_1, true)) {
-      spriteAnimated = new SpriteAnimated(sheetPackage.getSpriteSheet("sheet2"), 3);
-      spriteAnimated.setDirection(SpriteAnimated.Direction.PING_PONG);
-    } else if (input.isPressed(KeyEvent.VK_2, true)) {
-      spriteAnimated = new SpriteAnimated(sheetPackage.getSpriteSheet("sheet3"), 3);
-      spriteAnimated.setDirection(SpriteAnimated.Direction.PING_PONG);
-    }
 
+    if (input.isPressed(KeyEvent.VK_1, true)) {
+      sprite = spritePackage.getSprite("turnDown");
+    } else if (input.isPressed(KeyEvent.VK_DOWN, true)) {
+      sprite = spritePackage.getSprite("moveDown");
+    }
+    else if (input.isPressed(KeyEvent.VK_UP, true)) {
+      sprite = spritePackage.getSprite("moveUp");
+    }
+    else if (input.isPressed(KeyEvent.VK_RIGHT, true)) {
+      sprite = spritePackage.getSprite("moveRight");
+    }
+    else if (input.isPressed(KeyEvent.VK_LEFT, true)) {
+      sprite = spritePackage.getSprite("moveLeft");
+    }
 
     spriteFontMap.setString("exp: 90813");
 
-//    spriteAnimated.draw(canvas, 0, 0);
+    //    spriteAnimated.draw(canvas, 0, 0);
 
     spriteFontMap.draw(canvas, 100, 100);
     if (object1.getMaxX() > bound2D.getMaxX()) {
@@ -171,16 +182,16 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
 
     //    canvas.setColor(Color.WHITE);
 
-    for (double x = bound2D.getX(); x < bound2D.getMaxX(); x += size) {
-      for (double y = bound2D.getY(); y < bound2D.getMaxY(); y += size) {
-//        canvas.drawRectangle((int)x, (int)y, size, size);
-        spriteAnimated.draw(canvas, x, y);
+    for (double x = bound2D.getX(); x < bound2D.getMaxX(); x += sprite.getWidth()) {
+      for (double y = bound2D.getY(); y < bound2D.getMaxY(); y += sprite.getHeight()) {
+        sprite.draw(canvas, x, y);
+        //        canvas.drawRectangle((int)x, (int)y, size, size);
+        //        spriteAnimated.draw(canvas, x, y);
       }
     }
 
 
-
-//    canvas.setColor(Color.RED.getRGB());
+    //    canvas.setColor(Color.RED.getRGB());
     //    canvas.drawRectangle(bound2D.getX(), bound2D.getY(), bound2D.getWidth(), bound2D.getHeight());
 
     //    for (Object2D object2D : spatialHash.getObjects()) {

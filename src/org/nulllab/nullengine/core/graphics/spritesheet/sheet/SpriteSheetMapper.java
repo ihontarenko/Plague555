@@ -1,6 +1,6 @@
 package org.nulllab.nullengine.core.graphics.spritesheet.sheet;
 
-public class SpriteSheetSetup {
+public class SpriteSheetMapper {
 
   private String name;
 
@@ -13,19 +13,19 @@ public class SpriteSheetSetup {
   private int countX;
   private int countY;
 
-  public SpriteSheetSetup(String name, int size, int offset, int count) {
+  public SpriteSheetMapper(String name, int size, int offset, int count) {
     this(name, size, size, offset, offset, count, count);
   }
 
-  public SpriteSheetSetup(String name, int sizeX, int sizeY, int offset, int count) {
+  public SpriteSheetMapper(String name, int sizeX, int sizeY, int offset, int count) {
     this(name, sizeX, sizeY, offset, offset, count, count);
   }
 
-  public SpriteSheetSetup(String name, int sizeX, int sizeY, int offsetX, int offsetY, int count) {
+  public SpriteSheetMapper(String name, int sizeX, int sizeY, int offsetX, int offsetY, int count) {
     this(name, sizeX, sizeY, offsetX, offsetY, count, count);
   }
 
-  public SpriteSheetSetup(String name, int sizeX, int sizeY, int offsetX, int offsetY, int countX, int countY) {
+  public SpriteSheetMapper(String name, int sizeX, int sizeY, int offsetX, int offsetY, int countX, int countY) {
     this.name = name;
     this.sizeX = sizeX;
     this.sizeY = sizeY;

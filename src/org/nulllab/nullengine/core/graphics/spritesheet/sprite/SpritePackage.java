@@ -1,22 +1,27 @@
 package org.nulllab.nullengine.core.graphics.spritesheet.sprite;
 
+import org.nulllab.nullengine.core.ServiceLocator;
 import org.nulllab.nullengine.core.common.Initializable;
+import org.nulllab.nullengine.core.graphics.spritesheet.SpriteManager;
 import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheet;
-import org.nulllab.nullengine.core.graphics.spritesheet.sprite.setup.SpriteAnimatedSetup;
-import org.nulllab.nullengine.core.graphics.spritesheet.sprite.setup.SpriteSetup;
-import org.nulllab.nullengine.core.graphics.spritesheet.sprite.setup.SpriteStaticSetup;
+import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheetPackage;
+import org.nulllab.nullengine.core.graphics.spritesheet.sprite.mapping.SpriteAnimatedMapper;
+import org.nulllab.nullengine.core.graphics.spritesheet.sprite.mapping.SpriteMapper;
+import org.nulllab.nullengine.core.graphics.spritesheet.sprite.mapping.SpriteStaticMapper;
 
 import java.util.HashMap;
 import java.util.Map;
 
 abstract public class SpritePackage implements Initializable {
 
-  private SpriteSheet         spriteSheet;
-  private Map<String, Sprite> sprites;
+  private Map<String, Sprite>                 sprites;
+  private Class<? extends SpriteSheetPackage> packageClass;
+  private String                              sheetName;
 
-  public SpritePackage(SpriteSheet spriteSheet) {
-    this.spriteSheet = spriteSheet;
+  public SpritePackage(Class<? extends SpriteSheetPackage> packageClass, String sheetName) {
     this.sprites = new HashMap<>();
+    this.packageClass = packageClass;
+    this.sheetName = sheetName;
     initialize();
   }
 
@@ -26,6 +31,14 @@ abstract public class SpritePackage implements Initializable {
 
   public Sprite getSprite(String name) {
     return sprites.get(name);
+  }
+
+  public Class<? extends SpriteSheetPackage> getPackageClass() {
+    return packageClass;
+  }
+
+  public String getSheetName() {
+    return sheetName;
   }
 
   public String getPackageUniqueName() {
@@ -39,32 +52,39 @@ abstract public class SpritePackage implements Initializable {
 
   @Override
   public void initialize() {
-    for (SpriteSetup setup : getSpriteSetup()) {
+    SpriteSheet spriteSheet = findSpriteSheet();
+
+    for (SpriteMapper mapper : getSpriteMappers()) {
       Sprite sprite;
 
-      if (setup instanceof SpriteAnimatedSetup) {
-        sprite = createSprite((SpriteAnimatedSetup) setup);
+      if (mapper instanceof SpriteAnimatedMapper) {
+        sprite = createSprite(spriteSheet, (SpriteAnimatedMapper) mapper);
       } else {
-        sprite = createSprite((SpriteStaticSetup) setup);
+        sprite = createSprite(spriteSheet, (SpriteStaticMapper) mapper);
       }
 
-      sprites.put(setup.getName(), sprite);
+      sprites.put(mapper.getName(), sprite);
     }
   }
 
-  private Sprite createSprite(SpriteAnimatedSetup setup) {
-    return new SpriteAnimated(spriteSheet,
-        setup.getFps(), setup.getScale(), setup.getStart(), setup.getEnd(), setup.getDirection());
+  private Sprite createSprite(SpriteSheet sheet, SpriteAnimatedMapper setup) {
+    return new SpriteAnimated(sheet, setup.getFps(), setup.getScale(), setup.getStart(), setup.getEnd(), setup.getDirection());
   }
 
-  private Sprite createSprite(SpriteStaticSetup setup) {
-    return new SpriteStatic(spriteSheet, setup.getScale(), setup.getPosition());
+  private Sprite createSprite(SpriteSheet sheet, SpriteStaticMapper setup) {
+    return new SpriteStatic(sheet, setup.getScale(), setup.getPosition());
+  }
+
+  private SpriteSheet findSpriteSheet() {
+    SpriteManager spriteManager = ServiceLocator.getInstance().getSpriteManager();
+
+    return spriteManager.getSheetFromPackage(getPackageClass(), getSheetName());
   }
 
   @Override
   public void reinitialize() {
   }
 
-  abstract public SpriteSetup[] getSpriteSetup();
+  abstract public SpriteMapper[] getSpriteMappers();
 
 }

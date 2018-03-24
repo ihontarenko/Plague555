@@ -50,13 +50,13 @@ abstract public class SpriteSheetPackage implements Initializable {
     try {
       bufferedImage = ImageIO.read(inputStream);
 
-      for (SpriteSheetSetup setup : getSpriteSheetSetup()) {
+      for (SpriteSheetMapper mapper : getSpriteSheetMappers()) {
         SpriteSheet sheet = new SpriteSheet(bufferedImage,
-            setup.getSizeX(), setup.getSizeY(),
-            setup.getOffsetX(), setup.getOffsetY(),
-            setup.getCountX(), setup.getCountY()
+            mapper.getSizeX(), mapper.getSizeY(),
+            mapper.getOffsetX(), mapper.getOffsetY(),
+            mapper.getCountX(), mapper.getCountY()
         );
-        spriteSheets.put(setup.getName(), sheet);
+        spriteSheets.put(mapper.getName(), sheet);
       }
     } catch (IOException e) {
       e.printStackTrace();
@@ -68,6 +68,6 @@ abstract public class SpriteSheetPackage implements Initializable {
 
   }
 
-  abstract public SpriteSheetSetup[] getSpriteSheetSetup();
+  abstract public SpriteSheetMapper[] getSpriteSheetMappers();
 
 }

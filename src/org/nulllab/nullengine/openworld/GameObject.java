@@ -20,7 +20,7 @@ abstract public class GameObject extends Object2D implements Renderable<Canvas>,
   private ServiceLocator      serviceLocator;
 
   public GameObject() {
-    // stub setup
+    // stub mapping
     this(0, 0, 1 << 4, 1 << 4);
   }
 

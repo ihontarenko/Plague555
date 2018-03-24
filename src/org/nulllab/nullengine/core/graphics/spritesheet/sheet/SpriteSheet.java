@@ -65,7 +65,7 @@ public class SpriteSheet {
     BufferedImage[] bufferedImages = new BufferedImage[length];
 
     for (int i = 0; i < length; i++) {
-      bufferedImages[i] = getBufferedImage(i + length);
+      bufferedImages[i] = getBufferedImage(i + start);
     }
 
     return bufferedImages;
