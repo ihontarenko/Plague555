@@ -10,21 +10,23 @@ import java.util.Set;
 @SuppressWarnings("unused")
 public class Character extends GameObject {
 
-  private Breed                           breed;
-  private Observable<? extends Character> observable;
-  private Stats stats;
-  private Set<Equipment> equipment;
+  private Breed                  breed;
+  private Observable<Character>  observable;
+  private Stats                  stats;
+  private Set<Equipment>         equipment;
+  private CharacterSpritePackage spritePackage;
 
   public Character(Breed breed) {
     this.breed = breed;
-    this.observable = new CharacterObservable();
+    this.observable = new Observable<>();
+    this.stats = breed.getStats();
   }
 
   public Breed getBreed() {
     return breed;
   }
 
-  public Observable<? extends Character> getObservable() {
+  public Observable getObservable() {
     return observable;
   }
 

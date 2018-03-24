@@ -1,5 +1,6 @@
-package org.nulllab.nullengine.core.graphics.spritesheet;
+package org.nulllab.nullengine.core.graphics.spritesheet.sheet;
 
+import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpriteAnimated;
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpriteStatic;
 
 import java.awt.image.BufferedImage;
@@ -72,6 +73,10 @@ public class SpriteSheet {
 
   public SpriteStatic getSprite(int index) {
     return new SpriteStatic(getBufferedImage(index));
+  }
+
+  public SpriteAnimated getSprite(int start, int end) {
+    return new SpriteAnimated(this, SpriteAnimated.DEFAULT_FPS, SpriteAnimated.DEFAULT_SCALE, start, end);
   }
 
   public int inHeight() {

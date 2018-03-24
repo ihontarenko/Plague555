@@ -2,7 +2,7 @@ package org.nulllab.nullengine.core.graphics.spritesheet.sprite;
 
 import org.nulllab.nullengine.core.common.time.Timer;
 import org.nulllab.nullengine.core.graphics.Canvas;
-import org.nulllab.nullengine.core.graphics.spritesheet.SpriteSheet;
+import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheet;
 
 public class SpriteAnimated extends Sprite {
 

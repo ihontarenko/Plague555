@@ -1,4 +1,4 @@
-package org.nulllab.nullengine.core.graphics.spritesheet;
+package org.nulllab.nullengine.core.graphics.spritesheet.sheet;
 
 import org.nulllab.nullengine.core.common.Initializable;
 import org.nulllab.nullengine.core.common.resource.ImageLoader;
@@ -18,6 +18,7 @@ abstract public class SpriteSheetPackage implements Initializable {
   public SpriteSheetPackage(String filename) {
     this.filename = filename;
     this.spriteSheets = new HashMap<>();
+    initialize();
   }
 
   public SpriteSheet getSpriteSheet(String name) {
@@ -28,37 +29,6 @@ abstract public class SpriteSheetPackage implements Initializable {
     return spriteSheets;
   }
 
-  @Override
-  public boolean isInitialized() {
-    return spriteSheets.size() > 0;
-  }
-
-  @Override
-  public void initialize() {
-    InputStream   inputStream   = new ImageLoader(getFilename()).getFileStream();
-    BufferedImage bufferedImage = null;
-
-    try {
-      bufferedImage = ImageIO.read(inputStream);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-
-    for (SpriteSheetParameters parameters : getSpriteSheetParameters()) {
-      SpriteSheet sheet = new SpriteSheet(bufferedImage,
-          parameters.getSizeX(), parameters.getSizeY(),
-          parameters.getOffsetX(), parameters.getOffsetY(),
-          parameters.getCountX(), parameters.getCountY()
-      );
-      spriteSheets.put(parameters.getName(), sheet);
-    }
-  }
-
-  @Override
-  public void reinitialize() {
-
-  }
-
   public String getFilename() {
     return filename;
   }
@@ -67,6 +37,37 @@ abstract public class SpriteSheetPackage implements Initializable {
     return getClass().getSimpleName();
   }
 
-  abstract public SpriteSheetParameters[] getSpriteSheetParameters();
+  @Override
+  public boolean isInitialized() {
+    return spriteSheets.size() > 0;
+  }
+
+  @Override
+  public void initialize() {
+    InputStream   inputStream   = new ImageLoader(getFilename()).getFileStream();
+    BufferedImage bufferedImage;
+
+    try {
+      bufferedImage = ImageIO.read(inputStream);
+
+      for (SpriteSheetSetup setup : getSpriteSheetSetup()) {
+        SpriteSheet sheet = new SpriteSheet(bufferedImage,
+            setup.getSizeX(), setup.getSizeY(),
+            setup.getOffsetX(), setup.getOffsetY(),
+            setup.getCountX(), setup.getCountY()
+        );
+        spriteSheets.put(setup.getName(), sheet);
+      }
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
+
+  @Override
+  public void reinitialize() {
+
+  }
+
+  abstract public SpriteSheetSetup[] getSpriteSheetSetup();
 
 }

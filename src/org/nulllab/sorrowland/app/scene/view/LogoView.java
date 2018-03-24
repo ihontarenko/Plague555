@@ -6,7 +6,7 @@ import org.nulllab.nullengine.core.geometry.Dimension;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.StringDrawer;
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpriteStatic;
-import org.nulllab.nullengine.core.graphics.spritesheet.SpriteSheet;
+import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheet;
 import org.nulllab.sorrowland.app.config.Configuration;
 import org.nulllab.sorrowland.app.manager.Manager;
 import org.nulllab.sorrowland.app.scene.IntroScene;

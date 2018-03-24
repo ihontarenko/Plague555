@@ -1,7 +1,7 @@
 package org.nulllab.sorrowland.app.graphics;
 
-import org.nulllab.nullengine.core.graphics.spritesheet.SpriteSheetPackage;
-import org.nulllab.nullengine.core.graphics.spritesheet.SpriteSheetParameters;
+import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheetPackage;
+import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheetSetup;
 
 public class WorldTilesSpritePackage extends SpriteSheetPackage {
 
@@ -10,11 +10,11 @@ public class WorldTilesSpritePackage extends SpriteSheetPackage {
   }
 
   @Override
-  public SpriteSheetParameters[] getSpriteSheetParameters() {
-    return new SpriteSheetParameters[] {
-        new SpriteSheetParameters("sheet1", 32, 32, 384, 288, 2, 1),
-        new SpriteSheetParameters("sheet2", 32, 32, 320, 288, 2, 1),
-        new SpriteSheetParameters("sheet3", 32, 32, 0, 288, 2, 1),
+  public SpriteSheetSetup[] getSpriteSheetSetup() {
+    return new SpriteSheetSetup[] {
+        new SpriteSheetSetup("sheet1", 32, 32, 384, 288, 2, 1),
+        new SpriteSheetSetup("sheet2", 32, 32, 320, 288, 2, 1),
+        new SpriteSheetSetup("sheet3", 32, 32, 0, 288, 2, 1),
     };
   }
 

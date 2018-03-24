@@ -3,7 +3,7 @@ package org.nulllab.nullengine.openworld.stats;
 import java.util.HashMap;
 import java.util.Map;
 
-abstract public class Stats {
+public class Stats {
 
   private Map<String, Double> values;
 

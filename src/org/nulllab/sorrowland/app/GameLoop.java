@@ -3,7 +3,7 @@ package org.nulllab.sorrowland.app;
 import org.nulllab.nullengine.core.common.resource.ImageLoader;
 import org.nulllab.nullengine.core.graphics.AWTGraphicsCanvas;
 import org.nulllab.nullengine.core.graphics.spritesheet.SpriteFont;
-import org.nulllab.nullengine.core.graphics.spritesheet.SpriteSheet;
+import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheet;
 import org.nulllab.sorrowland.app.config.Configuration;
 import org.nulllab.sorrowland.app.graphics.BoxySpriteFontMap;
 import org.nulllab.nullengine.core.graphics.StringDrawer;

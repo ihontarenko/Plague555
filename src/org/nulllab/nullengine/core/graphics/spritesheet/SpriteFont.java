@@ -1,5 +1,6 @@
 package org.nulllab.nullengine.core.graphics.spritesheet;
 
+import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheet;
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpriteStatic;
 
 import java.util.HashMap;

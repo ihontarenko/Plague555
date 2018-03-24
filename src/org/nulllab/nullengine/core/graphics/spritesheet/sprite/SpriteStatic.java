@@ -1,7 +1,7 @@
 package org.nulllab.nullengine.core.graphics.spritesheet.sprite;
 
 import org.nulllab.nullengine.core.geometry.Dimension;
-import org.nulllab.nullengine.core.graphics.spritesheet.SpriteSheet;
+import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheet;
 
 import java.awt.image.BufferedImage;
 

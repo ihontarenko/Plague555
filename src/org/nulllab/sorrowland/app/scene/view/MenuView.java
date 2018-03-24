@@ -9,8 +9,8 @@ import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.StringDrawer;
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpriteAnimated;
 import org.nulllab.nullengine.core.graphics.spritesheet.SpriteManager;
-import org.nulllab.nullengine.core.graphics.spritesheet.SpriteSheet;
-import org.nulllab.nullengine.core.graphics.spritesheet.SpriteSheetPackage;
+import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheet;
+import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheetPackage;
 import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.openworld.map.MapParser;
 import org.nulllab.nullengine.openworld.map.Terrain;
@@ -74,7 +74,6 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
     System.out.println(worldMap[600][300].getType());
 
     sheetPackage = new WorldTilesSpritePackage();
-    sheetPackage.initialize();
 
     timer = new Timer(0.1);
 

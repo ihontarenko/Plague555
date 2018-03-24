@@ -7,7 +7,7 @@ import org.nulllab.nullengine.core.event.Observer;
 import java.util.Set;
 
 @SuppressWarnings("unused")
-abstract public class Observable<T> {
+public class Observable<T> {
 
   private Set<Observer<T>> observers;
 
