@@ -1,6 +1,6 @@
 package org.nulllab.nullengine.core.graphics;
 
-import org.nulllab.nullengine.core.graphics.spritesheet.sprite.StaticSprite;
+import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpriteStatic;
 import org.nulllab.nullengine.core.graphics.spritesheet.SpriteFont;
 
 public class StringDrawer implements Drawable<Canvas> {
@@ -23,9 +23,9 @@ public class StringDrawer implements Drawable<Canvas> {
     int    offsetX;
 
     for (int i = 0; i < string.length(); i++) {
-      StaticSprite staticSprite = spriteFont.getSprite(string.charAt(i));
-      offsetX = (i * staticSprite.getWidth());
-      staticSprite.draw(g2d, x + offsetX, y);
+      SpriteStatic sprite = spriteFont.getSprite(string.charAt(i));
+      offsetX = (i * sprite.getWidth());
+      sprite.draw(g2d, x + offsetX, y);
     }
   }
 

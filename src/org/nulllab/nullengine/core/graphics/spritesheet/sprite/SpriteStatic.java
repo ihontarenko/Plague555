@@ -5,26 +5,26 @@ import org.nulllab.nullengine.core.graphics.spritesheet.SpriteSheet;
 
 import java.awt.image.BufferedImage;
 
-public class StaticSprite extends Sprite {
+public class SpriteStatic extends Sprite {
 
-  public StaticSprite(BufferedImage bufferedImage, Dimension dimension) {
+  public SpriteStatic(BufferedImage bufferedImage, Dimension dimension) {
     super(new BufferedImage[]{bufferedImage}, dimension);
   }
 
-  public StaticSprite(BufferedImage bufferedImage) {
+  public SpriteStatic(BufferedImage bufferedImage) {
     super(new BufferedImage[]{bufferedImage});
   }
 
-  public StaticSprite(SpriteSheet spriteSheet, double scale, int position) {
+  public SpriteStatic(SpriteSheet spriteSheet, double scale, int position) {
     this(spriteSheet.getBufferedImage(position % spriteSheet.count()));
     setScale(scale);
   }
 
-  public StaticSprite(SpriteSheet spriteSheet, int position) {
+  public SpriteStatic(SpriteSheet spriteSheet, int position) {
     this(spriteSheet.getBufferedImage(position % spriteSheet.count()));
   }
 
-  public StaticSprite(SpriteSheet spriteSheet) {
+  public SpriteStatic(SpriteSheet spriteSheet) {
     this(spriteSheet.getBufferedImage(0));
   }
 

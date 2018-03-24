@@ -1,13 +1,13 @@
 package org.nulllab.nullengine.core.graphics.spritesheet;
 
-import org.nulllab.nullengine.core.graphics.spritesheet.sprite.StaticSprite;
+import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpriteStatic;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class SpriteFont {
 
-  private Map<Integer, StaticSprite> sprites;
+  private Map<Integer, SpriteStatic> sprites;
   private double                     fontScale;
 
   public SpriteFont(SpriteSheet spriteSheet, SpriteFontMap spriteFontMap) {
@@ -22,9 +22,9 @@ public class SpriteFont {
 
   private void mapSprites(SpriteSheet spriteSheet, SpriteFontMap spriteFontMap) {
     for (int charCode : spriteFontMap.getChars()) {
-      StaticSprite staticSprite = spriteSheet.getSprite(spriteFontMap.getPosition(charCode));
-      staticSprite.setScale(getFontScale());
-      this.sprites.put(charCode, staticSprite);
+      SpriteStatic sprite = spriteSheet.getSprite(spriteFontMap.getPosition(charCode));
+      sprite.setScale(getFontScale());
+      this.sprites.put(charCode, sprite);
     }
   }
 
@@ -36,7 +36,7 @@ public class SpriteFont {
     this.fontScale = fontScale;
   }
 
-  public StaticSprite getSprite(int position) {
+  public SpriteStatic getSprite(int position) {
     return sprites.get(position);
   }
 

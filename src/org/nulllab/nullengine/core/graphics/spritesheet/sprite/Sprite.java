@@ -68,6 +68,10 @@ abstract public class Sprite implements Drawable<Canvas> {
     }
   }
 
+  public int countImages() {
+    return images.length;
+  }
+
   public BufferedImage[] getImages() {
     return images;
   }

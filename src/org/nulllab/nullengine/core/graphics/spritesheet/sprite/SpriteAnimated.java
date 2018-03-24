@@ -4,7 +4,7 @@ import org.nulllab.nullengine.core.common.time.Timer;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.spritesheet.SpriteSheet;
 
-public class DinamicSprite extends Sprite {
+public class SpriteAnimated extends Sprite {
 
   public enum Direction {
     LOOPED, PING_PONG
@@ -16,23 +16,23 @@ public class DinamicSprite extends Sprite {
   private Timer          timer;
   private int            incrementer;
 
-  public DinamicSprite(SpriteSheet sheet) {
-    this(sheet, DEFAULT_FPS, 1, 0, sheet.count(), Direction.LOOPED);
+  public SpriteAnimated(SpriteSheet sheet) {
+    this(sheet, DEFAULT_FPS, DEFAULT_SCALE, DEFAULT_INDEX, sheet.count(), Direction.LOOPED);
   }
 
-  public DinamicSprite(SpriteSheet sheet, int fps) {
-    this(sheet, fps, 1, 0, sheet.count(), Direction.LOOPED);
+  public SpriteAnimated(SpriteSheet sheet, int fps) {
+    this(sheet, fps, DEFAULT_SCALE, DEFAULT_INDEX, sheet.count(), Direction.LOOPED);
   }
 
-  public DinamicSprite(SpriteSheet sheet, int fps, double scale) {
-    this(sheet, fps, scale, 0, sheet.count(), Direction.LOOPED);
+  public SpriteAnimated(SpriteSheet sheet, int fps, double scale) {
+    this(sheet, fps, scale, DEFAULT_INDEX, sheet.count(), Direction.LOOPED);
   }
 
-  public DinamicSprite(SpriteSheet sheet, int fps, double scale, int startIndex, int lastIndex) {
+  public SpriteAnimated(SpriteSheet sheet, int fps, double scale, int startIndex, int lastIndex) {
     this(sheet, fps, scale, startIndex, lastIndex, Direction.LOOPED);
   }
 
-  public DinamicSprite(SpriteSheet sheet, int fps, double scale, int startIndex, int lastIndex, Direction direction) {
+  public SpriteAnimated(SpriteSheet sheet, int fps, double scale, int startIndex, int lastIndex, Direction direction) {
     super(sheet.getBufferedImages(startIndex, lastIndex));
     setScale(scale);
     this.incrementer = 1;
@@ -56,7 +56,7 @@ public class DinamicSprite extends Sprite {
   private void updateIncrementer() {
     switch (direction) {
       case PING_PONG:
-        if (getActiveIndex() == getImages().length - 1) {
+        if (getActiveIndex() == countImages() - 1) {
           incrementer = -1;
         } else if (getActiveIndex() == 0) {
           incrementer = 1;

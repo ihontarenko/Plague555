@@ -1,6 +1,6 @@
 package org.nulllab.nullengine.core.graphics.spritesheet;
 
-import org.nulllab.nullengine.core.graphics.spritesheet.sprite.StaticSprite;
+import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpriteStatic;
 
 import java.awt.image.BufferedImage;
 
@@ -70,8 +70,8 @@ public class SpriteSheet {
     return bufferedImages;
   }
 
-  public StaticSprite getSprite(int index) {
-    return new StaticSprite(getBufferedImage(index));
+  public SpriteStatic getSprite(int index) {
+    return new SpriteStatic(getBufferedImage(index));
   }
 
   public int inHeight() {

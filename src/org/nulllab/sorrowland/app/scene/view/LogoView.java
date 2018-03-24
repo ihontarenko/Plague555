@@ -5,7 +5,7 @@ import org.nulllab.nullengine.core.common.time.Timer;
 import org.nulllab.nullengine.core.geometry.Dimension;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.StringDrawer;
-import org.nulllab.nullengine.core.graphics.spritesheet.sprite.StaticSprite;
+import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpriteStatic;
 import org.nulllab.nullengine.core.graphics.spritesheet.SpriteSheet;
 import org.nulllab.sorrowland.app.config.Configuration;
 import org.nulllab.sorrowland.app.manager.Manager;
@@ -21,7 +21,7 @@ import java.io.InputStream;
 public class LogoView extends AbstractView<IntroScene, AbstractView> {
 
   private Configuration configuration;
-  private StaticSprite  logoStaticSprite;
+  private SpriteStatic  logoSprite;
   private StringDrawer  stringDrawer;
   private Timer         timer;
 
@@ -42,12 +42,12 @@ public class LogoView extends AbstractView<IntroScene, AbstractView> {
 
     try {
       SpriteSheet spriteSheet = new SpriteSheet(ImageIO.read(inputStream));
-      this.logoStaticSprite = new StaticSprite(spriteSheet);
+      this.logoSprite = new SpriteStatic(spriteSheet);
     } catch (IOException e) {
       e.printStackTrace();
     }
 
-    this.logoStaticSprite.setDimension(dimension);
+    this.logoSprite.setDimension(dimension);
 
     timer = new Timer(3);
   }
@@ -56,7 +56,7 @@ public class LogoView extends AbstractView<IntroScene, AbstractView> {
   public void render(Canvas canvas) {
     super.render(canvas);
 
-    logoStaticSprite.draw(canvas, 0, 0);
+    logoSprite.draw(canvas, 0, 0);
     stringDrawer.draw(canvas, "github.com/nulllab | Ivan Hontarenko 2018", 10, 585);
 
     if (timer.isElapsedThenPurge()) {

@@ -7,7 +7,7 @@ import org.nulllab.nullengine.core.geometry.Object2D;
 import org.nulllab.nullengine.core.geometry.intersection.spatialhash.SpatialHash;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.StringDrawer;
-import org.nulllab.nullengine.core.graphics.spritesheet.sprite.DinamicSprite;
+import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpriteAnimated;
 import org.nulllab.nullengine.core.graphics.spritesheet.SpriteManager;
 import org.nulllab.nullengine.core.graphics.spritesheet.SpriteSheet;
 import org.nulllab.nullengine.core.graphics.spritesheet.SpriteSheetPackage;
@@ -31,7 +31,7 @@ import java.util.Set;
 public class MenuView extends AbstractView<MenuScene, AbstractView> {
 
   private SpriteSheet        sheet;
-  private DinamicSprite      dinamicSprite;
+  private SpriteAnimated     spriteAnimated;
   private StringDrawer       spriteFontMap;
   private Configuration      configuration;
   private SpatialHash        spatialHash;
@@ -124,8 +124,8 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
     spriteManager.addSheetPackage(sheetPackage);
     spriteManager.getSheetPackage(WorldTilesSpritePackage.class);
 
-    dinamicSprite = new DinamicSprite(spriteManager.getSheetFromPackage(WorldTilesSpritePackage.class, "sheet1"), 3, 5);
-    dinamicSprite.setDirection(DinamicSprite.Direction.PING_PONG);
+    spriteAnimated = new SpriteAnimated(spriteManager.getSheetFromPackage(WorldTilesSpritePackage.class, "sheet1"), 3, 5);
+    spriteAnimated.setDirection(SpriteAnimated.Direction.PING_PONG);
   }
 
   @Override
@@ -134,17 +134,17 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
     super.render(canvas);
 
     if (input.isPressed(KeyEvent.VK_1, true)) {
-      dinamicSprite = new DinamicSprite(sheetPackage.getSpriteSheet("sheet2"), 3);
-      dinamicSprite.setDirection(DinamicSprite.Direction.PING_PONG);
+      spriteAnimated = new SpriteAnimated(sheetPackage.getSpriteSheet("sheet2"), 3);
+      spriteAnimated.setDirection(SpriteAnimated.Direction.PING_PONG);
     } else if (input.isPressed(KeyEvent.VK_2, true)) {
-      dinamicSprite = new DinamicSprite(sheetPackage.getSpriteSheet("sheet3"), 3);
-      dinamicSprite.setDirection(DinamicSprite.Direction.PING_PONG);
+      spriteAnimated = new SpriteAnimated(sheetPackage.getSpriteSheet("sheet3"), 3);
+      spriteAnimated.setDirection(SpriteAnimated.Direction.PING_PONG);
     }
 
 
     spriteFontMap.setString("exp: 90813");
 
-    dinamicSprite.draw(canvas, 0, 0);
+    spriteAnimated.draw(canvas, 0, 0);
 
     spriteFontMap.draw(canvas, 100, 100);
     if (object1.getMaxX() > bound2D.getMaxX()) {
@@ -169,7 +169,7 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
     //      }
     //    }
 
-    dinamicSprite.draw(canvas, 0, 32);
+    spriteAnimated.draw(canvas, 0, 32);
 
     canvas.setColor(Color.RED.getRGB());
     //    canvas.drawRectangle(bound2D.getX(), bound2D.getY(), bound2D.getWidth(), bound2D.getHeight());
