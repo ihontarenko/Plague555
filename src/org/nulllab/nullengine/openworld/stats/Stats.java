@@ -5,29 +5,50 @@ import java.util.Map;
 
 abstract public class Stats {
 
-  private Map<String, StatsValue> statsValues;
+  private Map<String, Double> values;
 
   public Stats() {
-    this.statsValues = new HashMap<>();
+    values = new HashMap<>();
   }
 
-  public StatsValue getStats(String keyName) {
-    return statsValues.get(keyName);
+  public Double getValue(String keyName) {
+    return values.get(keyName);
   }
 
-  public <V> V getStatsValue(String keyName) {
-    return (V) statsValues.get(keyName).getValue();
+  public void setValue(String keyName, Double value) {
+    values.put(keyName, value);
   }
 
-  public void addStats(String keyName, StatsValue statsValue) {
-    statsValues.put(keyName, statsValue);
-//    for (String keyName : stats.getStatsValues().keySet()) {
-//
-//    }
+  public boolean hasValue(String keyName) {
+    return values.containsKey(keyName);
   }
 
-  public Map<String, StatsValue> getStatsValues() {
-    return statsValues;
+  public void subtractWith(Stats stats) {
+    stats.getValues().forEach(this::subtractWith);
+  }
+
+  public void foldWith(Stats stats) {
+    stats.getValues().forEach(this::foldWith);
+  }
+
+  public void subtractWith(String keyName, Double value) {
+    if (hasValue(keyName)) {
+      value = getValue(keyName) - value;
+    }
+
+    setValue(keyName, value);
+  }
+
+  public void foldWith(String keyName, Double value) {
+    if (hasValue(keyName)) {
+      value = getValue(keyName) + value;
+    }
+
+    setValue(keyName, value);
+  }
+
+  public Map<String, Double> getValues() {
+    return values;
   }
 
 }
