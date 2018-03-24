@@ -1,4 +1,4 @@
-package org.nulllab.sorrowland.app.view.menu;
+package org.nulllab.sorrowland.app.scene.view;
 
 import org.nulllab.nullengine.core.common.resource.ImageLoader;
 import org.nulllab.nullengine.core.common.time.Timer;
@@ -7,12 +7,13 @@ import org.nulllab.nullengine.core.geometry.Object2D;
 import org.nulllab.nullengine.core.geometry.intersection.spatialhash.SpatialHash;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.StringDrawer;
-import org.nulllab.nullengine.core.graphics.sprite.SpriteAnimated;
-import org.nulllab.nullengine.core.graphics.sprite.SpriteManager;
-import org.nulllab.nullengine.core.graphics.sprite.SpriteSheet;
-import org.nulllab.nullengine.core.graphics.sprite.SpriteSheetPackage;
+import org.nulllab.nullengine.core.graphics.spritesheet.sprite.DinamicSprite;
+import org.nulllab.nullengine.core.graphics.spritesheet.SpriteManager;
+import org.nulllab.nullengine.core.graphics.spritesheet.SpriteSheet;
+import org.nulllab.nullengine.core.graphics.spritesheet.SpriteSheetPackage;
 import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.openworld.map.MapParser;
+import org.nulllab.nullengine.openworld.map.Terrain;
 import org.nulllab.sorrowland.app.config.Configuration;
 import org.nulllab.sorrowland.app.graphics.WorldTilesSpritePackage;
 import org.nulllab.sorrowland.app.scene.MenuScene;
@@ -30,7 +31,7 @@ import java.util.Set;
 public class MenuView extends AbstractView<MenuScene, AbstractView> {
 
   private SpriteSheet        sheet;
-  private SpriteAnimated     spriteAnimated;
+  private DinamicSprite      dinamicSprite;
   private StringDrawer       spriteFontMap;
   private Configuration      configuration;
   private SpatialHash        spatialHash;
@@ -42,6 +43,7 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
   private Timer              timer;
   private Input              input;
   private SpriteSheetPackage sheetPackage;
+  private Terrain[][]        worldMap;
 
   private int velocity = 1;
 
@@ -54,6 +56,22 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
 
     MapParser reader = new MapParser("map/World1.map");
     reader.loadMap();
+
+    System.out.println("before world map init...");
+
+    int width = 1200;
+    int height = 800;
+
+    worldMap = new Terrain[width][height];
+
+    for (int w = 0; w < width; w++) {
+      for (int h = 0; h < height; h++) {
+        worldMap[w][h] = new Terrain(Terrain.Type.GRASS, 12D);
+      }
+    }
+
+    System.out.println("after world map init...");
+    System.out.println(worldMap[600][300].getType());
 
     sheetPackage = new WorldTilesSpritePackage();
     sheetPackage.initialize();
@@ -106,8 +124,8 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
     spriteManager.addSheetPackage(sheetPackage);
     spriteManager.getSheetPackage(WorldTilesSpritePackage.class);
 
-    spriteAnimated = new SpriteAnimated(spriteManager.getSheetFromPackage(WorldTilesSpritePackage.class, "sheet1"), 3, 5);
-    spriteAnimated.setDirection(SpriteAnimated.Direction.PING_PONG);
+    dinamicSprite = new DinamicSprite(spriteManager.getSheetFromPackage(WorldTilesSpritePackage.class, "sheet1"), 3, 5);
+    dinamicSprite.setDirection(DinamicSprite.Direction.PING_PONG);
   }
 
   @Override
@@ -116,17 +134,17 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
     super.render(canvas);
 
     if (input.isPressed(KeyEvent.VK_1, true)) {
-      spriteAnimated = new SpriteAnimated(sheetPackage.getSpriteSheet("sheet2"), 3, 2);
-      spriteAnimated.setDirection(SpriteAnimated.Direction.PING_PONG);
+      dinamicSprite = new DinamicSprite(sheetPackage.getSpriteSheet("sheet2"), 3);
+      dinamicSprite.setDirection(DinamicSprite.Direction.PING_PONG);
     } else if (input.isPressed(KeyEvent.VK_2, true)) {
-      spriteAnimated = new SpriteAnimated(sheetPackage.getSpriteSheet("sheet3"), 3, 2);
-      spriteAnimated.setDirection(SpriteAnimated.Direction.PING_PONG);
+      dinamicSprite = new DinamicSprite(sheetPackage.getSpriteSheet("sheet3"), 3);
+      dinamicSprite.setDirection(DinamicSprite.Direction.PING_PONG);
     }
 
 
     spriteFontMap.setString("exp: 90813");
 
-    spriteAnimated.draw(canvas, 10, 10);
+    dinamicSprite.draw(canvas, 0, 0);
 
     spriteFontMap.draw(canvas, 100, 100);
     if (object1.getMaxX() > bound2D.getMaxX()) {
@@ -143,33 +161,33 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
 
     object1.setX(object1.getX() + velocity);
 
-//    canvas.setColor(Color.WHITE);
+    //    canvas.setColor(Color.WHITE);
 
-//    for (int x = bound2D.getX(); x < bound2D.getMaxX(); x += size) {
-//      for (int y = bound2D.getY(); y < bound2D.getMaxY(); y += size) {
-//        g2d.drawRect(x, y, size, size);
-//      }
-//    }
+    //    for (int x = bound2D.getX(); x < bound2D.getMaxX(); x += size) {
+    //      for (int y = bound2D.getY(); y < bound2D.getMaxY(); y += size) {
+    //        g2d.drawRect(x, y, size, size);
+    //      }
+    //    }
 
-    spriteAnimated.draw(canvas, 10, 10);
+    dinamicSprite.draw(canvas, 0, 32);
 
     canvas.setColor(Color.RED.getRGB());
-//    canvas.drawRectangle(bound2D.getX(), bound2D.getY(), bound2D.getWidth(), bound2D.getHeight());
+    //    canvas.drawRectangle(bound2D.getX(), bound2D.getY(), bound2D.getWidth(), bound2D.getHeight());
 
-//    for (Object2D object2D : spatialHash.getObjects()) {
-//      g2d.setColor(Color.GREEN);
-//      spatialHash.getObjectKeys(object2D).forEach(key -> g2d.drawRect(spatialHash.getXPixel(key), spatialHash.getYPixel(key), size, size));
-//      g2d.setColor(Color.MAGENTA);
-//      g2d.drawRect(object2D.getX(), object2D.getY(), object2D.getWidth(), object2D.getHeight());
-//    }
+    //    for (Object2D object2D : spatialHash.getObjects()) {
+    //      g2d.setColor(Color.GREEN);
+    //      spatialHash.getObjectKeys(object2D).forEach(key -> g2d.drawRect(spatialHash.getXPixel(key), spatialHash.getYPixel(key), size, size));
+    //      g2d.setColor(Color.MAGENTA);
+    //      g2d.drawRect(object2D.getX(), object2D.getY(), object2D.getWidth(), object2D.getHeight());
+    //    }
 
-//    System.out.println("retrieved: " + spatialHash.retrieve(object1).size());
+    //    System.out.println("retrieved: " + spatialHash.retrieve(object1).size());
 
-//    g2d.setColor(Color.RED);
-//    g2d.drawRect(object1.getX(), object1.getY(), object1.getWidth(), object1.getHeight());
+    //    g2d.setColor(Color.RED);
+    //    g2d.drawRect(object1.getX(), object1.getY(), object1.getWidth(), object1.getHeight());
 
-//    for (Object2D object2D : spatialHash.retrieve(object1)) {
-//      g2d.drawRect(object2D.getX(), object2D.getY(), object2D.getWidth(), object2D.getHeight());
-//    }
+    //    for (Object2D object2D : spatialHash.retrieve(object1)) {
+    //      g2d.drawRect(object2D.getX(), object2D.getY(), object2D.getWidth(), object2D.getHeight());
+    //    }
   }
 }

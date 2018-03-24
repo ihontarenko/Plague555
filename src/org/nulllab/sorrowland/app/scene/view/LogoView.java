@@ -1,12 +1,12 @@
-package org.nulllab.sorrowland.app.view.intro;
+package org.nulllab.sorrowland.app.scene.view;
 
 import org.nulllab.nullengine.core.common.resource.ImageLoader;
 import org.nulllab.nullengine.core.common.time.Timer;
 import org.nulllab.nullengine.core.geometry.Dimension;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.StringDrawer;
-import org.nulllab.nullengine.core.graphics.sprite.Sprite;
-import org.nulllab.nullengine.core.graphics.sprite.SpriteSheet;
+import org.nulllab.nullengine.core.graphics.spritesheet.sprite.StaticSprite;
+import org.nulllab.nullengine.core.graphics.spritesheet.SpriteSheet;
 import org.nulllab.sorrowland.app.config.Configuration;
 import org.nulllab.sorrowland.app.manager.Manager;
 import org.nulllab.sorrowland.app.scene.IntroScene;
@@ -21,7 +21,7 @@ import java.io.InputStream;
 public class LogoView extends AbstractView<IntroScene, AbstractView> {
 
   private Configuration configuration;
-  private Sprite        logoSprite;
+  private StaticSprite  logoStaticSprite;
   private StringDrawer  stringDrawer;
   private Timer         timer;
 
@@ -42,12 +42,12 @@ public class LogoView extends AbstractView<IntroScene, AbstractView> {
 
     try {
       SpriteSheet spriteSheet = new SpriteSheet(ImageIO.read(inputStream));
-      this.logoSprite = new Sprite(spriteSheet);
+      this.logoStaticSprite = new StaticSprite(spriteSheet);
     } catch (IOException e) {
       e.printStackTrace();
     }
 
-    this.logoSprite.setDimension(dimension);
+    this.logoStaticSprite.setDimension(dimension);
 
     timer = new Timer(3);
   }
@@ -56,8 +56,8 @@ public class LogoView extends AbstractView<IntroScene, AbstractView> {
   public void render(Canvas canvas) {
     super.render(canvas);
 
-    logoSprite.draw(canvas, 0, 0);
-    stringDrawer.draw(canvas, 100, 500);
+    logoStaticSprite.draw(canvas, 0, 0);
+    stringDrawer.draw(canvas, "github.com/nulllab | Ivan Hontarenko 2018", 10, 585);
 
     if (timer.isElapsedThenPurge()) {
       getSceneManager().setActiveScene(Manager.STATE_MENU);

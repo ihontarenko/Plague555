@@ -1,6 +1,6 @@
 package org.nulllab.nullengine.core;
 
-import org.nulllab.nullengine.core.graphics.sprite.SpriteManager;
+import org.nulllab.nullengine.core.graphics.spritesheet.SpriteManager;
 
 public class ServiceLocator extends AbstractServiceLocator {
 

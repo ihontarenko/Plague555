@@ -1,6 +1,6 @@
-package org.nulllab.nullengine.openworld.object.tile;
+package org.nulllab.nullengine.openworld.tile;
 
-import org.nulllab.nullengine.openworld.object.GameObject;
+import org.nulllab.nullengine.openworld.GameObject;
 
 public class Tile extends GameObject {
 

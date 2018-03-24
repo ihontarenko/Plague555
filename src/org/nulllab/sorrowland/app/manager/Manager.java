@@ -1,10 +1,11 @@
 package org.nulllab.sorrowland.app.manager;
 
-import org.nulllab.ui.process.scene.Scene;
-import org.nulllab.ui.service.Context;
-import org.nulllab.ui.process.SceneManager;
 import org.nulllab.sorrowland.app.scene.IntroScene;
 import org.nulllab.sorrowland.app.scene.MenuScene;
+import org.nulllab.sorrowland.app.scene.WorldTestScene;
+import org.nulllab.ui.process.SceneManager;
+import org.nulllab.ui.process.scene.Scene;
+import org.nulllab.ui.service.Context;
 
 public class Manager extends SceneManager<Scene> {
 
@@ -20,6 +21,7 @@ public class Manager extends SceneManager<Scene> {
   public void doInitialize() {
     registerController(STATE_INTRO, IntroScene.class, getContext());
     registerController(STATE_MENU, MenuScene.class, getContext());
-    setActiveScene(STATE_MENU);
+    registerController(STATE_GAME_PLAY, WorldTestScene.class, getContext());
+    setActiveScene(STATE_GAME_PLAY);
   }
 }

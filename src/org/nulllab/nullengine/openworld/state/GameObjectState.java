@@ -4,7 +4,7 @@ import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.Renderable;
 import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.core.loop.Updateable;
-import org.nulllab.nullengine.openworld.object.GameObject;
+import org.nulllab.nullengine.openworld.GameObject;
 
 public class GameObjectState implements Renderable<Canvas>, Updateable {
 

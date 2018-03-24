@@ -24,9 +24,9 @@ public class GUIFrame extends JFrame implements Initializable {
   @Override
   public void initialize() {
     if (!isInitialized()) {
-      JScrollPane scrollPane = new JScrollPane(canvas);
-      scrollPane.setSize(400, 500);
-      getContentPane().add(scrollPane);
+//      JScrollPane scrollPane = new JScrollPane(canvas);
+//      scrollPane.setSize(400, 500);
+      getContentPane().add(canvas);
       setResizable(false);
       setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
       pack();

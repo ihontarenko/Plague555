@@ -1,7 +1,8 @@
-package org.nulllab.nullengine.openworld.object;
+package org.nulllab.nullengine.openworld;
 
 import org.nulllab.nullengine.component.Component;
 import org.nulllab.nullengine.component.ComponentCollection;
+import org.nulllab.nullengine.core.ServiceLocator;
 import org.nulllab.nullengine.core.geometry.Object2D;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.Renderable;
@@ -16,16 +17,18 @@ abstract public class GameObject extends Object2D implements Renderable<Canvas>,
   private boolean             active;
   private ComponentCollection components;
   private GameObjectState     objectState;
-
-  public GameObject(int x, int y, int width, int height) {
-    super(x, y, width, height);
-    components = new ComponentCollection();
-    objectState = new NullState();
-  }
+  private ServiceLocator      serviceLocator;
 
   public GameObject() {
     // stub setup
     this(0, 0, 1 << 4, 1 << 4);
+  }
+
+  public GameObject(int x, int y, int width, int height) {
+    super(x, y, width, height);
+    serviceLocator = ServiceLocator.getInstance();
+    components = new ComponentCollection();
+    objectState = new NullState();
   }
 
   public Component getComponent(String name) {

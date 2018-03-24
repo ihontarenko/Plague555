@@ -1,4 +1,4 @@
-package org.nulllab.nullengine.core.graphics.sprite;
+package org.nulllab.nullengine.core.graphics.spritesheet;
 
 public class SpriteSheetParameters {
 

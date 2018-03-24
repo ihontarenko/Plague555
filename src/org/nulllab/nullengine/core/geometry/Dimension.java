@@ -2,8 +2,12 @@ package org.nulllab.nullengine.core.geometry;
 
 public class Dimension {
 
-  private int width  = 0;
-  private int height = 0;
+  private int width;
+  private int height;
+
+  public Dimension(double width, double height) {
+    this((int)width, (int)height);
+  }
 
   public Dimension(int width, int height) {
     this.width = width;

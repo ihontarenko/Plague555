@@ -1,4 +1,6 @@
-package org.nulllab.nullengine.core.graphics.sprite;
+package org.nulllab.nullengine.core.graphics.spritesheet;
+
+import org.nulllab.nullengine.core.graphics.spritesheet.sprite.StaticSprite;
 
 import java.awt.image.BufferedImage;
 
@@ -57,8 +59,19 @@ public class SpriteSheet {
     return getBufferedImage().getSubimage(x, y, getSizeX(), getSizeY());
   }
 
-  public Sprite getSprite(int index) {
-    return new Sprite(getBufferedImage(index));
+  public BufferedImage[] getBufferedImages(int start, int end) {
+    int             length         = end - start + 1;
+    BufferedImage[] bufferedImages = new BufferedImage[length];
+
+    for (int i = 0; i < length; i++) {
+      bufferedImages[i] = getBufferedImage(i + length);
+    }
+
+    return bufferedImages;
+  }
+
+  public StaticSprite getSprite(int index) {
+    return new StaticSprite(getBufferedImage(index));
   }
 
   public int inHeight() {

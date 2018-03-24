@@ -1,4 +1,4 @@
-package org.nulllab.nullengine.openworld.object.character.stats;
+package org.nulllab.nullengine.openworld.stats;
 
 public class StatsValue<V> {
 

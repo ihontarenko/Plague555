@@ -1,7 +1,7 @@
 package org.nulllab.sorrowland.app.graphics;
 
-import org.nulllab.nullengine.core.graphics.sprite.SpriteSheetPackage;
-import org.nulllab.nullengine.core.graphics.sprite.SpriteSheetParameters;
+import org.nulllab.nullengine.core.graphics.spritesheet.SpriteSheetPackage;
+import org.nulllab.nullengine.core.graphics.spritesheet.SpriteSheetParameters;
 
 public class WorldTilesSpritePackage extends SpriteSheetPackage {
 

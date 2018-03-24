@@ -1,4 +1,4 @@
-package org.nulllab.nullengine.core.graphics.sprite;
+package org.nulllab.nullengine.core.graphics.spritesheet;
 
 import org.nulllab.nullengine.core.common.Initializable;
 import org.nulllab.nullengine.core.common.resource.ImageLoader;
@@ -7,9 +7,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 abstract public class SpriteSheetPackage implements Initializable {

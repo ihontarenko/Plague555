@@ -1,4 +1,4 @@
-package org.nulllab.nullengine.core.graphics.sprite;
+package org.nulllab.nullengine.core.graphics.spritesheet;
 
 import java.util.HashMap;
 import java.util.Map;
