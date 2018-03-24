@@ -1,7 +1,7 @@
 package org.nulllab.nullengine.core.graphics.spritesheet.sheet;
 
-import org.nulllab.nullengine.core.common.Initializable;
 import org.nulllab.nullengine.core.common.resource.ImageLoader;
+import org.nulllab.nullengine.core.graphics.GraphicsPackage;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -10,7 +10,7 @@ import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
-abstract public class SpriteSheetPackage implements Initializable {
+abstract public class SpriteSheetPackage implements GraphicsPackage {
 
   private String                   filename;
   private Map<String, SpriteSheet> spriteSheets;

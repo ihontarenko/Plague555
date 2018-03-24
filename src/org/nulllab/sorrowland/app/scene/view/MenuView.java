@@ -112,23 +112,26 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
 
     SpriteManager spriteManager = new SpriteManager();
     spriteManager.addSheetPackage(sheetPackage);
-    spriteManager.addSheetPackage(new A02ASheetPackage());
-    spriteManager.addSheetPackage(new A01ASheetPackage());
-    spriteManager.addSheetPackage(new A01BSheetPackage());
+
+    spriteManager.addSheetPackage(A02ASheetPackage.class);
+    spriteManager.addSheetPackage(A01ASheetPackage.class);
+    spriteManager.addSheetPackage(A01BSheetPackage.class);
     spriteManager.getSheetPackage(WorldTilesSpritePackage.class);
 
-    for (SpriteSheet spriteSheet : spriteManager.getSheetPackage(A01ASheetPackage.class).getSpriteSheets().values()) {
+    spriteManager.addSpritePackage(CharactersSpritePackage.class);
+
+    /*for (SpriteSheet spriteSheet : spriteManager.getSheetPackage(A01ASheetPackage.class).getSpriteSheets().values()) {
       try {
         File outputFile = new File(String.format("resources/cached/spriteSheet00%d.png", counter++));
         ImageIO.write(spriteSheet.getBufferedImage(), "png", outputFile);
       } catch (IOException e) {
         e.printStackTrace();
       }
-    }
+    }*/
 
     ServiceLocator.getInstance().addService(SpriteManager.class, spriteManager);
 
-    spritePackage = new CharactersSpritePackage();
+    spritePackage = (CharactersSpritePackage) spriteManager.getSpritePackage(CharactersSpritePackage.class);
 
     sprite = spritePackage.getStandNorth();
 

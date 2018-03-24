@@ -1,7 +1,7 @@
 package org.nulllab.nullengine.core.graphics.spritesheet.sprite;
 
 import org.nulllab.nullengine.core.ServiceLocator;
-import org.nulllab.nullengine.core.common.Initializable;
+import org.nulllab.nullengine.core.graphics.GraphicsPackage;
 import org.nulllab.nullengine.core.graphics.spritesheet.SpriteManager;
 import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheet;
 import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheetPackage;
@@ -12,7 +12,7 @@ import org.nulllab.nullengine.core.graphics.spritesheet.sprite.mapping.SpriteSta
 import java.util.HashMap;
 import java.util.Map;
 
-abstract public class SpritePackage implements Initializable {
+abstract public class SpritePackage implements GraphicsPackage {
 
   private Map<String, Sprite>                 sprites;
   private Class<? extends SpriteSheetPackage> packageClass;
