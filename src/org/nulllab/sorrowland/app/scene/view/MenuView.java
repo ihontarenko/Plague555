@@ -17,9 +17,11 @@ import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.openworld.map.MapParser;
 import org.nulllab.nullengine.openworld.map.Terrain;
 import org.nulllab.sorrowland.app.config.Configuration;
-import org.nulllab.sorrowland.app.graphics.Characters1SheetPackage;
-import org.nulllab.sorrowland.app.graphics.CharactersSpritePackage;
-import org.nulllab.sorrowland.app.graphics.WorldTilesSpritePackage;
+import org.nulllab.sorrowland.app.graphics.sheet.A01BSheetPackage;
+import org.nulllab.sorrowland.app.graphics.sheet.A01ASheetPackage;
+import org.nulllab.sorrowland.app.graphics.sheet.A02ASheetPackage;
+import org.nulllab.sorrowland.app.graphics.sprite.CharactersSpritePackage;
+import org.nulllab.sorrowland.app.graphics.sheet.WorldTilesSpritePackage;
 import org.nulllab.sorrowland.app.scene.MenuScene;
 import org.nulllab.ui.process.view.AbstractView;
 import org.nulllab.ui.service.Context;
@@ -104,17 +106,18 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
 
     integerList = spatialHash.calculateObjectKeys(object1);
 
-    InputStream inputStream = new ImageLoader("common/vx_chara01_b.png").getFileStream();
-
-    try {
-      sheet = new SpriteSheet(ImageIO.read(inputStream), 32, 48);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-
     int counter = 0;
 
-    for (SpriteSheet spriteSheet : sheetPackage.getSpriteSheets().values()) {
+    System.out.println(sheetPackage.getPackageUniqueName());
+
+    SpriteManager spriteManager = new SpriteManager();
+    spriteManager.addSheetPackage(sheetPackage);
+    spriteManager.addSheetPackage(new A02ASheetPackage());
+    spriteManager.addSheetPackage(new A01ASheetPackage());
+    spriteManager.addSheetPackage(new A01BSheetPackage());
+    spriteManager.getSheetPackage(WorldTilesSpritePackage.class);
+
+    for (SpriteSheet spriteSheet : spriteManager.getSheetPackage(A01ASheetPackage.class).getSpriteSheets().values()) {
       try {
         File outputFile = new File(String.format("resources/cached/spriteSheet00%d.png", counter++));
         ImageIO.write(spriteSheet.getBufferedImage(), "png", outputFile);
@@ -123,18 +126,11 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
       }
     }
 
-    System.out.println(sheetPackage.getPackageUniqueName());
-
-    SpriteManager spriteManager = new SpriteManager();
-    spriteManager.addSheetPackage(sheetPackage);
-    spriteManager.addSheetPackage(new Characters1SheetPackage());
-    spriteManager.getSheetPackage(WorldTilesSpritePackage.class);
-
     ServiceLocator.getInstance().addService(SpriteManager.class, spriteManager);
 
     spritePackage = new CharactersSpritePackage();
 
-    sprite = spritePackage.getSprite("turnUp");
+    sprite = spritePackage.getStandNorth();
 
     spriteAnimated = new SpriteAnimated(spriteManager.getSheetFromPackage(WorldTilesSpritePackage.class, "sheet1"), 3, 5);
     spriteAnimated.setDirection(SpriteAnimated.Direction.PING_PONG);
@@ -147,18 +143,18 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
 
 
     if (input.isPressed(KeyEvent.VK_1, true)) {
-      sprite = spritePackage.getSprite("turnDown");
+      sprite = spritePackage.getStandSouth();
     } else if (input.isPressed(KeyEvent.VK_DOWN, true)) {
-      sprite = spritePackage.getSprite("moveDown");
+      sprite = spritePackage.getMoveNorth();
     }
     else if (input.isPressed(KeyEvent.VK_UP, true)) {
-      sprite = spritePackage.getSprite("moveUp");
+      sprite = spritePackage.getMoveSouth();
     }
     else if (input.isPressed(KeyEvent.VK_RIGHT, true)) {
-      sprite = spritePackage.getSprite("moveRight");
+      sprite = spritePackage.getMoveEast();
     }
     else if (input.isPressed(KeyEvent.VK_LEFT, true)) {
-      sprite = spritePackage.getSprite("moveLeft");
+      sprite = spritePackage.getMoveWest();
     }
 
     spriteFontMap.setString("exp: 90813");

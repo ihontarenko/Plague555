@@ -1,12 +1,12 @@
-package org.nulllab.sorrowland.app.graphics;
+package org.nulllab.sorrowland.app.graphics.sheet;
 
-import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheetPackage;
 import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheetMapper;
+import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheetPackage;
 
-public class Characters1SheetPackage extends SpriteSheetPackage {
+abstract public class Characters4x2Package extends SpriteSheetPackage {
 
-  public Characters1SheetPackage() {
-    super("characters/vx_chara01_a.png");
+  public Characters4x2Package(String filename) {
+    super(filename);
   }
 
   @Override

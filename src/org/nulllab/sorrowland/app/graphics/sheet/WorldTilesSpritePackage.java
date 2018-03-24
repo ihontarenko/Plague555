@@ -1,4 +1,4 @@
-package org.nulllab.sorrowland.app.graphics;
+package org.nulllab.sorrowland.app.graphics.sheet;
 
 import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheetPackage;
 import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheetMapper;
