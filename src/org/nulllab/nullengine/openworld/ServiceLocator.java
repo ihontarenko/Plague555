@@ -2,6 +2,8 @@ package org.nulllab.nullengine.openworld;
 
 import org.nulllab.nullengine.core.AbstractServiceLocator;
 import org.nulllab.nullengine.core.graphics.spritesheet.SpriteManager;
+import org.nulllab.nullengine.core.input.Input;
+import org.nulllab.nullengine.core.input.Keyboard;
 
 public class ServiceLocator extends AbstractServiceLocator {
 
@@ -15,6 +17,10 @@ public class ServiceLocator extends AbstractServiceLocator {
 
   public World getWorld() {
     return getService(World.class);
+  }
+
+  public Input getInputKeyboard() {
+    return getService(Keyboard.class);
   }
 
   public static class Holder {

@@ -12,6 +12,10 @@ public class Stats {
   }
 
   public Double getValue(String keyName) {
+    if (!hasValue(keyName)) {
+      setValue(keyName, 0.0D);
+    }
+
     return values.get(keyName);
   }
 
@@ -32,19 +36,11 @@ public class Stats {
   }
 
   public void subtractWith(String keyName, Double value) {
-    if (hasValue(keyName)) {
-      value = getValue(keyName) - value;
-    }
-
-    setValue(keyName, value);
+    setValue(keyName, getValue(keyName) - value);
   }
 
   public void foldWith(String keyName, Double value) {
-    if (hasValue(keyName)) {
-      value = getValue(keyName) + value;
-    }
-
-    setValue(keyName, value);
+    setValue(keyName, getValue(keyName) + value);
   }
 
   public Map<String, Double> getValues() {

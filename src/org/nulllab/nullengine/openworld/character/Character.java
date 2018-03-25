@@ -22,6 +22,10 @@ public class Character extends GameObject {
     this.stats = breed.getStats();
   }
 
+  public double getHealth() {
+    return getBreed().getHealth();
+  }
+
   public Breed getBreed() {
     return breed;
   }

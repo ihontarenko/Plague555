@@ -1,11 +1,11 @@
 package org.nulllab.sorrowland.app.graphics.sprite;
 
-import org.nulllab.sorrowland.app.graphics.sheet.A01BSheetPackage;
+import org.nulllab.sorrowland.app.graphics.sheet.Monster1ShadowLeggyPackage;
 
 public class CharactersSpritePackage extends CharacterSpritePackageDefaultMapper {
 
   public CharactersSpritePackage() {
-    super(A01BSheetPackage.class, "char6");
+    super(Monster1ShadowLeggyPackage.class, "monster7");
   }
 
 }

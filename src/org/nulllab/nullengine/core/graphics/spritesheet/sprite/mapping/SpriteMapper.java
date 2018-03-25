@@ -7,11 +7,13 @@ abstract public class SpriteMapper {
   private String                  name;
   private Class<? extends Sprite> spriteClass;
   private double                  scale;
+  private int                     colorRemove;
 
-  public SpriteMapper(Class<? extends Sprite> spriteClass, String name, double scale) {
+  public SpriteMapper(Class<? extends Sprite> spriteClass, String name, double scale, int color) {
     this.spriteClass = spriteClass;
     this.name = name;
     this.scale = scale;
+    this.colorRemove = color;
   }
 
   public String getName() {
@@ -25,4 +27,9 @@ abstract public class SpriteMapper {
   public double getScale() {
     return scale;
   }
+
+  public int getColorRemove() {
+    return colorRemove;
+  }
+
 }

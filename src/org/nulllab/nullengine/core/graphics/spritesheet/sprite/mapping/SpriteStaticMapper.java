@@ -7,7 +7,11 @@ public class SpriteStaticMapper extends SpriteMapper {
   private int position;
 
   public SpriteStaticMapper(String name, int scale, int position) {
-    super(SpriteStatic.class, name, scale);
+    this(name, scale, position, -1);
+  }
+
+  public SpriteStaticMapper(String name, int scale, int position, int color) {
+    super(SpriteStatic.class, name, scale, color);
 
     this.position = position;
   }

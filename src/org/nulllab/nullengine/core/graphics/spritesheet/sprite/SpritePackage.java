@@ -63,6 +63,10 @@ abstract public class SpritePackage implements GraphicsPackage {
         sprite = createSprite(spriteSheet, (SpriteStaticMapper) mapper);
       }
 
+      if (mapper.getColorRemove() > -1) {
+        sprite.cutColor(mapper.getColorRemove(), 1F);
+      }
+
       sprites.put(mapper.getName(), sprite);
     }
   }

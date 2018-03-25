@@ -1,6 +1,5 @@
 package org.nulllab.sorrowland.app.scene.view;
 
-import org.nulllab.nullengine.openworld.ServiceLocator;
 import org.nulllab.nullengine.core.common.time.Timer;
 import org.nulllab.nullengine.core.geometry.Bound2D;
 import org.nulllab.nullengine.core.geometry.Object2D;
@@ -13,14 +12,15 @@ import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheetPackage
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.Sprite;
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpriteAnimated;
 import org.nulllab.nullengine.core.input.Input;
+import org.nulllab.nullengine.core.input.Keyboard;
+import org.nulllab.nullengine.openworld.ServiceLocator;
+import org.nulllab.nullengine.openworld.character.Breed;
+import org.nulllab.nullengine.openworld.character.Character;
 import org.nulllab.nullengine.openworld.map.MapParser;
 import org.nulllab.nullengine.openworld.map.Terrain;
 import org.nulllab.sorrowland.app.config.Configuration;
-import org.nulllab.sorrowland.app.graphics.sheet.A01BSheetPackage;
-import org.nulllab.sorrowland.app.graphics.sheet.A01ASheetPackage;
-import org.nulllab.sorrowland.app.graphics.sheet.A02ASheetPackage;
+import org.nulllab.sorrowland.app.graphics.sheet.*;
 import org.nulllab.sorrowland.app.graphics.sprite.CharactersSpritePackage;
-import org.nulllab.sorrowland.app.graphics.sheet.WorldTilesSpritePackage;
 import org.nulllab.sorrowland.app.scene.MenuScene;
 import org.nulllab.ui.process.view.AbstractView;
 import org.nulllab.ui.service.Context;
@@ -45,6 +45,7 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
   private SpriteSheetPackage sheetPackage;
   private Terrain[][]        worldMap;
   private Sprite             sprite;
+  private Character          character;
 
   private CharactersSpritePackage spritePackage;
 
@@ -111,27 +112,41 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
     spriteManager.addSheetPackage(A02ASheetPackage.class);
     spriteManager.addSheetPackage(A01ASheetPackage.class);
     spriteManager.addSheetPackage(A01BSheetPackage.class);
-    spriteManager.getSheetPackage(WorldTilesSpritePackage.class);
+    spriteManager.addSheetPackage(OrcAssassinAPackage.class);
+    spriteManager.addSheetPackage(Monster1ShadowLeggyPackage.class);
+    spriteManager.addSheetPackage(IconsSheetPackage.class);
 
     spriteManager.addSpritePackage(CharactersSpritePackage.class);
 
-    /*for (SpriteSheet spriteSheet : spriteManager.getSheetPackage(A01ASheetPackage.class).getSpriteSheets().values()) {
+    SpriteSheet icons = spriteManager.getSheetPackage(IconsSheetPackage.class).getSpriteSheet("icons");
+    System.out.println(icons.count());
+    /*for (SpriteSheet spriteSheet : .values()) {
       try {
-        File outputFile = new File(String.format("resources/cached/spriteSheet00%d.png", counter++));
+        File outputFile = new File(String.format("resources/cached/icon%d.png", counter++));
         ImageIO.write(spriteSheet.getBufferedImage(), "png", outputFile);
       } catch (IOException e) {
         e.printStackTrace();
       }
     }*/
 
-    ServiceLocator.getInstance().addService(SpriteManager.class, spriteManager);
+    character = new Character(new Breed(15.0));
+
+    ServiceLocator serviceLocator = ServiceLocator.getInstance();
+
+    serviceLocator.addService(SpriteManager.class, spriteManager);
+    serviceLocator.addService(Keyboard.class, input);
 
     spritePackage = (CharactersSpritePackage) spriteManager.getSpritePackage(CharactersSpritePackage.class);
-
+    System.out.println(spritePackage);
     sprite = spritePackage.getStandNorth();
 
-    spriteAnimated = new SpriteAnimated(spriteManager.getSheetFromPackage(WorldTilesSpritePackage.class, "sheet1"), 3, 5);
+    //    spriteAnimated = spriteManager.getSheetFromPackage(WorldTilesSpritePackage.class, "sheet3")
+
+    spriteAnimated = new SpriteAnimated(icons, 5);
     spriteAnimated.setDirection(SpriteAnimated.Direction.PING_PONG);
+
+    System.out.println(spriteAnimated.countImages());
+    System.out.println(character.getHealth());
   }
 
   @Override
@@ -139,19 +154,17 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
 
     super.render(canvas);
 
+    character.update(1.0f);
 
     if (input.isPressed(KeyEvent.VK_1, true)) {
       sprite = spritePackage.getStandSouth();
     } else if (input.isPressed(KeyEvent.VK_DOWN, true)) {
       sprite = spritePackage.getMoveSouth();
-    }
-    else if (input.isPressed(KeyEvent.VK_UP, true)) {
+    } else if (input.isPressed(KeyEvent.VK_UP, true)) {
       sprite = spritePackage.getMoveNorth();
-    }
-    else if (input.isPressed(KeyEvent.VK_RIGHT, true)) {
+    } else if (input.isPressed(KeyEvent.VK_RIGHT, true)) {
       sprite = spritePackage.getMoveEast();
-    }
-    else if (input.isPressed(KeyEvent.VK_LEFT, true)) {
+    } else if (input.isPressed(KeyEvent.VK_LEFT, true)) {
       sprite = spritePackage.getMoveWest();
     }
 
@@ -178,12 +191,15 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
 
     for (double x = bound2D.getX(); x < bound2D.getMaxX(); x += sprite.getWidth()) {
       for (double y = bound2D.getY(); y < bound2D.getMaxY(); y += sprite.getHeight()) {
-        sprite.draw(canvas, x, y);
-        //        canvas.drawRectangle((int)x, (int)y, size, size);
-        //        spriteAnimated.draw(canvas, x, y);
+
+        //                canvas.drawRectangle((int)x, (int)y, size, size);
+        spriteAnimated.draw(canvas, x, y);
       }
     }
 
+    sprite.draw(canvas, 200, 200);
+
+    character.render(canvas);
 
     //    canvas.setColor(Color.RED.getRGB());
     //    canvas.drawRectangle(bound2D.getX(), bound2D.getY(), bound2D.getWidth(), bound2D.getHeight());

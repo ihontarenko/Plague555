@@ -11,11 +11,15 @@ public class SpriteAnimatedMapper extends SpriteMapper {
   private SpriteAnimated.Direction direction;
 
   public SpriteAnimatedMapper(String name, int scale, int start, int end, int fps) {
-    this(name, scale, start, end, fps, SpriteAnimated.Direction.PING_PONG);
+    this(name, scale, start, end, fps, SpriteAnimated.Direction.PING_PONG, -1);
   }
 
-  public SpriteAnimatedMapper(String name, int scale, int start, int end, int fps, SpriteAnimated.Direction direction) {
-    super(SpriteAnimated.class, name, scale);
+  public SpriteAnimatedMapper(String name, int scale, int start, int end, int fps, int color) {
+    this(name, scale, start, end, fps, SpriteAnimated.Direction.PING_PONG, color);
+  }
+
+  public SpriteAnimatedMapper(String name, int scale, int start, int end, int fps, SpriteAnimated.Direction direction, int color) {
+    super(SpriteAnimated.class, name, scale, color);
 
     this.start = start;
     this.end = end;

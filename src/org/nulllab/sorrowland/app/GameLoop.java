@@ -53,7 +53,7 @@ public class GameLoop extends Loop implements ContextAware {
       gui.getMainFrame().add(inputKey);
 
       SpriteSheet spriteSheet = null;
-      InputStream inputStream = new ImageLoader("ui/fonts/boxy.png").getFileStream();
+      InputStream inputStream = new ImageLoader("sprites/fonts/boxy.png").getFileStream();
 
       try {
         spriteSheet = new SpriteSheet(ImageIO.read(inputStream), 18, 16);

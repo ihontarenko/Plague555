@@ -1,23 +1,19 @@
 package org.nulllab.nullengine.openworld;
 
-import org.nulllab.nullengine.component.Component;
-import org.nulllab.nullengine.component.ComponentCollection;
 import org.nulllab.nullengine.core.geometry.Object2D;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.Renderable;
-import org.nulllab.nullengine.core.input.Keyboard;
 import org.nulllab.nullengine.core.loop.Updateable;
-import org.nulllab.nullengine.openworld.state.GameObjectState;
-import org.nulllab.nullengine.openworld.state.NullState;
+import org.nulllab.nullengine.openworld.state.ObjectState;
+import org.nulllab.nullengine.openworld.state.IdleState;
 
 @SuppressWarnings("unused")
 abstract public class GameObject extends Object2D implements Renderable<Canvas>, Updateable {
 
-  private boolean             active;
-  private int                 layerIndex;
-  private ComponentCollection components;
-  private GameObjectState     objectState;
-  private ServiceLocator      serviceLocator;
+  private boolean        active;
+  private int            layerIndex;
+  private ObjectState    state;
+  private ServiceLocator serviceLocator;
 
   public GameObject() {
     // stub mapping
@@ -27,16 +23,7 @@ abstract public class GameObject extends Object2D implements Renderable<Canvas>,
   public GameObject(int x, int y, int width, int height) {
     super(x, y, width, height);
     serviceLocator = ServiceLocator.getInstance();
-    components = new ComponentCollection();
-    objectState = new NullState();
-  }
-
-  public Component getComponent(String name) {
-    return components.getObject(name);
-  }
-
-  public void setComponent(String name, Component component) {
-    components.setObject(name, component);
+    state = new IdleState();
   }
 
   public boolean isActive() {
@@ -47,28 +34,30 @@ abstract public class GameObject extends Object2D implements Renderable<Canvas>,
     this.active = active;
   }
 
-  public GameObjectState getObjectState() {
-    return objectState;
+  public ObjectState getState() {
+    return state;
   }
 
-  public void setObjectState(GameObjectState objectState) {
-    this.objectState = objectState;
+  public void setState(ObjectState state) {
+    this.state = state;
   }
 
   @Override
   public void render(Canvas canvas) {
-    objectState.render(canvas);
+    state.render(canvas);
   }
 
   @Override
   public void update(float nano) {
-    GameObjectState state = objectState.handle(this, new Keyboard());
+    ObjectState state = this.state.handle(this, serviceLocator.getInputKeyboard());
 
     if (state != null) {
-      setObjectState(state);
+      this.state.exitAction(this);
+      setState(state);
+      this.state.entryAction(this);
     }
 
-    objectState.update(nano);
+    this.state.update(nano);
   }
 
 }

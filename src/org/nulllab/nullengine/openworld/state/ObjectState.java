@@ -6,13 +6,17 @@ import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.core.loop.Updateable;
 import org.nulllab.nullengine.openworld.GameObject;
 
-public class GameObjectState implements Renderable<Canvas>, Updateable {
+public class ObjectState implements Renderable<Canvas>, Updateable {
 
   public void entryAction(GameObject gameObject) {
 
   }
 
-  public GameObjectState handle(GameObject gameObject, Input input) {
+  public void exitAction(GameObject gameObject) {
+
+  }
+
+  public ObjectState handle(GameObject gameObject, Input input) {
     return null;
   }
 
