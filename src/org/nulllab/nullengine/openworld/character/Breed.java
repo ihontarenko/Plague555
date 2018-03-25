@@ -2,21 +2,18 @@ package org.nulllab.nullengine.openworld.character;
 
 import org.nulllab.nullengine.openworld.stats.Stats;
 
-public class Breed {
+abstract public class Breed {
 
   public static final String HEALTH_KEY = "health";
 
-  private Breed parent;
-  private Stats stats;
+  private String name;
+  private Breed  parent;
+  private Stats  stats;
 
-  public Breed(double health) {
+  public Breed(double health, String name) {
+    this.name = name;
     this.stats = new Stats();
     this.stats.setValue(HEALTH_KEY, health);
-  }
-
-  public Breed(Breed parent) {
-    this.parent = parent;
-    this.stats.foldWith(parent.getStats());
   }
 
   public Stats getStats() {
@@ -25,6 +22,10 @@ public class Breed {
 
   public Breed getParent() {
     return parent;
+  }
+
+  public void setParentBreed(Breed breed) {
+
   }
 
   public double getHealth() {

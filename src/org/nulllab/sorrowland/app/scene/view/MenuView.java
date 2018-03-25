@@ -129,7 +129,7 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
       }
     }*/
 
-    character = new Character(new Breed(15.0));
+    character = new Character(new Breed(15.0, name));
 
     ServiceLocator serviceLocator = ServiceLocator.getInstance();
 
