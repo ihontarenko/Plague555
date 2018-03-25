@@ -129,7 +129,7 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
       }
     }*/
 
-    character = new Character(new Breed(15.0, name));
+//    character = new Character(/*new Breed(15.0D, "test")*/null);
 
     ServiceLocator serviceLocator = ServiceLocator.getInstance();
 
@@ -146,7 +146,7 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
     spriteAnimated.setDirection(SpriteAnimated.Direction.PING_PONG);
 
     System.out.println(spriteAnimated.countImages());
-    System.out.println(character.getHealth());
+//    System.out.println(character.getHealth());
   }
 
   @Override
@@ -154,7 +154,7 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
 
     super.render(canvas);
 
-    character.update(1.0f);
+//    character.update(1.0f);
 
     if (input.isPressed(KeyEvent.VK_1, true)) {
       sprite = spritePackage.getStandSouth();
@@ -199,7 +199,7 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
 
     sprite.draw(canvas, 200, 200);
 
-    character.render(canvas);
+//    character.render(canvas);
 
     //    canvas.setColor(Color.RED.getRGB());
     //    canvas.drawRectangle(bound2D.getX(), bound2D.getY(), bound2D.getWidth(), bound2D.getHeight());

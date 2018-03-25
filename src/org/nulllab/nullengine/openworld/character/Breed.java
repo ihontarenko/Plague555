@@ -11,9 +11,14 @@ abstract public class Breed {
   private Stats  stats;
 
   public Breed(double health, String name) {
-    this.name = name;
     this.stats = new Stats();
     this.stats.setValue(HEALTH_KEY, health);
+    this.name = name;
+  }
+
+  public Breed(Breed parent, double health, String name) {
+    this(health, name);
+    setParentBreed(parent);
   }
 
   public Stats getStats() {
@@ -25,7 +30,7 @@ abstract public class Breed {
   }
 
   public void setParentBreed(Breed breed) {
-
+    this.stats.foldWith(breed.getStats());
   }
 
   public double getHealth() {
