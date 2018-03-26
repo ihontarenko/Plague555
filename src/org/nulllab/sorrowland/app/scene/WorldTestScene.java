@@ -1,5 +1,6 @@
 package org.nulllab.sorrowland.app.scene;
 
+import org.nulllab.nullengine.openworld.character.Character;
 import org.nulllab.nullengine.openworld.character.level.Level;
 import org.nulllab.sorrowland.app.manager.Manager;
 import org.nulllab.sorrowland.app.scene.view.WorldTestView;
@@ -35,6 +36,9 @@ public class WorldTestScene extends Scene<AbstractView> {
     System.out.println(level.getScale());
 
     health = (int) (health * level.getScale());
+
+//    new Character(new TrollBreed());
+//    new Character(new ElfBreed());
 
     System.out.println();
 

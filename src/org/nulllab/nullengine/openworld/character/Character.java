@@ -2,8 +2,7 @@ package org.nulllab.nullengine.openworld.character;
 
 import org.nulllab.nullengine.core.event.Observable;
 import org.nulllab.nullengine.openworld.GameObject;
-import org.nulllab.nullengine.openworld.equipment.Equipment;
-import org.nulllab.nullengine.openworld.stats.Stats;
+import org.nulllab.nullengine.openworld.character.equipment.Equipment;
 
 import java.util.Set;
 
@@ -12,14 +11,14 @@ public class Character extends GameObject {
 
   private Breed                  breed;
   private Observable<Character>  observable;
-  private Stats                  stats;
+  private Values                 values;
   private Set<Equipment>         equipment;
   private CharacterSpritePackage spritePackage;
 
   public Character(Breed breed) {
     this.breed = breed;
     this.observable = new Observable<>();
-    this.stats = breed.getStats();
+    this.values = breed.getValues();
   }
 
   public double getHealth() {
@@ -34,8 +33,8 @@ public class Character extends GameObject {
     return observable;
   }
 
-  public Stats getStats() {
-    return stats;
+  public Values getValues() {
+    return values;
   }
 
   public Set<Equipment> getEquipment() {
