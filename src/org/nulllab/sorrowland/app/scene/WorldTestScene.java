@@ -1,5 +1,6 @@
 package org.nulllab.sorrowland.app.scene;
 
+import org.nulllab.nullengine.openworld.character.Breed;
 import org.nulllab.nullengine.openworld.character.Character;
 import org.nulllab.nullengine.openworld.character.level.Level;
 import org.nulllab.sorrowland.app.manager.Manager;
@@ -36,6 +37,11 @@ public class WorldTestScene extends Scene<AbstractView> {
     System.out.println(level.getScale());
 
     health = (int) (health * level.getScale());
+
+    Breed trollDarkElf = new Breed("Troll");
+    trollDarkElf.setParentBreed(new Breed("Dark Elf"));
+    trollDarkElf.getParent().setParentBreed(new Breed("Zombie Genom"));
+    System.out.println(trollDarkElf.getFullName("/"));
 
 //    new Character(new TrollBreed());
 //    new Character(new ElfBreed());
