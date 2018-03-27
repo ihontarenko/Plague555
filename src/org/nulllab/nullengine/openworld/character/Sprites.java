@@ -4,7 +4,7 @@ import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheetPackage
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.Sprite;
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpritePackage;
 
-abstract public class CharacterSpritePackage extends SpritePackage {
+abstract public class Sprites extends SpritePackage {
 
   public static final String KEY_STAND_WEST  = "standWest";
   public static final String KEY_STAND_EAST  = "standEast";
@@ -15,7 +15,7 @@ abstract public class CharacterSpritePackage extends SpritePackage {
   public static final String KEY_MOVE_NORTH  = "moveNorth";
   public static final String KEY_MOVE_SOUTH  = "moveSouth";
 
-  public CharacterSpritePackage(Class<? extends SpriteSheetPackage> packageClass, String sheetName) {
+  public Sprites(Class<? extends SpriteSheetPackage> packageClass, String sheetName) {
     super(packageClass, sheetName);
   }
 

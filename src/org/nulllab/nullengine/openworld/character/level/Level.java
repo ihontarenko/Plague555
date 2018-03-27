@@ -20,9 +20,11 @@ public class Level {
   }
 
   public double getScale() {
-    double divider = CHARACTER_MAX_LEVEL / 10;
+    return ((double)this.level / (CHARACTER_MAX_LEVEL / 10)) * getLevelFactor();
+  }
 
-    return ((double)this.level / divider) * getCalculator().getLevelFactor(this.level);
+  public double getLevelFactor() {
+    return getCalculator().getLevelFactor(level);
   }
 
   public int getLevel() {
@@ -57,11 +59,12 @@ public class Level {
         double maxLevel        = Level.CHARACTER_MAX_LEVEL * 2;
         double factor          = 1.5D;
         double reducer         = (factor - 1.2D) / maxLevel;
-        long   experienceValue = 100L;
+        long   experienceValue = 0L;
         long   totalExperience = experienceValue;
 
         this.experience.put(0, experienceValue);
-        total.put(0, totalExperience);
+        this.total.put(0, totalExperience);
+        this.scales.put(0, factor);
 
         for (int level = 1; level <= maxLevel; level++) {
           experienceValue = (long) Math.pow(factor, level) + this.experience.get(level - 1);

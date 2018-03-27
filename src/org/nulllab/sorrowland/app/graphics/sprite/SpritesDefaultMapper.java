@@ -4,11 +4,11 @@ import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheetPackage
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.mapping.SpriteAnimatedMapper;
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.mapping.SpriteMapper;
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.mapping.SpriteStaticMapper;
-import org.nulllab.nullengine.openworld.character.CharacterSpritePackage;
+import org.nulllab.nullengine.openworld.character.Sprites;
 
-public class CharacterSpritePackageDefaultMapper extends CharacterSpritePackage {
+public class SpritesDefaultMapper extends Sprites {
 
-  public CharacterSpritePackageDefaultMapper(Class<? extends SpriteSheetPackage> packageClass, String sheetName) {
+  public SpritesDefaultMapper(Class<? extends SpriteSheetPackage> packageClass, String sheetName) {
     super(packageClass, sheetName);
   }
 

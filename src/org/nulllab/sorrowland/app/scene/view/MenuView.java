@@ -14,13 +14,12 @@ import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpriteAnimated;
 import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.core.input.Keyboard;
 import org.nulllab.nullengine.openworld.ServiceLocator;
-import org.nulllab.nullengine.openworld.character.Breed;
 import org.nulllab.nullengine.openworld.character.Character;
 import org.nulllab.nullengine.openworld.map.MapParser;
 import org.nulllab.nullengine.openworld.map.Terrain;
 import org.nulllab.sorrowland.app.config.Configuration;
 import org.nulllab.sorrowland.app.graphics.sheet.*;
-import org.nulllab.sorrowland.app.graphics.sprite.CharactersSpritePackage;
+import org.nulllab.sorrowland.app.graphics.sprite.CharactersSprites;
 import org.nulllab.sorrowland.app.scene.MenuScene;
 import org.nulllab.ui.process.view.AbstractView;
 import org.nulllab.ui.service.Context;
@@ -47,7 +46,7 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
   private Sprite             sprite;
   private Character          character;
 
-  private CharactersSpritePackage spritePackage;
+  private CharactersSprites spritePackage;
 
   private int velocity = 1;
 
@@ -116,7 +115,7 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
     spriteManager.addSheetPackage(Monster1ShadowLeggyPackage.class);
     spriteManager.addSheetPackage(IconsSheetPackage.class);
 
-    spriteManager.addSpritePackage(CharactersSpritePackage.class);
+    spriteManager.addSpritePackage(CharactersSprites.class);
 
     SpriteSheet icons = spriteManager.getSheetPackage(IconsSheetPackage.class).getSpriteSheet("icons");
     System.out.println(icons.count());
@@ -136,7 +135,7 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
     serviceLocator.addService(SpriteManager.class, spriteManager);
     serviceLocator.addService(Keyboard.class, input);
 
-    spritePackage = (CharactersSpritePackage) spriteManager.getSpritePackage(CharactersSpritePackage.class);
+    spritePackage = (CharactersSprites) spriteManager.getSpritePackage(CharactersSprites.class);
     System.out.println(spritePackage);
     sprite = spritePackage.getStandNorth();
 

@@ -1,8 +1,11 @@
 package org.nulllab.sorrowland.app.scene;
 
+import org.nulllab.nullengine.core.common.Probability;
 import org.nulllab.nullengine.openworld.character.Breed;
 import org.nulllab.nullengine.openworld.character.Character;
+import org.nulllab.nullengine.openworld.character.Skills;
 import org.nulllab.nullengine.openworld.character.level.Level;
+import org.nulllab.nullengine.openworld.world.monster.Orc;
 import org.nulllab.sorrowland.app.manager.Manager;
 import org.nulllab.sorrowland.app.scene.view.WorldTestView;
 import org.nulllab.ui.process.scene.Scene;
@@ -29,24 +32,42 @@ public class WorldTestScene extends Scene<AbstractView> {
 
     int health = 100;
     int lvl = 100;
-    Level level = new Level(lvl);
+    Level level = new Level(1);
     Level level1 = new Level(37);
 
-    System.out.println(level.getScale());
+    Probability probability = new Probability(45);
 
-    System.out.println(level.getScale());
+    if (probability.generate()) {
+      System.out.println(String.format("%d %% was probability what you see this", (int)probability.getProbability()));
+    }
 
-    health = (int) (health * level.getScale());
+    Skills skills = new Skills();
+
+    health = health + (int)(health / 10 * level.getScale());
+
+    System.out.println(health);
+    System.out.println(level.getCalculator().getExperience(13));
+
+    Orc orc = new Orc();
+
+    skills.getDefense();
+    skills.getDexterity();
+    skills.getIntellegence();
+
 
     Breed trollDarkElf = new Breed("Troll");
     trollDarkElf.setParentBreed(new Breed("Dark Elf"));
     trollDarkElf.getParent().setParentBreed(new Breed("Zombie Genom"));
     System.out.println(trollDarkElf.getFullName("/"));
 
-//    new Character(new TrollBreed());
+    orc.getBreed().setParentBreed(new Breed("Dwarf"));
+
+    System.out.println(orc);
+
+    Character character = new Character(trollDarkElf);
 //    new Character(new ElfBreed());
 
-    System.out.println();
+//    character.getSkills().getDefense();
 
     System.exit(1);
 

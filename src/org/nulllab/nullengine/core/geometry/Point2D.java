@@ -28,6 +28,6 @@ public class Point2D {
 
   @Override
   public String toString() {
-    return String.format("%s: {x: %d, y: %d}", Point2D.class.getSimpleName(), getX(), getY());
+    return String.format("%s: {x: %f, y: %f}", Point2D.class.getSimpleName(), getX(), getY());
   }
 }

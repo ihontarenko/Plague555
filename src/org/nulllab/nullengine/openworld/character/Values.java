@@ -2,6 +2,7 @@ package org.nulllab.nullengine.openworld.character;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Values {
 
@@ -62,6 +63,17 @@ public class Values {
 
   public Map<String, Double> getValues() {
     return values;
+  }
+
+  @Override
+  public String toString() {
+    AtomicReference<String> values = new AtomicReference<>("");
+
+    this.values.forEach((keyName, value) -> {
+      values.set(String.format("%s %s: %f,", values, keyName, value));
+    });
+
+    return String.format("Values: {%s}", values);
   }
 
 }

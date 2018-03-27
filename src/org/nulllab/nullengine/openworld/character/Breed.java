@@ -4,8 +4,8 @@ public class Breed {
 
   public static final String UNNAMED_BREED = "Unnamed Breed";
 
-  public static final String HEALTH = "health";
-  public static final String MANA = "mana";
+  public static final String HEALTH = "HEALTH";
+  public static final String MANA = "MANA";
 
   private String name;
   private Breed  parent;
@@ -82,4 +82,9 @@ public class Breed {
     this.parent = breed;
   }
 
+  @Override
+  public String toString() {
+    return String.format("Breed (%s) {Name: %s, FullName: %s, Values: %s}",
+        getClass().getSimpleName(), getName(), getFullName("_"), getValues());
+  }
 }

@@ -38,7 +38,7 @@ public class Object2D extends Point2D {
 
   @Override
   public String toString() {
-    return String.format("%s: {super: %s, maxX: %d, maxY: %d}",
+    return String.format("%s: {super: %s, maxX: %f, maxY: %f}",
         Object2D.class.getSimpleName(), super.toString(), getMaxX(), getMaxY());
   }
 
