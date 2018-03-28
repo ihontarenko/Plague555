@@ -10,7 +10,6 @@ public class Keyboard extends JComponent implements Input {
 
   private             boolean[] keyCodeMap = new boolean[256];
   private             Timer     timer      = new Timer(Timer.Factor.MILLI, 500D);
-  private             State     state      = State.RELEASED;
 
   public Keyboard() {
     InputMap  inputMap  = this.getInputMap(WHEN_IN_FOCUSED_WINDOW);
@@ -24,14 +23,12 @@ public class Keyboard extends JComponent implements Input {
 
       actionMap.put(i, new AbstractAction() {
         public void actionPerformed(ActionEvent actionEvent) {
-          Keyboard.this.state = State.PRESSED;
           Keyboard.this.keyCodeMap[keyCode] = true;
         }
       });
 
       actionMap.put(~i, new AbstractAction() {
         public void actionPerformed(ActionEvent actionEvent) {
-          Keyboard.this.state = State.RELEASED;
           Keyboard.this.keyCodeMap[keyCode] = false;
         }
       });
@@ -60,9 +57,18 @@ public class Keyboard extends JComponent implements Input {
 
   @Override
   public boolean isReleased(int keyCode) {
-    return !isPressed(keyCode);
+    return isReleased(keyCode, false);
   }
 
-  public enum State {PRESSED, RELEASED}
+  @Override
+  public boolean isReleased(int keyCode, boolean withTimer) {
+    boolean isReleased = !this.keyCodeMap[keyCode];
+
+    if (withTimer) {
+      isReleased = isReleased && timer.isElapsedThenPurge();
+    }
+
+    return isReleased;
+  }
 
 }

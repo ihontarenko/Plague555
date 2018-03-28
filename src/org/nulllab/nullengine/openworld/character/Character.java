@@ -1,9 +1,12 @@
 package org.nulllab.nullengine.openworld.character;
 
 import org.nulllab.nullengine.core.event.Observable;
+import org.nulllab.nullengine.core.graphics.Canvas;
+import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.openworld.GameObject;
 import org.nulllab.nullengine.openworld.character.equipment.Equipment;
 import org.nulllab.nullengine.openworld.character.level.Level;
+import org.nulllab.nullengine.openworld.character.state.StandState;
 
 import java.util.Set;
 
@@ -12,7 +15,6 @@ public class Character extends GameObject {
 
   private Breed                 breed;
   private Level                 level;
-  private Skills                skills;
   private Observable<Character> observable;
   private Set<Equipment>        equipment;
   private Sprites               spritePackage;
@@ -20,6 +22,7 @@ public class Character extends GameObject {
   public Character(Breed breed) {
     this.breed = breed;
     this.observable = new Observable<>();
+    this.state = new StandState();
   }
 
   public double getHealth() {
@@ -42,16 +45,12 @@ public class Character extends GameObject {
     this.level = level;
   }
 
-  public Skills getSkills() {
-    return skills;
-  }
-
-  public void setSkills(Skills skills) {
-    this.skills = skills;
-  }
-
   public double getMana() {
     return getBreed().getMana();
+  }
+
+  public void setSpritePackage(Sprites spritePackage) {
+    this.spritePackage = spritePackage;
   }
 
   public Sprites getSpritePackage() {
@@ -70,6 +69,11 @@ public class Character extends GameObject {
   public String toString() {
     return String.format("Character (%s) {%s, super: %s}",
         getClass().getSimpleName(), getBreed(), super.toString());
+  }
+
+  @Override
+  public void render(Canvas canvas) {
+    getSprite().draw(canvas, getX(), getY());
   }
 
 }

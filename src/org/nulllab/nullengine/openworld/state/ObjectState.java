@@ -1,32 +1,23 @@
 package org.nulllab.nullengine.openworld.state;
 
-import org.nulllab.nullengine.core.graphics.Canvas;
-import org.nulllab.nullengine.core.graphics.Renderable;
 import org.nulllab.nullengine.core.input.Input;
-import org.nulllab.nullengine.core.loop.Updateable;
 import org.nulllab.nullengine.openworld.GameObject;
 
-public class ObjectState implements Renderable<Canvas>, Updateable {
+public class ObjectState<O extends GameObject> {
 
-  public void entryAction(GameObject gameObject) {
-
+  public void entryAction(O object) {
+    System.out.println("entry: " + this.getClass().getSimpleName());
   }
 
-  public void exitAction(GameObject gameObject) {
-
+  public void exitAction(O object) {
+    System.out.println("exit: " + this.getClass().getSimpleName());
   }
 
-  public ObjectState handle(GameObject gameObject, Input input) {
+  public ObjectState handle(O object, Input input) {
     return null;
   }
 
-  @Override
-  public void render(Canvas g2d) {
-
-  }
-
-  @Override
-  public void update(float nano) {
+  public void update(O object) {
 
   }
 

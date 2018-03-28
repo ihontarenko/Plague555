@@ -1,11 +1,18 @@
 package org.nulllab.sorrowland.app.scene;
 
 import org.nulllab.nullengine.core.common.Probability;
+import org.nulllab.nullengine.core.graphics.Canvas;
+import org.nulllab.nullengine.core.graphics.spritesheet.SpriteManager;
+import org.nulllab.nullengine.core.input.Keyboard;
+import org.nulllab.nullengine.openworld.ServiceLocator;
 import org.nulllab.nullengine.openworld.character.Breed;
 import org.nulllab.nullengine.openworld.character.Character;
 import org.nulllab.nullengine.openworld.character.Skills;
 import org.nulllab.nullengine.openworld.character.level.Level;
+import org.nulllab.nullengine.openworld.component.InputComponent;
 import org.nulllab.nullengine.openworld.world.monster.Orc;
+import org.nulllab.sorrowland.app.graphics.sheet.*;
+import org.nulllab.sorrowland.app.graphics.sprite.CharactersSprites;
 import org.nulllab.sorrowland.app.manager.Manager;
 import org.nulllab.sorrowland.app.scene.view.WorldTestView;
 import org.nulllab.ui.process.scene.Scene;
@@ -16,6 +23,8 @@ import java.awt.event.KeyEvent;
 
 public class WorldTestScene extends Scene<AbstractView> {
 
+  private Character character;
+
   public WorldTestScene(Context context) {
     super(context);
   }
@@ -24,6 +33,10 @@ public class WorldTestScene extends Scene<AbstractView> {
   protected void doInitialize() {
     registerView("default", WorldTestView.class, getContext(), this);
     setActiveView("default");
+
+    ServiceLocator serviceLocator = ServiceLocator.getInstance();
+
+    serviceLocator.addService(Keyboard.class, getContext().getInputKey());
 
     for (int i = 1; i < 100; i++) {
       Level level = new Level(i);
@@ -64,12 +77,29 @@ public class WorldTestScene extends Scene<AbstractView> {
 
     System.out.println(orc);
 
-    Character character = new Character(trollDarkElf);
+    SpriteManager spriteManager = new SpriteManager();
+    spriteManager.addSheetPackage(A02ASheetPackage.class);
+    spriteManager.addSheetPackage(A01ASheetPackage.class);
+    spriteManager.addSheetPackage(A01BSheetPackage.class);
+    spriteManager.addSheetPackage(OrcAssassinAPackage.class);
+    spriteManager.addSheetPackage(Monster1ShadowLeggyPackage.class);
+    spriteManager.addSheetPackage(IconsSheetPackage.class);
+
+    serviceLocator.addService(spriteManager.getClass(), spriteManager);
+    serviceLocator.addService(InputComponent.class, serviceLocator.getInputKeyboard());
+
+//    System.out.println(serviceLocator.getService(InputComponent.class));
+//    System.exit(1);
+
+    character = new Character(trollDarkElf);
+    character.setSpritePackage(new CharactersSprites());
+    character.layerUp();
+    character.setSprite(character.getSpritePackage().getStandWest());
 //    new Character(new ElfBreed());
 
 //    character.getSkills().getDefense();
 
-    System.exit(1);
+//    System.exit(1);
 
     // new TrollElf();
   }
@@ -81,6 +111,12 @@ public class WorldTestScene extends Scene<AbstractView> {
     if (getInputKey().isPressed(KeyEvent.VK_ESCAPE)) {
       getSceneManager().setActiveScene(Manager.STATE_INTRO);
     }
+
+    character.update(nano);
   }
 
+  @Override
+  public void render(Canvas canvas) {
+    character.render(canvas);
+  }
 }

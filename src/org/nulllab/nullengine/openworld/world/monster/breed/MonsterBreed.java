@@ -1,4 +1,4 @@
-package org.nulllab.nullengine.openworld.world.monster;
+package org.nulllab.nullengine.openworld.world.monster.breed;
 
 import org.nulllab.nullengine.openworld.character.Breed;
 

@@ -7,12 +7,12 @@ public class Camera extends GameObject {
 
   @Override
   public void render(Canvas canvas) {
-    super.render(canvas);
+
   }
 
   @Override
   public void update(float nano) {
-    super.update(nano);
+
   }
 
 }
