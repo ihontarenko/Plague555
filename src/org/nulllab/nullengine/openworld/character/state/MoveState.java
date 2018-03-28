@@ -7,26 +7,6 @@ import org.nulllab.nullengine.openworld.state.ObjectState;
 public class MoveState extends ObjectState<Character> {
 
   @Override
-  public void update(Character object) {
-    Input input = object.getInput();
-    double velocity = 0.2D;
-
-    if (input.isPressed(Input.UP)) {
-      object.setY(object.getY() - velocity);
-      object.setSprite(object.getSpritePackage().getMoveNorth());
-    } else if (input.isPressed(Input.DOWN)) {
-      object.setY(object.getY() + velocity);
-      object.setSprite(object.getSpritePackage().getMoveSouth());
-    }else if (input.isPressed(Input.LEFT)) {
-      object.setX(object.getX() - velocity);
-      object.setSprite(object.getSpritePackage().getMoveWest());
-    }else if (input.isPressed(Input.RIGHT)) {
-      object.setX(object.getX() + velocity);
-      object.setSprite(object.getSpritePackage().getMoveEast());
-    }
-  }
-
-  @Override
   public ObjectState handle(Character object, Input input) {
     ObjectState state = null;
 
@@ -35,5 +15,25 @@ public class MoveState extends ObjectState<Character> {
     }
 
     return state;
+  }
+
+  @Override
+  public void update(Character object) {
+    Input  input    = object.getInput();
+    double velocity = 0.2D;
+
+    if (input.isPressed(Input.UP)) {
+      object.setY(object.getY() - velocity);
+      object.setSprite(object.getSpritePackage().getMoveNorth());
+    } else if (input.isPressed(Input.DOWN)) {
+      object.setY(object.getY() + velocity);
+      object.setSprite(object.getSpritePackage().getMoveSouth());
+    } else if (input.isPressed(Input.LEFT)) {
+      object.setX(object.getX() - velocity);
+      object.setSprite(object.getSpritePackage().getMoveWest());
+    } else if (input.isPressed(Input.RIGHT)) {
+      object.setX(object.getX() + velocity);
+      object.setSprite(object.getSpritePackage().getMoveEast());
+    }
   }
 }
