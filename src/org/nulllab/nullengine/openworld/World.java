@@ -1,20 +1,36 @@
 package org.nulllab.nullengine.openworld;
 
+import org.nulllab.nullengine.core.geometry.Collidable;
 import org.nulllab.nullengine.core.geometry.intersection.spatialhash.SpatialHash;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.Renderable;
 import org.nulllab.nullengine.core.loop.Updateable;
 
 import java.util.Set;
+import java.util.TreeSet;
 import java.util.stream.Stream;
 
-public class World implements Renderable<Canvas>, Updateable {
+public class World implements Renderable<Canvas>, Updateable, Collidable {
 
   private Set<GameObject> gameObjects;
   private SpatialHash     spatialHash;
 
+  public World() {
+    this.gameObjects = new TreeSet<>();
+  }
+
   public Set<GameObject> getGameObjects() {
     return gameObjects;
+  }
+
+  public void addGameObject(GameObject object) {
+    gameObjects.add(object);
+    spatialHash.insert(object);
+  }
+
+  public void removeGameObject(GameObject object) {
+    gameObjects.remove(object);
+    spatialHash.remove(object);
   }
 
   @Override
@@ -31,4 +47,8 @@ public class World implements Renderable<Canvas>, Updateable {
     getActiveObjects().forEach(gameObject -> gameObject.update(nano));
   }
 
+  @Override
+  public void collide() {
+    // collision detection here
+  }
 }

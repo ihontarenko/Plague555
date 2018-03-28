@@ -86,7 +86,7 @@ public class WorldTestScene extends Scene<AbstractView> {
     spriteManager.addSheetPackage(IconsSheetPackage.class);
 
     serviceLocator.addService(spriteManager.getClass(), spriteManager);
-    serviceLocator.addService(InputComponent.class, serviceLocator.getInputKeyboard());
+    serviceLocator.addService(InputComponent.class, new InputComponent(serviceLocator.getInputKeyboard()));
 
 //    System.out.println(serviceLocator.getService(InputComponent.class));
 //    System.exit(1);

@@ -8,7 +8,7 @@ public class StandState extends ObjectState<Character> {
 
   @Override
   public void entryAction(Character object) {
-    object.setSprite(object.getSpritePackage().getStandWest());
+    object.setSprite(object.getSpritePackage().getStandSouth());
   }
 
   @Override
