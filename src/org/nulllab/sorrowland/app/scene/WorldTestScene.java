@@ -9,6 +9,7 @@ import org.nulllab.nullengine.openworld.character.Breed;
 import org.nulllab.nullengine.openworld.character.Character;
 import org.nulllab.nullengine.openworld.character.Skills;
 import org.nulllab.nullengine.openworld.character.level.Level;
+import org.nulllab.nullengine.openworld.component.GraphicComponent;
 import org.nulllab.nullengine.openworld.component.InputComponent;
 import org.nulllab.nullengine.openworld.world.monster.Orc;
 import org.nulllab.sorrowland.app.graphics.sheet.*;
@@ -61,7 +62,7 @@ public class WorldTestScene extends Scene<AbstractView> {
     System.out.println(health);
     System.out.println(level.getCalculator().getExperience(13));
 
-    Orc orc = new Orc();
+
 
     skills.getDefense();
     skills.getDexterity();
@@ -73,9 +74,9 @@ public class WorldTestScene extends Scene<AbstractView> {
     trollDarkElf.getParent().setParentBreed(new Breed("Zombie Genom"));
     System.out.println(trollDarkElf.getFullName("/"));
 
-    orc.getBreed().setParentBreed(new Breed("Dwarf"));
-
-    System.out.println(orc);
+//    Orc orc = new Orc();
+//    orc.getBreed().setParentBreed(new Breed("Dwarf"));
+//    System.out.println(orc);
 
     SpriteManager spriteManager = new SpriteManager();
     spriteManager.addSheetPackage(A02ASheetPackage.class);
@@ -91,7 +92,7 @@ public class WorldTestScene extends Scene<AbstractView> {
 //    System.out.println(serviceLocator.getService(InputComponent.class));
 //    System.exit(1);
 
-    character = new Character(trollDarkElf);
+    character = new Character(trollDarkElf, serviceLocator.getService(InputComponent.class), new GraphicComponent());
     character.setSpritePackage(new CharactersSprites());
     character.layerUp();
     character.setSprite(character.getSpritePackage().getStandWest());

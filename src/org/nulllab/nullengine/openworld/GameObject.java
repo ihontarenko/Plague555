@@ -7,28 +7,34 @@ import org.nulllab.nullengine.core.graphics.Renderable;
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.Sprite;
 import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.core.loop.Updateable;
+import org.nulllab.nullengine.openworld.component.GraphicComponent;
+import org.nulllab.nullengine.openworld.component.InputComponent;
 import org.nulllab.nullengine.openworld.state.ObjectState;
 
 @SuppressWarnings("unused")
 abstract public class GameObject extends Object2D implements Renderable<Canvas>, Updateable, Collidable {
 
-  protected Input          input;
-  protected boolean        active;
-  protected int            layerID;
-  protected ObjectState    state;
-  protected ServiceLocator services;
-  protected Sprite         sprite;
+  protected Input            input;
+  protected GraphicComponent graphic;
+  protected boolean          active;
+  protected int              layerID;
+  protected ObjectState      state;
+  protected ServiceLocator   services;
+  protected Sprite           sprite;
 
-  public GameObject() {
+  public GameObject(ObjectState state, InputComponent input, GraphicComponent graphic) {
     // stub mapping
     this(0, 0, 1 << 4, 1 << 4);
+
+    this.state = state;
+    this.input = input;
+    this.graphic = graphic;
   }
 
   public GameObject(int x, int y, int width, int height) {
     super(x, y, width, height);
     layerID = 1;
     services = ServiceLocator.getInstance();
-    input = services.getInputKeyboard();
   }
 
   public Sprite getSprite() {
@@ -53,6 +59,14 @@ abstract public class GameObject extends Object2D implements Renderable<Canvas>,
 
   public void setInput(Input input) {
     this.input = input;
+  }
+
+  public GraphicComponent getGraphic() {
+    return graphic;
+  }
+
+  public void setGraphic(GraphicComponent graphic) {
+    this.graphic = graphic;
   }
 
   public boolean isActive() {

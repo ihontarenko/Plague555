@@ -1,5 +1,6 @@
 package org.nulllab.nullengine.openworld;
 
+import org.nulllab.nullengine.core.common.Initializable;
 import org.nulllab.nullengine.core.geometry.Collidable;
 import org.nulllab.nullengine.core.geometry.intersection.spatialhash.SpatialHash;
 import org.nulllab.nullengine.core.graphics.Canvas;
@@ -10,7 +11,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Stream;
 
-public class World implements Renderable<Canvas>, Updateable, Collidable {
+public class World implements Renderable<Canvas>, Updateable, Collidable, Initializable {
 
   private Set<GameObject> gameObjects;
   private SpatialHash     spatialHash;
@@ -50,5 +51,20 @@ public class World implements Renderable<Canvas>, Updateable, Collidable {
   @Override
   public void collide() {
     // collision detection here
+  }
+
+  @Override
+  public boolean isInitialized() {
+    return false;
+  }
+
+  @Override
+  public void initialize() {
+
+  }
+
+  @Override
+  public void reinitialize() {
+
   }
 }

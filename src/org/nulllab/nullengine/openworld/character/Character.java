@@ -7,6 +7,8 @@ import org.nulllab.nullengine.openworld.GameObject;
 import org.nulllab.nullengine.openworld.character.equipment.Equipment;
 import org.nulllab.nullengine.openworld.character.level.Level;
 import org.nulllab.nullengine.openworld.character.state.StandState;
+import org.nulllab.nullengine.openworld.component.GraphicComponent;
+import org.nulllab.nullengine.openworld.component.InputComponent;
 
 import java.util.Set;
 
@@ -19,10 +21,11 @@ public class Character extends GameObject {
   private Set<Equipment>        equipment;
   private Sprites               spritePackage;
 
-  public Character(Breed breed) {
+  public Character(Breed breed, InputComponent input, GraphicComponent graphic) {
+    super(new StandState(), input, graphic);
+
     this.breed = breed;
     this.observable = new Observable<>();
-    this.state = new StandState();
   }
 
   public double getHealth() {
