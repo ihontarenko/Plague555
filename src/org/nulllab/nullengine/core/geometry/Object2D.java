@@ -20,6 +20,14 @@ public class Object2D extends Point2D {
     return this.height;
   }
 
+  public void setWidth(int width) {
+    this.width = width;
+  }
+
+  public void setHeight(int height) {
+    this.height = height;
+  }
+
   public double getCentreX() {
     return (this.x + this.getMaxX()) / 2;
   }

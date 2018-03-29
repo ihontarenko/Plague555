@@ -14,7 +14,7 @@ public class WorldTilesSpritePackage extends SpriteSheetPackage {
     return new SpriteSheetMapper[] {
         new SpriteSheetMapper("sheet1", 32, 32, 384, 288, 2, 1),
         new SpriteSheetMapper("sheet2", 32, 32, 320, 288, 2, 1),
-        new SpriteSheetMapper("sheet3", 32, 32, 0, 96, 2, 1),
+        new SpriteSheetMapper("grass", 32, 32, 0, 0, 2, 1),
     };
   }
 

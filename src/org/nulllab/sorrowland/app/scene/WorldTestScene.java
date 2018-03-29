@@ -5,15 +5,14 @@ import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.spritesheet.SpriteManager;
 import org.nulllab.nullengine.core.input.Keyboard;
 import org.nulllab.nullengine.openworld.ServiceLocator;
+import org.nulllab.nullengine.openworld.World;
 import org.nulllab.nullengine.openworld.character.Breed;
 import org.nulllab.nullengine.openworld.character.Character;
 import org.nulllab.nullengine.openworld.character.Skills;
 import org.nulllab.nullengine.openworld.character.level.Level;
-import org.nulllab.nullengine.openworld.component.GraphicComponent;
-import org.nulllab.nullengine.openworld.component.InputComponent;
-import org.nulllab.nullengine.openworld.world.monster.Orc;
 import org.nulllab.sorrowland.app.graphics.sheet.*;
 import org.nulllab.sorrowland.app.graphics.sprite.CharactersSprites;
+import org.nulllab.sorrowland.app.graphics.sprite.WorldMapTilesSprites;
 import org.nulllab.sorrowland.app.manager.Manager;
 import org.nulllab.sorrowland.app.scene.view.WorldTestView;
 import org.nulllab.ui.process.scene.Scene;
@@ -25,6 +24,7 @@ import java.awt.event.KeyEvent;
 public class WorldTestScene extends Scene<AbstractView> {
 
   private Character character;
+  private World world;
 
   public WorldTestScene(Context context) {
     super(context);
@@ -85,14 +85,17 @@ public class WorldTestScene extends Scene<AbstractView> {
     spriteManager.addSheetPackage(OrcAssassinAPackage.class);
     spriteManager.addSheetPackage(Monster1ShadowLeggyPackage.class);
     spriteManager.addSheetPackage(IconsSheetPackage.class);
+    spriteManager.addSheetPackage(WorldTilesSpritePackage.class);
+
+
+    spriteManager.addSpritePackage(WorldMapTilesSprites.class);
 
     serviceLocator.addService(spriteManager.getClass(), spriteManager);
-    serviceLocator.addService(InputComponent.class, new InputComponent(serviceLocator.getInputKeyboard()));
 
 //    System.out.println(serviceLocator.getService(InputComponent.class));
 //    System.exit(1);
 
-    character = new Character(trollDarkElf, serviceLocator.getService(InputComponent.class), new GraphicComponent());
+    character = new Character(trollDarkElf, serviceLocator.getInputKeyboard());
     character.setSpritePackage(new CharactersSprites());
     character.layerUp();
     character.setSprite(character.getSpritePackage().getStandWest());
@@ -103,6 +106,13 @@ public class WorldTestScene extends Scene<AbstractView> {
 //    System.exit(1);
 
     // new TrollElf();
+
+    System.out.println("before map load...");
+    world = new World();
+    world.initialize();
+    System.out.println("all map object loaded...");
+
+    System.out.println(world.getSpatialHash().inWidth());
   }
 
   @Override
@@ -113,11 +123,14 @@ public class WorldTestScene extends Scene<AbstractView> {
       getSceneManager().setActiveScene(Manager.STATE_INTRO);
     }
 
+    world.update(nano);
+
     character.update(nano);
   }
 
   @Override
   public void render(Canvas canvas) {
+    world.render(canvas);
     character.render(canvas);
   }
 }

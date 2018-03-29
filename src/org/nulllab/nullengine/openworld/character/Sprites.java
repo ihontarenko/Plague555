@@ -51,4 +51,8 @@ abstract public class Sprites extends SpritePackage {
     return getSprite(KEY_STAND_EAST);
   }
 
+  @Override
+  public Sprite getDefaultSprite() {
+    return getStandSouth();
+  }
 }

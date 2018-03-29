@@ -1,27 +1,40 @@
 package org.nulllab.nullengine.openworld.map;
 
-public class Terrain {
+import org.nulllab.nullengine.openworld.GameObject;
+import org.nulllab.sorrowland.app.graphics.sprite.WorldMapTilesSprites;
 
-  private Type   type;
-  private double movementCost;
+public class Terrain extends GameObject {
 
-  public Terrain(Type type, double movementCost) {
+  private Type type;
+
+  public Terrain(Type type) {
+    this();
     this.type = type;
-    this.movementCost = movementCost;
+
+    setSprite(this.getServiceLocator().getSpriteManager().getSpriteFromPackage(WorldMapTilesSprites.class, "grass"));
+  }
+
+  public Terrain() {
   }
 
   public Type getType() {
     return type;
   }
 
-  public double getMovementCost() {
-    return movementCost;
+  @Override
+  public void collide() {
+
+  }
+
+  @Override
+  public void update(float nano) {
+
   }
 
   public enum Type {
     WATER,
     SAND,
-    GRASS;
+    GRASS
   }
 
 }

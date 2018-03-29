@@ -22,4 +22,8 @@ public interface Canvas {
 
   void setColor(int red, int green, int blue, int alpha);
 
+  default void drawRectangle(double x, double y, int width, int height) {
+    drawRectangle((int)x, (int)y, width, height);
+  }
+
 }

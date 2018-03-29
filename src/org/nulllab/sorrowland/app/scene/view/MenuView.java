@@ -69,7 +69,7 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
 
     for (int w = 0; w < width; w++) {
       for (int h = 0; h < height; h++) {
-        worldMap[w][h] = new Terrain(Terrain.Type.GRASS, 12D);
+        worldMap[w][h] = new Terrain(Terrain.Type.GRASS);
       }
     }
 

@@ -91,4 +91,6 @@ abstract public class SpritePackage implements GraphicsPackage {
 
   abstract public SpriteMapper[] getSpriteMappers();
 
+  abstract public Sprite getDefaultSprite();
+
 }
