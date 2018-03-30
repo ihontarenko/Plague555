@@ -1,7 +1,7 @@
 package org.nulllab.nullengine.openworld.tile;
 
 import org.nulllab.nullengine.core.graphics.Canvas;
-import org.nulllab.nullengine.openworld.GameObject;
+import org.nulllab.nullengine.openworld.object.GameObject;
 
 public class Tile extends GameObject {
 

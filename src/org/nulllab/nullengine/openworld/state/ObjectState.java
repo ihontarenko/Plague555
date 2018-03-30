@@ -1,7 +1,7 @@
 package org.nulllab.nullengine.openworld.state;
 
 import org.nulllab.nullengine.core.input.Input;
-import org.nulllab.nullengine.openworld.GameObject;
+import org.nulllab.nullengine.openworld.object.GameObject;
 
 public class ObjectState<O extends GameObject> {
 

@@ -6,10 +6,10 @@ import org.nulllab.nullengine.core.graphics.spritesheet.sprite.mapping.SpriteMap
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.mapping.SpriteStaticMapper;
 import org.nulllab.nullengine.openworld.character.Sprites;
 
-public class SpritesDefaultMapper extends Sprites {
+abstract public class SpritesDefaultMapper extends Sprites {
 
-  public SpritesDefaultMapper(Class<? extends SpriteSheetPackage> packageClass, String sheetName) {
-    super(packageClass, sheetName);
+  public SpritesDefaultMapper(String sheetID) {
+    super(sheetID);
   }
 
   @Override

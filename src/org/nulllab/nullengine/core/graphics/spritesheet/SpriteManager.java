@@ -38,13 +38,13 @@ public class SpriteManager extends ObjectManager<GraphicsPackage> {
   }
 
   public SpriteSheet getSheetFromPackage(String id) {
-    String[] sheetID     = id.split(".");
+    String[] sheetID     = id.split("\\.");
 
     return getSheetFromPackage(sheetID[0], sheetID[1]);
   }
 
   public Sprite getSpriteFromPackage(String id) {
-    String[] spriteID     = id.split(".");
+    String[] spriteID     = id.split("\\.");
 
     return getSpriteFromPackage(spriteID[0], spriteID[1]);
   }

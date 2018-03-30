@@ -1,42 +1,35 @@
 package org.nulllab.nullengine.openworld;
 
 import org.nulllab.nullengine.core.common.Initializable;
-import org.nulllab.nullengine.core.geometry.Bound2D;
 import org.nulllab.nullengine.core.geometry.Collidable;
 import org.nulllab.nullengine.core.geometry.intersection.spatialhash.SpatialHash;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.Renderable;
 import org.nulllab.nullengine.core.loop.Updateable;
-import org.nulllab.nullengine.openworld.map.Terrain;
 import org.nulllab.nullengine.openworld.map.WorldMap;
+import org.nulllab.nullengine.openworld.object.GameObject;
 import org.nulllab.nullengine.openworld.world.Camera;
 
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.stream.Stream;
+import java.util.*;
 
 public class World implements Renderable<Canvas>, Updateable, Collidable, Initializable {
 
-  private Set<GameObject> gameObjects;
-  private SpatialHash     spatialHash;
-  private Camera          camera;
-  private WorldMap        worldMap;
+  private Set<GameObject>         gameObjects;
+  private SpatialHash<GameObject> spatialHash;
+  private Camera                  camera;
+  private WorldMap                worldMap;
 
   public World() {
     WorldMap worldMap = new WorldMap(this);
-    Camera   camera   = new Camera(0, 0, 600, 400);
+    Camera   camera   = new Camera(0, 0, 800, 640);
+
+    camera.setBound2D(worldMap.getBound());
 
     this.gameObjects = new TreeSet<>();
-    this.spatialHash = new SpatialHash(new Bound2D(0, 0, worldMap.getWidthInPixels(), worldMap.getHeightInPixels()), 4);
-
-    spatialHash.insert(camera);
+    this.spatialHash = new SpatialHash<>(worldMap.getBound(), 4);
 
     this.camera = camera;
     this.worldMap = worldMap;
-  }
-
-  public Set<GameObject> getGameObjects() {
-    return gameObjects;
   }
 
   public void addGameObject(GameObject object) {
@@ -63,31 +56,26 @@ public class World implements Renderable<Canvas>, Updateable, Collidable, Initia
 
   @Override
   public void render(Canvas canvas) {
-    canvas.setColor("#0000ff");
+    List<GameObject> objects = new ArrayList<>(spatialHash.retrieve(camera));
+
+    Collections.sort(objects);
+
+    objects.forEach(gameObject ->
+        gameObject.getSprite().draw(canvas,
+            gameObject.getX() - camera.getX(), gameObject.getY() - camera.getY()));
+
     canvas.drawRectangle(0, 0, camera.getWidth(), camera.getHeight());
-
-    canvas.setColor("#ff0000");
-    spatialHash.retrieve(camera).forEach(object2D -> {
-      if (object2D instanceof Terrain) {
-        GameObject gameObject = (GameObject) object2D;
-        gameObject.getSprite().draw(canvas, object2D.getX() - camera.getX(), object2D.getY() - camera.getY());
-      }
-    });
-  }
-
-  private Stream<GameObject> getActiveObjects() {
-    return gameObjects.stream();
   }
 
   @Override
   public void update(float nano) {
+    getGameObjects().forEach(object -> object.update(nano));
 
-    camera.setX(camera.getX() + 0.5D);
-    camera.setY(camera.getY() + 0.2D);
+    getGameObjects().stream().filter(GameObject::isMovable).forEach(object -> spatialHash.reinsert(object));
+  }
 
-    spatialHash.reinsert(camera);
-
-    //    getActiveObjects().forEach(gameObject -> gameObject.update(nano));
+  public Set<GameObject> getGameObjects() {
+    return gameObjects;
   }
 
   @Override

@@ -2,7 +2,7 @@ package org.nulllab.nullengine.openworld.character;
 
 import org.nulllab.nullengine.core.event.Observable;
 import org.nulllab.nullengine.core.input.Input;
-import org.nulllab.nullengine.openworld.GameObject;
+import org.nulllab.nullengine.openworld.object.GameObject;
 import org.nulllab.nullengine.openworld.character.equipment.Equipment;
 import org.nulllab.nullengine.openworld.character.level.Level;
 import org.nulllab.nullengine.openworld.character.state.StandState;
@@ -27,6 +27,8 @@ public class Character extends GameObject {
     this.observable = new Observable<>();
     this.input = input;
     this.breed = breed;
+
+    this.setLayerID(1 << 2);
   }
 
   public double getHealth() {
@@ -99,6 +101,8 @@ public class Character extends GameObject {
     }
 
     this.state.update(this);
+
+    getServiceLocator().getWorld().getCamera().syncPositionWith(getCentreX(), getCentreY());
   }
 
 

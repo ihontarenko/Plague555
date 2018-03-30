@@ -19,12 +19,14 @@ import org.nulllab.nullengine.openworld.map.MapParser;
 import org.nulllab.nullengine.openworld.map.Terrain;
 import org.nulllab.sorrowland.app.config.Configuration;
 import org.nulllab.sorrowland.app.graphics.sheet.*;
-import org.nulllab.sorrowland.app.graphics.sprite.CharactersSprites;
+import org.nulllab.sorrowland.app.graphics.sheet.characters.*;
+import org.nulllab.sorrowland.app.graphics.sprite.PlayerSprites;
 import org.nulllab.sorrowland.app.scene.MenuScene;
 import org.nulllab.ui.process.view.AbstractView;
 import org.nulllab.ui.service.Context;
 
 import java.awt.event.KeyEvent;
+import java.util.List;
 import java.util.Set;
 
 public class MenuView extends AbstractView<MenuScene, AbstractView> {
@@ -34,7 +36,7 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
   private StringDrawer       spriteFontMap;
   private Configuration      configuration;
   private SpatialHash        spatialHash;
-  private Set<Integer>       integerList;
+  private List<Integer>      integerList;
   private Bound2D            bound2D;
   private Object2D           object1;
   private Object2D           object2;
@@ -46,7 +48,7 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
   private Sprite             sprite;
   private Character          character;
 
-  private CharactersSprites spritePackage;
+  private PlayerSprites spritePackage;
 
   private int velocity = 1;
 
@@ -69,12 +71,12 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
 
     for (int w = 0; w < width; w++) {
       for (int h = 0; h < height; h++) {
-        worldMap[w][h] = new Terrain(Terrain.Type.GRASS);
+        worldMap[w][h] = new Terrain(w, h, w, h);
       }
     }
 
     System.out.println("after world map init...");
-    System.out.println(worldMap[600][300].getType());
+
 
     sheetPackage = new WorldTilesSpritePackage();
 
@@ -99,8 +101,6 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
       spatialHash.insert(new Object2D(10, 150, 50, 50));
     }
 
-    integerList = spatialHash.calculateObjectKeys(object1);
-
     int counter = 0;
 
     System.out.println(sheetPackage.getPackageName());
@@ -115,7 +115,7 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
     spriteManager.addSheetPackage(new Monster1ShadowLeggyPackage());
     spriteManager.addSheetPackage(new IconsSheetPackage());
 
-    spriteManager.addSpritePackage(CharactersSprites.class);
+    spriteManager.addSpritePackage(new PlayerSprites());
 
     SpriteSheet icons = spriteManager.getSheetFromPackage("iconSet", "set1");
     System.out.println(icons.count());
@@ -135,7 +135,7 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
     serviceLocator.addService(SpriteManager.class, spriteManager);
     serviceLocator.addService(Keyboard.class, input);
 
-    spritePackage = (CharactersSprites) spriteManager.getSpritePackage(CharactersSprites.class);
+    spritePackage = (PlayerSprites) spriteManager.getSpritePackage("mp1m6");
     System.out.println(spritePackage);
     sprite = spritePackage.getStandNorth();
 

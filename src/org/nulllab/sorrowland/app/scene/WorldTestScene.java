@@ -11,7 +11,8 @@ import org.nulllab.nullengine.openworld.character.Character;
 import org.nulllab.nullengine.openworld.character.Skills;
 import org.nulllab.nullengine.openworld.character.level.Level;
 import org.nulllab.sorrowland.app.graphics.sheet.*;
-import org.nulllab.sorrowland.app.graphics.sprite.CharactersSprites;
+import org.nulllab.sorrowland.app.graphics.sheet.characters.*;
+import org.nulllab.sorrowland.app.graphics.sprite.PlayerSprites;
 import org.nulllab.sorrowland.app.graphics.sprite.WorldMapTilesSprites;
 import org.nulllab.sorrowland.app.manager.Manager;
 import org.nulllab.sorrowland.app.scene.view.WorldTestView;
@@ -79,25 +80,25 @@ public class WorldTestScene extends Scene<AbstractView> {
 //    System.out.println(orc);
 
     SpriteManager spriteManager = new SpriteManager();
+    serviceLocator.addService(spriteManager.getClass(), spriteManager);
 
     spriteManager.addSheetPackage(new A02ASheetPackage());
     spriteManager.addSheetPackage(new A01ASheetPackage());
     spriteManager.addSheetPackage(new A01BSheetPackage());
+    spriteManager.addSheetPackage(new A03DSheetPackage());
     spriteManager.addSheetPackage(new OrcAssassinAPackage());
     spriteManager.addSheetPackage(new Monster1ShadowLeggyPackage());
     spriteManager.addSheetPackage(new IconsSheetPackage());
     spriteManager.addSheetPackage(new WorldTilesSpritePackage());
+    spriteManager.addSheetPackage(new TileSet1SheetPackage());
 
-
-    spriteManager.addSpritePackage(WorldMapTilesSprites.class);
-
-    serviceLocator.addService(spriteManager.getClass(), spriteManager);
+    spriteManager.addSpritePackage(new WorldMapTilesSprites());
 
 //    System.out.println(serviceLocator.getService(InputComponent.class));
 //    System.exit(1);
 
     character = new Character(trollDarkElf, serviceLocator.getInputKeyboard());
-    character.setSpritePackage(new CharactersSprites());
+    character.setSpritePackage(new PlayerSprites());
     character.layerUp();
     character.setSprite(character.getSpritePackage().getStandWest());
 //    new Character(new ElfBreed());
@@ -113,7 +114,11 @@ public class WorldTestScene extends Scene<AbstractView> {
     world.initialize();
     System.out.println("all map object loaded...");
 
-    System.out.println(world.getSpatialHash().inWidth());
+    world.addGameObject(character);
+
+    serviceLocator.addService(World.class, world);
+
+    System.out.println(world.getSpatialHash().getSize());
   }
 
   @Override
@@ -126,12 +131,12 @@ public class WorldTestScene extends Scene<AbstractView> {
 
     world.update(nano);
 
-    character.update(nano);
+//    character.update(nano);
   }
 
   @Override
   public void render(Canvas canvas) {
     world.render(canvas);
-    character.render(canvas);
+//    character.render(canvas);
   }
 }

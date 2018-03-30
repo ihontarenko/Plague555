@@ -8,7 +8,7 @@ import java.util.*;
 import java.util.stream.Stream;
 
 @SuppressWarnings("unused")
-public class SpatialHash implements IntersectionInterface {
+public class SpatialHash<T extends Object2D> implements IntersectionInterface<T> {
 
   private static final int DEFAULT_SHIFT = 5; // pow(2, 5) = 32
 
@@ -17,9 +17,9 @@ public class SpatialHash implements IntersectionInterface {
   private int inHeight;
   private int size;
 
-  private Map<Integer, Set<Object2D>> keyObjects;
-  private Map<Object2D, Set<Integer>> objectKeys;
-  private Bound2D                     bound2D;
+  private Map<Integer, Set<T>> keyObjects;
+  private Map<T, Set<Integer>> objectKeys;
+  private Bound2D              bound2D;
 
   public SpatialHash(Bound2D bound2D) {
     this(bound2D, DEFAULT_SHIFT);
@@ -36,36 +36,17 @@ public class SpatialHash implements IntersectionInterface {
   }
 
   @Override
-  public Set<Object2D> retrieve(Object2D object) {
-    Set<Object2D>   results = new HashSet<>();
-    Stream<Integer> stream  = getObjectKeys(object).stream();
+  public Set<T> retrieve(T object) {
+    Set<T>          results = new HashSet<>();
+    Stream<Integer> stream  = calculateObjectKeys(object).stream();
 
     stream.filter(keyObjects::containsKey).forEach(key -> results.addAll(keyObjects.get(key)));
 
     return results;
   }
 
-  public void remove(Object2D object) {
-    Set<Integer> removeKeys;
-
-    if (objectKeys.containsKey(object)) {
-      removeKeys = objectKeys.get(object);
-
-      for (Integer removeKey : removeKeys) {
-        keyObjects.get(removeKey).remove(object);
-      }
-
-      objectKeys.remove(object);
-    }
-  }
-
-  public void reinsert(Object2D object) {
-    remove(object);
-    insert(object);
-  }
-
   @Override
-  public void insert(Object2D object) {
+  public void insert(T object) {
     Set<Integer> keysSet = new HashSet<>();
     objectKeys.put(object, keysSet);
 
@@ -79,19 +60,16 @@ public class SpatialHash implements IntersectionInterface {
     }
   }
 
-  public Set<Object2D> getObjects() {
-    return objectKeys.keySet();
+  @Override
+  public void clear() {
+    keyObjects = new HashMap<>();
   }
 
-  public Set<Integer> getObjectKeys(Object2D object2D) {
-    return objectKeys.get(object2D);
-  }
-
-  public Set<Integer> calculateObjectKeys(Object2D object2D) {
+  public Set<Integer> calculateObjectKeys(T object2D) {
     return calculateObjectKeys(object2D, shift);
   }
 
-  public Set<Integer> calculateObjectKeys(Object2D object2D, int shift) {
+  public Set<Integer> calculateObjectKeys(T object2D, int shift) {
     Set<Integer> keys = new HashSet<>();
 
     int bx = (int) bound2D.getX();
@@ -111,33 +89,43 @@ public class SpatialHash implements IntersectionInterface {
     return keys;
   }
 
-  public int getXPosition(int key) {
-    return key % inWidth();
+  public int inWidth() {
+    return inWidth;
   }
 
-  public int getYPosition(int key) {
-    return key / inWidth();
+  public void reinsert(T object) {
+    remove(object);
+    insert(object);
+  }
+
+  public void remove(T object) {
+    Set<Integer> removeKeys;
+
+    if (objectKeys.containsKey(object)) {
+      removeKeys = objectKeys.get(object);
+
+      for (Integer removeKey : removeKeys) {
+        keyObjects.get(removeKey).remove(object);
+      }
+
+      objectKeys.remove(object);
+    }
+  }
+
+  public Set<T> getObjects() {
+    return objectKeys.keySet();
+  }
+
+  public Set<Integer> getObjectKeys(T object2D) {
+    return objectKeys.get(object2D);
   }
 
   public double getXPixel(int key) {
     return getXPosition(key) * getSize() + getBound2D().getX();
   }
 
-  public double getYPixel(int key) {
-    return getYPosition(key) * getSize() + getBound2D().getY();
-  }
-
-  @Override
-  public void clear() {
-    keyObjects = new HashMap<>();
-  }
-
-  public int inWidth() {
-    return inWidth;
-  }
-
-  public int inHeight() {
-    return inHeight;
+  public int getXPosition(int key) {
+    return key % inWidth();
   }
 
   public int getSize() {
@@ -146,6 +134,18 @@ public class SpatialHash implements IntersectionInterface {
 
   public Bound2D getBound2D() {
     return bound2D;
+  }
+
+  public double getYPixel(int key) {
+    return getYPosition(key) * getSize() + getBound2D().getY();
+  }
+
+  public int getYPosition(int key) {
+    return key / inWidth();
+  }
+
+  public int inHeight() {
+    return inHeight;
   }
 
 }

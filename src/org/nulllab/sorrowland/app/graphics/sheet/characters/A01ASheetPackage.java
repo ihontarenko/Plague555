@@ -1,4 +1,4 @@
-package org.nulllab.sorrowland.app.graphics.sheet;
+package org.nulllab.sorrowland.app.graphics.sheet.characters;
 
 public class A01ASheetPackage extends Characters4x2Package {
 

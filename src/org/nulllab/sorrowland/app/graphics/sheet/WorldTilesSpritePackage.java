@@ -20,7 +20,7 @@ public class WorldTilesSpritePackage extends SpriteSheetPackage {
 
   @Override
   public String getPackageName() {
-    return "tileSet1";
+    return "tileSet2";
   }
 
 }

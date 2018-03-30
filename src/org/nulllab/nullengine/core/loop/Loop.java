@@ -27,7 +27,7 @@ abstract public class Loop implements Runnable, Initializable {
   }
 
   public Loop() {
-    this(Loop.class.getSimpleName(), 300F);
+    this(Loop.class.getSimpleName(), 60F);
   }
 
   public synchronized void start() {

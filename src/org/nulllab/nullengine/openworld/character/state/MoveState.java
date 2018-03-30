@@ -20,7 +20,7 @@ public class MoveState extends ObjectState<Character> {
   @Override
   public void update(Character object) {
     Input  input    = object.getInput();
-    double velocity = 0.2D;
+    double velocity = 2D;
 
     if (input.isPressed(Input.UP)) {
       object.setY(object.getY() - velocity);

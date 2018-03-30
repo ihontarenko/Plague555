@@ -14,14 +14,12 @@ import java.util.Map;
 
 abstract public class SpritePackage implements GraphicsPackage {
 
-  private Map<String, Sprite>                 sprites;
-  private Class<? extends SpriteSheetPackage> packageClass;
-  private String                              sheetName;
+  private Map<String, Sprite> sprites;
+  private String              sheetID;
 
-  public SpritePackage(Class<? extends SpriteSheetPackage> packageClass, String sheetName) {
+  public SpritePackage(String sheetID) {
     this.sprites = new HashMap<>();
-    this.packageClass = packageClass;
-    this.sheetName = sheetName;
+    this.sheetID = sheetID;
     initialize();
   }
 
@@ -33,16 +31,8 @@ abstract public class SpritePackage implements GraphicsPackage {
     return sprites.get(name);
   }
 
-  public Class<? extends SpriteSheetPackage> getPackageClass() {
-    return packageClass;
-  }
-
-  public String getSheetName() {
-    return sheetName;
-  }
-
-  public String getPackageName() {
-    return getClass().getSimpleName();
+  public String getSheetID() {
+    return sheetID;
   }
 
   @Override
@@ -81,8 +71,8 @@ abstract public class SpritePackage implements GraphicsPackage {
 
   private SpriteSheet findSpriteSheet() {
     SpriteManager spriteManager = ServiceLocator.getInstance().getSpriteManager();
-return null;
-//    return spriteManager.getSheetFromPackage(getPackageClass(), getSheetName());
+
+    return spriteManager.getSheetFromPackage(getSheetID());
   }
 
   @Override

@@ -15,8 +15,8 @@ abstract public class Sprites extends SpritePackage {
   public static final String KEY_MOVE_NORTH  = "moveNorth";
   public static final String KEY_MOVE_SOUTH  = "moveSouth";
 
-  public Sprites(Class<? extends SpriteSheetPackage> packageClass, String sheetName) {
-    super(packageClass, sheetName);
+  public Sprites(String sheetID) {
+    super(sheetID);
   }
 
   public Sprite getMoveNorth() {
