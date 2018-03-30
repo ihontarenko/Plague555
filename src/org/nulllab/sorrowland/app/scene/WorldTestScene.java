@@ -79,13 +79,14 @@ public class WorldTestScene extends Scene<AbstractView> {
 //    System.out.println(orc);
 
     SpriteManager spriteManager = new SpriteManager();
-    spriteManager.addSheetPackage(A02ASheetPackage.class);
-    spriteManager.addSheetPackage(A01ASheetPackage.class);
-    spriteManager.addSheetPackage(A01BSheetPackage.class);
-    spriteManager.addSheetPackage(OrcAssassinAPackage.class);
-    spriteManager.addSheetPackage(Monster1ShadowLeggyPackage.class);
-    spriteManager.addSheetPackage(IconsSheetPackage.class);
-    spriteManager.addSheetPackage(WorldTilesSpritePackage.class);
+
+    spriteManager.addSheetPackage(new A02ASheetPackage());
+    spriteManager.addSheetPackage(new A01ASheetPackage());
+    spriteManager.addSheetPackage(new A01BSheetPackage());
+    spriteManager.addSheetPackage(new OrcAssassinAPackage());
+    spriteManager.addSheetPackage(new Monster1ShadowLeggyPackage());
+    spriteManager.addSheetPackage(new IconsSheetPackage());
+    spriteManager.addSheetPackage(new WorldTilesSpritePackage());
 
 
     spriteManager.addSpritePackage(WorldMapTilesSprites.class);

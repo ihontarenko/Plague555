@@ -13,52 +13,40 @@ public class SpriteManager extends ObjectManager<GraphicsPackage> {
   public SpriteManager() {
   }
 
-  public void addSheetPackage(String name, Class<? extends GraphicsPackage> packageClass) {
-    registerService(name, packageClass);
-  }
-
   public void addSheetPackage(SpriteSheetPackage sheetPackage) {
     setObject(sheetPackage.getPackageName(), sheetPackage);
   }
 
-  public SpriteSheetPackage getSheetPackage(String packageClassName) {
-    return (SpriteSheetPackage) getObject(packageClassName);
+  public SpriteSheetPackage getSheetPackage(String name) {
+    return (SpriteSheetPackage) getObject(name);
   }
 
   public SpriteSheet getSheetFromPackage(String packageName, String sheetName) {
     return getSheetPackage(packageName).getSpriteSheet(sheetName);
   }
 
+  public void addSpritePackage(SpritePackage spritePackage) {
+    setObject(spritePackage.getPackageName(), spritePackage);
+  }
+
+  public SpritePackage getSpritePackage(String name) {
+    return (SpritePackage) getObject(name);
+  }
+
+  public Sprite getSpriteFromPackage(String packageName, String name) {
+    return getSpritePackage(packageName).getSprite(name);
+  }
+
   public SpriteSheet getSheetFromPackage(String id) {
     String[] sheetID     = id.split(".");
-    String   packageName = sheetID[0];
-    String   sheetName   = sheetID[1];
 
-    return getSheetFromPackage(packageName, sheetName);
+    return getSheetFromPackage(sheetID[0], sheetID[1]);
   }
 
-  public void addSpritePackage(Class<? extends GraphicsPackage> packageClass) {
-    registerService(packageClass.getSimpleName(), packageClass);
-  }
+  public Sprite getSpriteFromPackage(String id) {
+    String[] spriteID     = id.split(".");
 
-  public void addSpritePackage(SpritePackage spritePackage) {
-    setObject(spritePackage.getClass().getSimpleName(), spritePackage);
-  }
-
-  public SpritePackage getSpritePackage(Class<? extends SpritePackage> packageClass) {
-    return getSpritePackage(packageClass.getSimpleName());
-  }
-
-  public SpritePackage getSpritePackage(String packageClassName) {
-    return (SpritePackage) getObject(packageClassName);
-  }
-
-  public Sprite getSpriteFromPackage(Class<? extends SpritePackage> packageClass, String name) {
-    return getSpriteFromPackage(packageClass.getSimpleName(), name);
-  }
-
-  public Sprite getSpriteFromPackage(String packageClassName, String name) {
-    return getSpritePackage(packageClassName).getSprite(name);
+    return getSpriteFromPackage(spriteID[0], spriteID[1]);
   }
 
 }

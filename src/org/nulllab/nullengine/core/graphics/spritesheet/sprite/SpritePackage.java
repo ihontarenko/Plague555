@@ -81,8 +81,8 @@ abstract public class SpritePackage implements GraphicsPackage {
 
   private SpriteSheet findSpriteSheet() {
     SpriteManager spriteManager = ServiceLocator.getInstance().getSpriteManager();
-
-    return spriteManager.getSheetFromPackage(getPackageClass(), getSheetName());
+return null;
+//    return spriteManager.getSheetFromPackage(getPackageClass(), getSheetName());
   }
 
   @Override

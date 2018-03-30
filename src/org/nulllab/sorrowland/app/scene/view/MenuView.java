@@ -108,12 +108,12 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
     SpriteManager spriteManager = new SpriteManager();
     spriteManager.addSheetPackage(sheetPackage);
 
-    spriteManager.addSheetPackage(A02ASheetPackage.class);
-    spriteManager.addSheetPackage(A01ASheetPackage.class);
-    spriteManager.addSheetPackage(A01BSheetPackage.class);
-    spriteManager.addSheetPackage(OrcAssassinAPackage.class);
-    spriteManager.addSheetPackage(Monster1ShadowLeggyPackage.class);
-    spriteManager.addSheetPackage(IconsSheetPackage.class);
+    spriteManager.addSheetPackage(new A02ASheetPackage());
+    spriteManager.addSheetPackage(new A01ASheetPackage());
+    spriteManager.addSheetPackage(new A01BSheetPackage());
+    spriteManager.addSheetPackage(new OrcAssassinAPackage());
+    spriteManager.addSheetPackage(new Monster1ShadowLeggyPackage());
+    spriteManager.addSheetPackage(new IconsSheetPackage());
 
     spriteManager.addSpritePackage(CharactersSprites.class);
 
