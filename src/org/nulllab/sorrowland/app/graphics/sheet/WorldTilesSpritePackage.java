@@ -18,4 +18,9 @@ public class WorldTilesSpritePackage extends SpriteSheetPackage {
     };
   }
 
+  @Override
+  public String getPackageName() {
+    return "tileSet1";
+  }
+
 }

@@ -33,10 +33,6 @@ abstract public class SpriteSheetPackage implements GraphicsPackage {
     return filename;
   }
 
-  public String getPackageUniqueName() {
-    return getClass().getSimpleName();
-  }
-
   @Override
   public boolean isInitialized() {
     return spriteSheets.size() > 0;
@@ -44,22 +40,24 @@ abstract public class SpriteSheetPackage implements GraphicsPackage {
 
   @Override
   public void initialize() {
-    InputStream   inputStream   = new ImageLoader(getFilename()).getFileStream();
-    BufferedImage bufferedImage;
+    if (!isInitialized()) {
+      InputStream   inputStream   = new ImageLoader(getFilename()).getFileStream();
+      BufferedImage bufferedImage;
 
-    try {
-      bufferedImage = ImageIO.read(inputStream);
+      try {
+        bufferedImage = ImageIO.read(inputStream);
 
-      for (SpriteSheetMapper mapper : getSpriteSheetMappers()) {
-        SpriteSheet sheet = new SpriteSheet(bufferedImage,
-            mapper.getSizeX(), mapper.getSizeY(),
-            mapper.getOffsetX(), mapper.getOffsetY(),
-            mapper.getCountX(), mapper.getCountY()
-        );
-        spriteSheets.put(mapper.getName(), sheet);
+        for (SpriteSheetMapper mapper : getSpriteSheetMappers()) {
+          SpriteSheet sheet = new SpriteSheet(bufferedImage,
+              mapper.getSizeX(), mapper.getSizeY(),
+              mapper.getOffsetX(), mapper.getOffsetY(),
+              mapper.getCountX(), mapper.getCountY()
+          );
+          spriteSheets.put(mapper.getName(), sheet);
+        }
+      } catch (IOException e) {
+        e.printStackTrace();
       }
-    } catch (IOException e) {
-      e.printStackTrace();
     }
   }
 
@@ -67,6 +65,8 @@ abstract public class SpriteSheetPackage implements GraphicsPackage {
   public void reinitialize() {
 
   }
+
+  abstract public String getPackageName();
 
   abstract public SpriteSheetMapper[] getSpriteSheetMappers();
 

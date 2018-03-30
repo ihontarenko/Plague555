@@ -7,41 +7,34 @@ import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheetPackage
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.Sprite;
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpritePackage;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @SuppressWarnings("unused")
 public class SpriteManager extends ObjectManager<GraphicsPackage> {
 
-  private Map<String, SpriteSheetPackage> sheetPackageMap;
-  private Map<String, SpritePackage>      spritePackageMap;
-
   public SpriteManager() {
-    sheetPackageMap = new HashMap<>();
   }
 
-  public void addSheetPackage(Class<? extends GraphicsPackage> packageClass) {
-    registerService(packageClass.getSimpleName(), packageClass);
+  public void addSheetPackage(String name, Class<? extends GraphicsPackage> packageClass) {
+    registerService(name, packageClass);
   }
 
   public void addSheetPackage(SpriteSheetPackage sheetPackage) {
-    setObject(sheetPackage.getClass().getSimpleName(), sheetPackage);
-  }
-
-  public SpriteSheetPackage getSheetPackage(Class<? extends SpriteSheetPackage> packageClass) {
-    return getSheetPackage(packageClass.getSimpleName());
+    setObject(sheetPackage.getPackageName(), sheetPackage);
   }
 
   public SpriteSheetPackage getSheetPackage(String packageClassName) {
     return (SpriteSheetPackage) getObject(packageClassName);
   }
 
-  public SpriteSheet getSheetFromPackage(Class<? extends SpriteSheetPackage> packageClass, String name) {
-    return getSheetFromPackage(packageClass.getSimpleName(), name);
+  public SpriteSheet getSheetFromPackage(String packageName, String sheetName) {
+    return getSheetPackage(packageName).getSpriteSheet(sheetName);
   }
 
-  public SpriteSheet getSheetFromPackage(String packageClassName, String name) {
-    return getSheetPackage(packageClassName).getSpriteSheet(name);
+  public SpriteSheet getSheetFromPackage(String id) {
+    String[] sheetID     = id.split(".");
+    String   packageName = sheetID[0];
+    String   sheetName   = sheetID[1];
+
+    return getSheetFromPackage(packageName, sheetName);
   }
 
   public void addSpritePackage(Class<? extends GraphicsPackage> packageClass) {

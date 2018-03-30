@@ -16,4 +16,9 @@ public class OrcAssassinAPackage extends SpriteSheetPackage {
     };
   }
 
+  @Override
+  public String getPackageName() {
+    return "orcA";
+  }
+
 }

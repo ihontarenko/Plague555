@@ -10,6 +10,11 @@ public class Monster1ShadowLeggyPackage extends SpriteSheetPackage {
   }
 
   @Override
+  public String getPackageName() {
+    return "mp1";
+  }
+
+  @Override
   public SpriteSheetMapper[] getSpriteSheetMappers() {
     return new SpriteSheetMapper[] {
         new SpriteSheetMapper("monster1", 32, 32, 0, 0, 3, 4),

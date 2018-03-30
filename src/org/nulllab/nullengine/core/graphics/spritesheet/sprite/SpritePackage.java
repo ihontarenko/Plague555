@@ -41,7 +41,7 @@ abstract public class SpritePackage implements GraphicsPackage {
     return sheetName;
   }
 
-  public String getPackageUniqueName() {
+  public String getPackageName() {
     return getClass().getSimpleName();
   }
 

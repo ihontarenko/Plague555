@@ -4,6 +4,6 @@ import org.nulllab.nullengine.core.common.Initializable;
 
 public interface GraphicsPackage extends Initializable {
 
-  public String getPackageUniqueName();
+  public String getPackageName();
 
 }

@@ -2,10 +2,12 @@ package org.nulllab.sorrowland.app.scene;
 
 import org.nulllab.sorrowland.app.manager.Manager;
 import org.nulllab.sorrowland.app.scene.view.MenuView;
+import org.nulllab.ui.gui.GUIFrame;
 import org.nulllab.ui.process.view.AbstractView;
 import org.nulllab.ui.service.Context;
 import org.nulllab.ui.process.scene.Scene;
 
+import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public class MenuScene extends Scene<AbstractView> {
@@ -32,6 +34,13 @@ public class MenuScene extends Scene<AbstractView> {
   protected void doInitialize() {
     registerView(MENU, MenuView.class, getContext(), this);
     setActiveView(MENU);
+
+    GUIFrame frame = getContext().getGuiWindow().getMainFrame();
+    Dimension dimension = new Dimension(640, 480);
+
+    frame.setSize(dimension);
+    frame.getCanvas().setSize(dimension);
+    frame.updateUI();
   }
 
 }

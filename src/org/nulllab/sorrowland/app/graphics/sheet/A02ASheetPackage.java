@@ -6,4 +6,8 @@ public class A02ASheetPackage extends Characters4x2Package {
     super("sprites/characters/a02_a.png");
   }
 
+  @Override
+  public String getPackageName() {
+    return "a02a";
+  }
 }

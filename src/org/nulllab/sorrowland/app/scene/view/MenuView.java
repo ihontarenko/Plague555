@@ -103,7 +103,7 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
 
     int counter = 0;
 
-    System.out.println(sheetPackage.getPackageUniqueName());
+    System.out.println(sheetPackage.getPackageName());
 
     SpriteManager spriteManager = new SpriteManager();
     spriteManager.addSheetPackage(sheetPackage);
@@ -117,7 +117,7 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
 
     spriteManager.addSpritePackage(CharactersSprites.class);
 
-    SpriteSheet icons = spriteManager.getSheetPackage(IconsSheetPackage.class).getSpriteSheet("icons");
+    SpriteSheet icons = spriteManager.getSheetFromPackage("iconSet", "set1");
     System.out.println(icons.count());
     /*for (SpriteSheet spriteSheet : .values()) {
       try {

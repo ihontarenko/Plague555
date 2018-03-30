@@ -12,8 +12,13 @@ public class IconsSheetPackage extends SpriteSheetPackage {
   @Override
   public SpriteSheetMapper[] getSpriteSheetMappers() {
     return new SpriteSheetMapper[] {
-        new SpriteSheetMapper("icons", 24, 24, 0, 0, 16, 625),
+        new SpriteSheetMapper("set1", 24, 24, 0, 0, 16, 625),
     };
+  }
+
+  @Override
+  public String getPackageName() {
+    return "iconSet";
   }
 
 }
