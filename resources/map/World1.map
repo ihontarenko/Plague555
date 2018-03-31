@@ -8,10 +8,16 @@ Size
 
 // default tile
 Default
-tiles.cave
+tilesB.grassDefault
 
 // spriteID positionX positionY layer solid
 Map
-0 1 4 0 tiles.grass2
-2 2 4 1 tiles.ice
-4 5 2 0 tiles.grass1
+0 1 4 0 tilesA.grass2
+2 2 4 1 tilesA.ice
+4 5 2 0 tilesA.grass1
+10 11 2 0 tilesB.grass1
+10 12 2 0 tilesB.grass2
+10 13 2 0 tilesB.grass1
+11 13 2 0 tilesB.grassDefault
+12 13 2 0 tilesA.ice
+13 13 2 0 tilesB.grass2

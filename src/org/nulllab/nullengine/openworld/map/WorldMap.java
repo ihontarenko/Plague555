@@ -18,7 +18,6 @@ public class WorldMap implements Initializable {
     return getWorldMapData().getBound();
   }
 
-
   public WorldMapData getWorldMapData() {
     return worldMapData;
   }

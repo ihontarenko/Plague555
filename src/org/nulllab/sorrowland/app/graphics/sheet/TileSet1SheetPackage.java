@@ -11,7 +11,7 @@ public class TileSet1SheetPackage extends SpriteSheetPackage {
 
   @Override
   public String getPackageName() {
-    return "tiles1";
+    return "tileSet1";
   }
 
   @Override

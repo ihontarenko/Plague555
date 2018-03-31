@@ -3,10 +3,10 @@ package org.nulllab.sorrowland.app.graphics.sheet;
 import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheetPackage;
 import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheetMapper;
 
-public class WorldTilesSpritePackage extends SpriteSheetPackage {
+public class TileSet2SheetPackage extends SpriteSheetPackage {
 
-  public WorldTilesSpritePackage() {
-    super("map/tiles1.png");
+  public TileSet2SheetPackage() {
+    super("sprites/tiles/tileSet2.png");
   }
 
   @Override
@@ -14,7 +14,7 @@ public class WorldTilesSpritePackage extends SpriteSheetPackage {
     return new SpriteSheetMapper[] {
         new SpriteSheetMapper("sheet1", 32, 32, 384, 288, 2, 1),
         new SpriteSheetMapper("sheet2", 32, 32, 320, 288, 2, 1),
-        new SpriteSheetMapper("grass", 32, 32, 0, 0, 2, 1),
+        new SpriteSheetMapper("setA", 32, 32, 0, 0, 16, 1),
     };
   }
 

@@ -10,11 +10,11 @@ import org.nulllab.nullengine.openworld.character.Breed;
 import org.nulllab.nullengine.openworld.character.Character;
 import org.nulllab.nullengine.openworld.character.Skills;
 import org.nulllab.nullengine.openworld.character.level.Level;
-import org.nulllab.nullengine.openworld.map.WorldMapLoader;
 import org.nulllab.sorrowland.app.graphics.sheet.*;
 import org.nulllab.sorrowland.app.graphics.sheet.characters.*;
 import org.nulllab.sorrowland.app.graphics.sprite.PlayerSprites;
-import org.nulllab.sorrowland.app.graphics.sprite.WorldMapTilesSprites;
+import org.nulllab.sorrowland.app.graphics.sprite.TilesASprites;
+import org.nulllab.sorrowland.app.graphics.sprite.TilesBSprites;
 import org.nulllab.sorrowland.app.manager.Manager;
 import org.nulllab.sorrowland.app.scene.view.WorldTestView;
 import org.nulllab.ui.process.scene.Scene;
@@ -90,10 +90,11 @@ public class WorldTestScene extends Scene<AbstractView> {
     spriteManager.addSheetPackage(new OrcAssassinAPackage());
     spriteManager.addSheetPackage(new Monster1ShadowLeggyPackage());
     spriteManager.addSheetPackage(new IconsSheetPackage());
-    spriteManager.addSheetPackage(new WorldTilesSpritePackage());
+    spriteManager.addSheetPackage(new TileSet2SheetPackage());
     spriteManager.addSheetPackage(new TileSet1SheetPackage());
 
-    spriteManager.addSpritePackage(new WorldMapTilesSprites());
+    spriteManager.addSpritePackage(new TilesASprites());
+    spriteManager.addSpritePackage(new TilesBSprites());
 
 //    System.out.println(serviceLocator.getService(InputComponent.class));
 //    System.exit(1);

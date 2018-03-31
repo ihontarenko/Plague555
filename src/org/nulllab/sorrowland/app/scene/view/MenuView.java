@@ -15,7 +15,6 @@ import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.core.input.Keyboard;
 import org.nulllab.nullengine.openworld.ServiceLocator;
 import org.nulllab.nullengine.openworld.character.Character;
-import org.nulllab.nullengine.openworld.map.WorldMapLoader;
 import org.nulllab.nullengine.openworld.map.Terrain;
 import org.nulllab.sorrowland.app.config.Configuration;
 import org.nulllab.sorrowland.app.graphics.sheet.*;
@@ -77,7 +76,7 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
     System.out.println("after world map init...");
 
 
-    sheetPackage = new WorldTilesSpritePackage();
+    sheetPackage = new TileSet2SheetPackage();
 
     timer = new Timer(0.1);
 
@@ -138,7 +137,7 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
     System.out.println(spritePackage);
     sprite = spritePackage.getStandNorth();
 
-    //    spriteAnimated = spriteManager.getSheetFromPackage(WorldTilesSpritePackage.class, "sheet3")
+    //    spriteAnimated = spriteManager.getSheetFromPackage(TileSet2SheetPackage.class, "sheet3")
 
     spriteAnimated = new SpriteAnimated(icons, 5);
     spriteAnimated.setDirection(SpriteAnimated.Direction.PING_PONG);

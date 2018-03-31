@@ -5,10 +5,10 @@ import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpritePackage;
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.mapping.SpriteMapper;
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.mapping.SpriteStaticMapper;
 
-public class WorldMapTilesSprites extends SpritePackage {
+public class TilesASprites extends SpritePackage {
 
-  public WorldMapTilesSprites() {
-    super("tiles1.set1");
+  public TilesASprites() {
+    super("tileSet1.set1");
   }
 
   @Override
@@ -28,6 +28,6 @@ public class WorldMapTilesSprites extends SpritePackage {
 
   @Override
   public String getPackageName() {
-    return "tiles";
+    return "tilesA";
   }
 }

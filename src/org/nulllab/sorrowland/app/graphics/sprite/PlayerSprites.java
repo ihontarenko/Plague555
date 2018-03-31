@@ -3,7 +3,7 @@ package org.nulllab.sorrowland.app.graphics.sprite;
 public class PlayerSprites extends SpritesDefaultMapper {
 
   public PlayerSprites() {
-    super("a01a.c6");
+    super("orcA.orc");
   }
 
   @Override

@@ -14,7 +14,7 @@ abstract public class Sprite implements Drawable<Canvas> {
   public static final int DEFAULT_SCALE = 1;
   private BufferedImage[] images;
   private Dimension       dimension;
-  private             int active        = DEFAULT_INDEX;
+  private int active = DEFAULT_INDEX;
 
   public Sprite(BufferedImage[] images, Dimension dimension) {
     setImages(images);
@@ -27,9 +27,19 @@ abstract public class Sprite implements Drawable<Canvas> {
     setScale(DEFAULT_SCALE);
   }
 
+  public static BufferedImage convertToARGB(BufferedImage bufferedImage) {
+    BufferedImage argbImage = new BufferedImage(
+        bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
+    Graphics graphics = argbImage.getGraphics();
+
+    graphics.drawImage(bufferedImage, 0, 0, bufferedImage.getWidth(), bufferedImage.getHeight(), null);
+
+    return argbImage;
+  }
+
   private void convertToARGB() {
     BufferedImage[] argbImages = new BufferedImage[images.length];
-    int counter = 0;
+    int             counter    = 0;
 
     for (BufferedImage image : images) {
       argbImages[counter++] = convertToARGB(image);
@@ -38,29 +48,21 @@ abstract public class Sprite implements Drawable<Canvas> {
     setImages(argbImages);
   }
 
-  public static BufferedImage convertToARGB(BufferedImage bufferedImage) {
-    BufferedImage argbImage = new BufferedImage(
-        bufferedImage.getWidth(), bufferedImage.getHeight(), BufferedImage.TYPE_INT_ARGB);
-    Graphics      graphics  = argbImage.getGraphics();
-
-    graphics.drawImage(bufferedImage, 0, 0, bufferedImage.getWidth(), bufferedImage.getHeight(), null);
-
-    return argbImage;
-  }
-
   public void draw(Canvas canvas, double x, double y) {
     canvas.drawImage(getActiveImage(), x, y, getWidth(), getHeight());
   }
 
-  public void cutColor(int color, float opacity) {
-    int opacityRate = (int) (0xff * opacity) % 0xff;
+  public void cutColor(int rgb, float opacity) {
+    int opacityRate = 0xff - (int) (0xff * opacity);
 
     for (BufferedImage image : images) {
       int[] pixels = image.getRGB(0, 0, image.getWidth(), image.getHeight(), null, 0, image.getWidth());
 
       for (int i = 0; i < pixels.length; i++) {
-        if (pixels[i] == color) {
-          pixels[i] = (opacityRate << 24) | (pixels[i] & 0x00ffffff);
+        int color = (pixels[i] & 0x00ffffff);
+
+        if (color == rgb) {
+          pixels[i] = (opacityRate << 24) | color;
         }
       }
 
@@ -84,12 +86,12 @@ abstract public class Sprite implements Drawable<Canvas> {
     return images[active];
   }
 
-  public int getActiveIndex() {
-    return active;
-  }
-
   public void setActiveImage(int index) {
     this.active = index % images.length;
+  }
+
+  public int getActiveIndex() {
+    return active;
   }
 
   public int getWidth() {
@@ -104,12 +106,12 @@ abstract public class Sprite implements Drawable<Canvas> {
     return dimension;
   }
 
-  public void setScale(double scale) {
-    setDimension(new Dimension(getActiveImage().getWidth() * scale, getActiveImage().getHeight() * scale));
-  }
-
   public void setDimension(Dimension dimension) {
     this.dimension = dimension;
+  }
+
+  public void setScale(double scale) {
+    setDimension(new Dimension(getActiveImage().getWidth() * scale, getActiveImage().getHeight() * scale));
   }
 
   public void setDimension(int width, int height) {
