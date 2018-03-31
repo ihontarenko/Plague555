@@ -10,16 +10,20 @@ import org.nulllab.nullengine.openworld.map.WorldMap;
 import org.nulllab.nullengine.openworld.object.GameObject;
 import org.nulllab.nullengine.openworld.world.Camera;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Set;
 
 public class World implements Renderable<Canvas>, Updateable, Collidable, Initializable {
 
   private SpatialHash<GameObject> spatialHash;
   private Camera                  camera;
   private WorldMap                worldMap;
+  private boolean                 initialized;
 
   public World() {
-    WorldMap worldMap = new WorldMap(this);
+    WorldMap worldMap = new WorldMap("map/World1.map");
     Camera   camera   = new Camera(0, 0, 800, 640);
 
     worldMap.initialize();
@@ -82,12 +86,15 @@ public class World implements Renderable<Canvas>, Updateable, Collidable, Initia
 
   @Override
   public boolean isInitialized() {
-    return false;
+    return initialized;
   }
 
   @Override
   public void initialize() {
-    worldMap.buildMap();
+    if (!isInitialized()) {
+      getWorldMap().buildWorldMap(this);
+      initialized = true;
+    }
   }
 
   @Override

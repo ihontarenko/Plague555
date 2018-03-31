@@ -2,18 +2,39 @@ package org.nulllab.nullengine.openworld.map;
 
 import org.nulllab.nullengine.core.geometry.Bound2D;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class WorldMapData {
 
+  private String             name;
   private int                width;
   private int                height;
   private int                tileSize;
   private Map<Integer, Tile> tiles;
   private String             mapFile;
+  private Tile               defaultTile;
 
   public WorldMapData(String mapFile) {
+    this.tiles = new HashMap<>();
     this.mapFile = mapFile;
+    this.defaultTile = new Tile(0, 0, 0, false, null);
+  }
+
+  public Tile getDefaultTile() {
+    return defaultTile;
+  }
+
+  public void setDefaultTile(Tile defaultTile) {
+    this.defaultTile = defaultTile;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 
   public int getWidth() {
@@ -38,6 +59,10 @@ public class WorldMapData {
 
   public Tile getTile(int x, int y) {
     return tiles.get(getPositionFor(x, y));
+  }
+
+  public boolean hasTile(int x, int y) {
+    return tiles.containsKey(getPositionFor(x, y));
   }
 
   public int getPositionFor(int positionX, int positionY) {
@@ -94,6 +119,14 @@ public class WorldMapData {
 
     public void setSpriteID(String spriteID) {
       this.spriteID = spriteID;
+    }
+
+    public int getX() {
+      return WorldMapData.this.getX(getPositionX());
+    }
+
+    public int getY() {
+      return WorldMapData.this.getY(getPositionY());
     }
 
     public int getPositionX() {

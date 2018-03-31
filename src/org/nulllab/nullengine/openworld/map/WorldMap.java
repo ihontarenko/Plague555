@@ -2,51 +2,54 @@ package org.nulllab.nullengine.openworld.map;
 
 import org.nulllab.nullengine.core.common.Initializable;
 import org.nulllab.nullengine.core.geometry.Bound2D;
-import org.nulllab.nullengine.core.graphics.spritesheet.SpriteManager;
-import org.nulllab.nullengine.openworld.ServiceLocator;
 import org.nulllab.nullengine.openworld.World;
 
 public class WorldMap implements Initializable {
 
-  public static final int WIDTH = 40;
-  public static final int HEIGHT = 90;
-  public static final int TILE_SIZE = 1 << 5;
-
   private boolean initialized = false;
-  private Terrain[][] terrains = new Terrain[WIDTH][HEIGHT];
-  private World        world;
+  private Terrain[][]  terrains;
   private WorldMapData worldMapData;
 
-  public WorldMap(World world) {
-    this.world = world;
-    this.worldMapData = new WorldMapData("map/World1.map");
-  }
-
-  public void buildMap() {
-    for (int w = 0; w < WIDTH; w++) {
-      for (int h = 0; h < HEIGHT; h++) {
-        Terrain terrain = new Terrain(w * TILE_SIZE, h * TILE_SIZE, TILE_SIZE, TILE_SIZE);
-        terrain.setSprite("tiles.ice");
-        terrains[w][h] = terrain;
-        world.addGameObject(terrain);
-      }
-    }
-
-    SpriteManager spriteManager = ServiceLocator.getInstance().getSpriteManager();
-
-    terrains[20][20].setSprite(spriteManager.getSpriteFromPackage("tiles.grass2"));
+  public WorldMap(String mapFile) {
+    this.worldMapData = new WorldMapData(mapFile);
   }
 
   public Bound2D getBound() {
-    return new Bound2D(0, 0, TILE_SIZE * WIDTH, TILE_SIZE * HEIGHT);
+    return getWorldMapData().getBound();
   }
 
-  public World getWorld() {
-    return world;
-  }
 
   public WorldMapData getWorldMapData() {
     return worldMapData;
+  }
+
+  public void buildWorldMap(World world) {
+    WorldMapData      data            = getWorldMapData();
+    String            defaultSpriteID = data.getDefaultTile().getSpriteID();
+    int               tileSize        = data.getTileSize();
+    int               width           = data.getWidth();
+    int               height          = data.getHeight();
+    WorldMapData.Tile tile;
+
+    this.terrains = new Terrain[width][height];
+
+    for (int positionX = 0; positionX < width; positionX++) {
+      for (int positionY = 0; positionY < height; positionY++) {
+
+        Terrain terrain = new Terrain(data.getX(positionX), data.getY(positionY), tileSize, tileSize);
+        terrain.setSprite(defaultSpriteID);
+
+        if (data.hasTile(positionX, positionY)) {
+          tile = data.getTile(positionX, positionY);
+          terrain.setSprite(tile.getSpriteID());
+          terrain.setSolid(tile.isSolid());
+          terrain.setLayerID(tile.getLayer());
+        }
+
+        world.addGameObject(terrain);
+        terrains[positionX][positionY] = terrain;
+      }
+    }
   }
 
   @Override
@@ -57,9 +60,10 @@ public class WorldMap implements Initializable {
   @Override
   public void initialize() {
     if (!isInitialized()) {
+      System.out.printf("WorldMap: start parse map '%s'%n", getWorldMapData().getMapFile());
       WorldMapLoader loader = new WorldMapLoader(getWorldMapData().getMapFile());
       loader.toMapData(getWorldMapData());
-      System.out.println(getWorldMapData());
+      System.out.printf("WorldMap: parsed map '%s'%n", getWorldMapData().getName());
       initialized = true;
     }
   }

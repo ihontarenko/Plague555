@@ -115,16 +115,14 @@ public class WorldTestScene extends Scene<AbstractView> {
 //    WorldMapLoader reader = new WorldMapLoader("map/World1.map");
 //    reader.toMapData();
 
-    System.out.println("before map load...");
     world = new World();
     world.initialize();
-    System.out.println("all map object loaded...");
 
     world.addGameObject(character);
 
     serviceLocator.addService(World.class, world);
 
-    System.out.println(world.getSpatialHash().getSize());
+    System.out.println("SpatialHash Size: " + world.getSpatialHash().getSize());
   }
 
   @Override

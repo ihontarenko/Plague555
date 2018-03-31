@@ -14,13 +14,22 @@ public class WorldMapLoader extends FileResourceLoader {
   }
 
   public void toMapData(WorldMapData mapData) {
-    Scanner      scanner = new Scanner(getFileStream());
+    Scanner scanner = new Scanner(getFileStream());
 
     while (scanner.hasNextLine()) {
-
       String line = scanner.nextLine();
 
       if (line.startsWith("//") || line.isEmpty()) {
+        continue;
+      }
+
+      if (line.startsWith("Name")) {
+        mapData.setName(scanner.nextLine());
+        continue;
+      }
+
+      if (line.startsWith("Default")) {
+        mapData.getDefaultTile().setSpriteID(scanner.nextLine());
         continue;
       }
 
@@ -42,8 +51,9 @@ public class WorldMapLoader extends FileResourceLoader {
 
   private void processTileData(String line, WorldMapData data) {
     String[]      strings   = line.split(" ");
-    List<Integer> integers  = processIntegers(Arrays.copyOfRange(strings, 1, strings.length));
-    String        spriteID  = strings[0];
+    int           lastIndex = strings.length - 1;
+    List<Integer> integers  = processIntegers(Arrays.copyOfRange(strings, 0, lastIndex));
+    String        spriteID  = strings[lastIndex];
     int           positionX = integers.get(0);
     int           positionY = integers.get(1);
     int           layer     = integers.get(2);

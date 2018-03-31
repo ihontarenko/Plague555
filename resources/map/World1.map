@@ -1,9 +1,17 @@
+// name of world
+Name
+Sorrow Land (World 1)
+
 // width height tile-size
 Size
-1280 960 32
+128 96 32
+
+// default tile
+Default
+tiles.cave
 
 // spriteID positionX positionY layer solid
 Map
-tiles.g1 0 1 4 0
-tiles.cave 2 2 4 1
-tiles.g2 4 5 2 0
+0 1 4 0 tiles.grass2
+2 2 4 1 tiles.ice
+4 5 2 0 tiles.grass1
