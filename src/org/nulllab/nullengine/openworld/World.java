@@ -14,7 +14,6 @@ import java.util.*;
 
 public class World implements Renderable<Canvas>, Updateable, Collidable, Initializable {
 
-  private Set<GameObject>         gameObjects;
   private SpatialHash<GameObject> spatialHash;
   private Camera                  camera;
   private WorldMap                worldMap;
@@ -23,9 +22,9 @@ public class World implements Renderable<Canvas>, Updateable, Collidable, Initia
     WorldMap worldMap = new WorldMap(this);
     Camera   camera   = new Camera(0, 0, 800, 640);
 
+    worldMap.initialize();
     camera.setBound2D(worldMap.getBound());
 
-    this.gameObjects = new TreeSet<>();
     this.spatialHash = new SpatialHash<>(worldMap.getBound(), 4);
 
     this.camera = camera;
@@ -33,12 +32,10 @@ public class World implements Renderable<Canvas>, Updateable, Collidable, Initia
   }
 
   public void addGameObject(GameObject object) {
-    gameObjects.add(object);
     spatialHash.insert(object);
   }
 
   public void removeGameObject(GameObject object) {
-    gameObjects.remove(object);
     spatialHash.remove(object);
   }
 
@@ -60,22 +57,22 @@ public class World implements Renderable<Canvas>, Updateable, Collidable, Initia
 
     Collections.sort(objects);
 
-    objects.forEach(gameObject ->
-        gameObject.getSprite().draw(canvas,
-            gameObject.getX() - camera.getX(), gameObject.getY() - camera.getY()));
+    objects.forEach(object -> {
+      double x = object.getX() - camera.getX();
+      double y = object.getY() - camera.getY();
 
-    canvas.drawRectangle(0, 0, camera.getWidth(), camera.getHeight());
+      object.getSprite().draw(canvas, x, y);
+    });
   }
 
   @Override
   public void update(float nano) {
-    getGameObjects().forEach(object -> object.update(nano));
+    Set<GameObject> objects = spatialHash.retrieve(camera);
 
-    getGameObjects().stream().filter(GameObject::isMovable).forEach(object -> spatialHash.reinsert(object));
-  }
-
-  public Set<GameObject> getGameObjects() {
-    return gameObjects;
+    objects.stream().filter(GameObject::isMovable).forEach(object -> {
+      object.update(nano);
+      spatialHash.reinsert(object);
+    });
   }
 
   @Override

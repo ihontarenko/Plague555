@@ -14,9 +14,10 @@ public class WorldMapTilesSprites extends SpritePackage {
   @Override
   public SpriteMapper[] getSpriteMappers() {
     return new SpriteMapper[] {
-        new SpriteStaticMapper("grass1", 1, 0),
+        new SpriteStaticMapper("grass1", 1, 52),
         new SpriteStaticMapper("grass2", 1, 86),
         new SpriteStaticMapper("cave", 1, 35),
+        new SpriteStaticMapper("ice", 1, 51),
     };
   }
 

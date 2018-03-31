@@ -10,6 +10,7 @@ import org.nulllab.nullengine.openworld.character.Breed;
 import org.nulllab.nullengine.openworld.character.Character;
 import org.nulllab.nullengine.openworld.character.Skills;
 import org.nulllab.nullengine.openworld.character.level.Level;
+import org.nulllab.nullengine.openworld.map.WorldMapLoader;
 import org.nulllab.sorrowland.app.graphics.sheet.*;
 import org.nulllab.sorrowland.app.graphics.sheet.characters.*;
 import org.nulllab.sorrowland.app.graphics.sprite.PlayerSprites;
@@ -40,10 +41,10 @@ public class WorldTestScene extends Scene<AbstractView> {
 
     serviceLocator.addService(Keyboard.class, getContext().getInputKey());
 
-    for (int i = 1; i < 100; i++) {
-      Level level = new Level(i);
-      System.out.println("lvl: " + i + ", health: " + 100* level.getScale());
-    }
+//    for (int i = 1; i < 100; i++) {
+//      Level level = new Level(i);
+//      System.out.println("lvl: " + i + ", health: " + 100* level.getScale());
+//    }
 
     int health = 100;
     int lvl = 100;
@@ -108,6 +109,11 @@ public class WorldTestScene extends Scene<AbstractView> {
 //    System.exit(1);
 
     // new TrollElf();
+
+    System.out.println("before map parse...");
+
+//    WorldMapLoader reader = new WorldMapLoader("map/World1.map");
+//    reader.toMapData();
 
     System.out.println("before map load...");
     world = new World();

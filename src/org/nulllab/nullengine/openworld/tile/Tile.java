@@ -10,7 +10,7 @@ public class Tile extends GameObject {
 
   @Override
   public void render(Canvas canvas) {
-//    getSprite().draw(canvas, getX(), getY());
+//    getSprite().draw(canvas, getPositionX(), getPositionY());
   }
 
   @Override

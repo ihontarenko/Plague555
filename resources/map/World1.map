@@ -1,21 +1,9 @@
-// world size
+// width height tile-size
 Size
-1000:1000
+1280 960 32
 
-Sheets
-WorldTilesSpritePackage
-
-// default filling
-Fill
-2,5-7/2,9
-
-// package.sheet.sprite
-Terrain
-1:0 0 0
-tiles1.grasses.g1.g1 0 1 4
-tiles1.grasses.g1.g1 0 1 4
-tiles1.grasses.g1.g1 0 1 4
-tiles1.grasses.g1.g1 0 1 4
-tiles1.grasses.g1.g1 0 1 4
-tiles1.grasses.g1.g1 0 1 4
-tiles1.grasses.g1.g1 0 1 4
+// spriteID positionX positionY layer solid
+Map
+tiles.g1 0 1 4 0
+tiles.cave 2 2 4 1
+tiles.g2 4 5 2 0

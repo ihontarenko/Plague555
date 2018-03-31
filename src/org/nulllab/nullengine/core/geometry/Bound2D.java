@@ -22,7 +22,7 @@ public class Bound2D extends Object2D {
 
   @Override
   public String toString() {
-    return String.format("Bound2D{ getX:%s getY:%s, w:%s h:%s }", this.x, this.x, this.width,
+    return String.format("Bound2D{ getPositionX:%s getPositionY:%s, w:%s h:%s }", this.x, this.x, this.width,
         this.height);
   }
 }

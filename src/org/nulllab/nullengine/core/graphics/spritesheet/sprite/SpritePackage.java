@@ -42,22 +42,24 @@ abstract public class SpritePackage implements GraphicsPackage {
 
   @Override
   public void initialize() {
-    SpriteSheet spriteSheet = findSpriteSheet();
+    if (!isInitialized()) {
+      SpriteSheet spriteSheet = findSpriteSheet();
 
-    for (SpriteMapper mapper : getSpriteMappers()) {
-      Sprite sprite;
+      for (SpriteMapper mapper : getSpriteMappers()) {
+        Sprite sprite;
 
-      if (mapper instanceof SpriteAnimatedMapper) {
-        sprite = createSprite(spriteSheet, (SpriteAnimatedMapper) mapper);
-      } else {
-        sprite = createSprite(spriteSheet, (SpriteStaticMapper) mapper);
+        if (mapper instanceof SpriteAnimatedMapper) {
+          sprite = createSprite(spriteSheet, (SpriteAnimatedMapper) mapper);
+        } else {
+          sprite = createSprite(spriteSheet, (SpriteStaticMapper) mapper);
+        }
+
+        if (mapper.getColorRemove() > -1) {
+          sprite.cutColor(mapper.getColorRemove(), 1F);
+        }
+
+        sprites.put(mapper.getName(), sprite);
       }
-
-      if (mapper.getColorRemove() > -1) {
-        sprite.cutColor(mapper.getColorRemove(), 1F);
-      }
-
-      sprites.put(mapper.getName(), sprite);
     }
   }
 

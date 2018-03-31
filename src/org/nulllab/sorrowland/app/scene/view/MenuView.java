@@ -15,7 +15,7 @@ import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.core.input.Keyboard;
 import org.nulllab.nullengine.openworld.ServiceLocator;
 import org.nulllab.nullengine.openworld.character.Character;
-import org.nulllab.nullengine.openworld.map.MapParser;
+import org.nulllab.nullengine.openworld.map.WorldMapLoader;
 import org.nulllab.nullengine.openworld.map.Terrain;
 import org.nulllab.sorrowland.app.config.Configuration;
 import org.nulllab.sorrowland.app.graphics.sheet.*;
@@ -27,7 +27,6 @@ import org.nulllab.ui.service.Context;
 
 import java.awt.event.KeyEvent;
 import java.util.List;
-import java.util.Set;
 
 public class MenuView extends AbstractView<MenuScene, AbstractView> {
 
@@ -59,8 +58,8 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
   @Override
   public void doInitialize() {
 
-    MapParser reader = new MapParser("map/World1.map");
-    reader.loadMap();
+//    WorldMapLoader reader = new WorldMapLoader("map/World1.map");
+//    reader.toMapData();
 
     System.out.println("before world map init...");
 
@@ -201,22 +200,22 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
 //    character.render(canvas);
 
     //    canvas.setColor(Color.RED.getRGB());
-    //    canvas.drawRectangle(bound2D.getX(), bound2D.getY(), bound2D.getWidth(), bound2D.getHeight());
+    //    canvas.drawRectangle(bound2D.getPositionX(), bound2D.getPositionY(), bound2D.getWidth(), bound2D.getHeight());
 
     //    for (Object2D object2D : spatialHash.getObjects()) {
     //      g2d.setColor(Color.GREEN);
     //      spatialHash.getObjectKeys(object2D).forEach(key -> g2d.drawRect(spatialHash.getXPixel(key), spatialHash.getYPixel(key), size, size));
     //      g2d.setColor(Color.MAGENTA);
-    //      g2d.drawRect(object2D.getX(), object2D.getY(), object2D.getWidth(), object2D.getHeight());
+    //      g2d.drawRect(object2D.getPositionX(), object2D.getPositionY(), object2D.getWidth(), object2D.getHeight());
     //    }
 
     //    System.out.println("retrieved: " + spatialHash.retrieve(object1).size());
 
     //    g2d.setColor(Color.RED);
-    //    g2d.drawRect(object1.getX(), object1.getY(), object1.getWidth(), object1.getHeight());
+    //    g2d.drawRect(object1.getPositionX(), object1.getPositionY(), object1.getWidth(), object1.getHeight());
 
     //    for (Object2D object2D : spatialHash.retrieve(object1)) {
-    //      g2d.drawRect(object2D.getX(), object2D.getY(), object2D.getWidth(), object2D.getHeight());
+    //      g2d.drawRect(object2D.getPositionX(), object2D.getPositionY(), object2D.getWidth(), object2D.getHeight());
     //    }
   }
 }

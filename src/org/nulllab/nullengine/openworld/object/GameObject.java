@@ -75,6 +75,14 @@ abstract public class GameObject extends Object2D
     this.spritePackage = spritePackage;
   }
 
+  public Sprite getSprite() {
+    return sprite;
+  }
+
+  public void setSprite(Sprite sprite) {
+    this.sprite = sprite;
+  }
+
   public ServiceLocator getServiceLocator() {
     return serviceLocator;
   }
@@ -97,14 +105,6 @@ abstract public class GameObject extends Object2D
   @Override
   public void update(float nano) {
     // null object ...
-  }
-
-  public Sprite getSprite() {
-    return sprite;
-  }
-
-  public void setSprite(Sprite sprite) {
-    this.sprite = sprite;
   }
 
 }
