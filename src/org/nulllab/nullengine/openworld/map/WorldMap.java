@@ -7,7 +7,6 @@ import org.nulllab.nullengine.openworld.World;
 public class WorldMap implements Initializable {
 
   private boolean initialized = false;
-  private Terrain[][]  terrains;
   private WorldMapData worldMapData;
 
   public WorldMap(String mapFile) {
@@ -30,8 +29,6 @@ public class WorldMap implements Initializable {
     int               height          = data.getHeight();
     WorldMapData.Tile tile;
 
-    this.terrains = new Terrain[width][height];
-
     for (int positionX = 0; positionX < width; positionX++) {
       for (int positionY = 0; positionY < height; positionY++) {
 
@@ -46,7 +43,6 @@ public class WorldMap implements Initializable {
         }
 
         world.addGameObject(terrain);
-        terrains[positionX][positionY] = terrain;
       }
     }
   }

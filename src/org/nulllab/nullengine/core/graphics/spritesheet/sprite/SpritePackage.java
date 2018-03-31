@@ -4,7 +4,6 @@ import org.nulllab.nullengine.openworld.ServiceLocator;
 import org.nulllab.nullengine.core.graphics.GraphicsPackage;
 import org.nulllab.nullengine.core.graphics.spritesheet.SpriteManager;
 import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheet;
-import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheetPackage;
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.mapping.SpriteAnimatedMapper;
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.mapping.SpriteMapper;
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.mapping.SpriteStaticMapper;
@@ -55,7 +54,7 @@ abstract public class SpritePackage implements GraphicsPackage {
         }
 
         if (mapper.getColorRemove() > -1) {
-          sprite.cutColor(mapper.getColorRemove(), 1F);
+          sprite.setOpacity(mapper.getColorRemove(), 1F);
         }
 
         sprites.put(mapper.getName(), sprite);

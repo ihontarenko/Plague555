@@ -83,10 +83,20 @@ public class WorldTestScene extends Scene<AbstractView> {
     SpriteManager spriteManager = new SpriteManager();
     serviceLocator.addService(spriteManager.getClass(), spriteManager);
 
-    spriteManager.addSheetPackage(new A02ASheetPackage());
     spriteManager.addSheetPackage(new A01ASheetPackage());
     spriteManager.addSheetPackage(new A01BSheetPackage());
+    spriteManager.addSheetPackage(new A02ASheetPackage());
+    spriteManager.addSheetPackage(new A02BSheetPackage());
+    spriteManager.addSheetPackage(new A02CSheetPackage());
+    spriteManager.addSheetPackage(new A02DSheetPackage());
+    spriteManager.addSheetPackage(new A03ASheetPackage());
+    spriteManager.addSheetPackage(new A03BSheetPackage());
+    spriteManager.addSheetPackage(new A03CSheetPackage());
     spriteManager.addSheetPackage(new A03DSheetPackage());
+    spriteManager.addSheetPackage(new A03ESheetPackage());
+    spriteManager.addSheetPackage(new A03FSheetPackage());
+    spriteManager.addSheetPackage(new A03GSheetPackage());
+
     spriteManager.addSheetPackage(new OrcAssassinAPackage());
     spriteManager.addSheetPackage(new Monster1ShadowLeggyPackage());
     spriteManager.addSheetPackage(new IconsSheetPackage());

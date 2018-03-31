@@ -52,7 +52,7 @@ abstract public class Sprite implements Drawable<Canvas> {
     canvas.drawImage(getActiveImage(), x, y, getWidth(), getHeight());
   }
 
-  public void cutColor(int rgb, float opacity) {
+  public void setOpacity(int rgb, float opacity) {
     int opacityRate = 0xff - (int) (0xff * opacity);
 
     for (BufferedImage image : images) {
