@@ -15,9 +15,9 @@ abstract public class GameObject extends Object2D
 
   private boolean        isSolid;
   private boolean        isStatic;
+  private int            layer;
   private Sprite         sprite;
   private Sprites        spritePackage;
-  private int            layerID;
   private ServiceLocator serviceLocator;
 
   public GameObject() {
@@ -27,7 +27,7 @@ abstract public class GameObject extends Object2D
   public GameObject(int x, int y, int width, int height) {
     super(x, y, width, height);
 
-    layerID = 1;
+    layer = 1;
     serviceLocator = ServiceLocator.getInstance();
   }
 
@@ -52,19 +52,19 @@ abstract public class GameObject extends Object2D
   }
 
   public void layerDown() {
-    layerID >>= 1;
+    layer >>= 1;
   }
 
   public void layerUp() {
-    layerID <<= 1;
+    layer <<= 1;
   }
 
-  public int getLayerID() {
-    return layerID;
+  public int getLayer() {
+    return layer;
   }
 
-  public void setLayerID(int layerID) {
-    this.layerID = layerID;
+  public void setLayer(int layer) {
+    this.layer = layer;
   }
 
   public Sprites getSpritePackage() {
@@ -89,7 +89,7 @@ abstract public class GameObject extends Object2D
 
   @Override
   public int compareTo(GameObject object) {
-    return this.getLayerID() - object.getLayerID();
+    return this.getLayer() - object.getLayer();
   }
 
   @Override

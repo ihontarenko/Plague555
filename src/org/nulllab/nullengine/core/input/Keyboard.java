@@ -8,8 +8,9 @@ import java.awt.event.ActionEvent;
 @SuppressWarnings("unused")
 public class Keyboard extends JComponent implements Input {
 
-  private             boolean[] keyCodeMap = new boolean[256];
-  private             Timer     timer      = new Timer(Timer.Factor.MILLI, 500D);
+  private int       length     = 256;
+  private boolean[] keyCodeMap = new boolean[length];
+  private Timer     timer      = new Timer(Timer.Factor.MILLI, 500D);
 
   public Keyboard() {
     InputMap  inputMap  = this.getInputMap(WHEN_IN_FOCUSED_WINDOW);
@@ -37,6 +38,20 @@ public class Keyboard extends JComponent implements Input {
 
   public Timer getTimer() {
     return timer;
+  }
+
+  @Override
+  public int getPressed() {
+    int pressedKey = 0;
+
+    for (int keyCode = 0; keyCode < length; keyCode++) {
+      if (isPressed(keyCode)) {
+        pressedKey = keyCode;
+        break;
+      }
+    }
+
+    return pressedKey;
   }
 
   @Override

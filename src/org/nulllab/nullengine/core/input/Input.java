@@ -20,6 +20,8 @@ public interface Input {
   int BUTTON_8 = KeyEvent.VK_8;
   int BUTTON_9 = KeyEvent.VK_9;
 
+  int getPressed();
+
   boolean isPressed(int keyCode);
 
   default boolean isPressed(int[] keyCodes) {

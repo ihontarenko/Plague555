@@ -2,7 +2,7 @@ package org.nulllab.nullengine.openworld.character;
 
 import org.nulllab.nullengine.core.event.Observable;
 import org.nulllab.nullengine.core.input.Input;
-import org.nulllab.nullengine.openworld.object.GameObject;
+import org.nulllab.nullengine.openworld.object.ActiveObject;
 import org.nulllab.nullengine.openworld.character.equipment.Equipment;
 import org.nulllab.nullengine.openworld.character.level.Level;
 import org.nulllab.nullengine.openworld.character.state.StandState;
@@ -11,7 +11,7 @@ import org.nulllab.nullengine.openworld.state.ObjectState;
 import java.util.Set;
 
 @SuppressWarnings("unused")
-public class Character extends GameObject {
+public class Character extends ActiveObject {
 
   protected ObjectState           state;
   protected Input                 input;
@@ -21,14 +21,14 @@ public class Character extends GameObject {
   private   Set<Equipment>        equipment;
 
   public Character(Breed breed, Input input) {
-    super();
+    super(0, 0, 1 << 4, 1 << 4);
 
     this.state = new StandState();
     this.observable = new Observable<>();
     this.input = input;
     this.breed = breed;
 
-    this.setLayerID(1 << 2);
+    this.setLayer(1 << 2);
   }
 
   public double getHealth() {
@@ -51,11 +51,7 @@ public class Character extends GameObject {
     this.level = level;
   }
 
-  public double getMana() {
-    return getBreed().getMana();
-  }
-
-  public Observable getObservable() {
+  public Observable<Character> getObservable() {
     return observable;
   }
 
@@ -102,6 +98,7 @@ public class Character extends GameObject {
 
     this.state.update(this);
 
+    // todo
     getServiceLocator().getWorld().getCamera().syncPositionWith(getCentreX(), getCentreY());
   }
 

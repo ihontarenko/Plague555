@@ -10,18 +10,23 @@ public class Camera extends ActiveObject {
   }
 
   public void syncPositionWith(double x, double y) {
-    Bound2D bound2D   = getBound2D();
+    Bound2D areaBound = getAreaBound();
+    Bound2D selfBound = getSelfBound();
     double  offsetX   = getWidth() / 2;
     double  offsetY   = getHeight() / 2;
-    double  positionX = bound2D.getX();
-    double  positionY = bound2D.getY();
+    double  positionX = areaBound.getX();
+    double  positionY = areaBound.getY();
+
+    if (selfBound.getMaxX() > areaBound.getMaxX()) {
+
+    }
 
     if (x > offsetX) {
-      positionX = Math.min(x, bound2D.getMaxX() - offsetX) - offsetX;
+      positionX = Math.min(x, areaBound.getMaxX() - offsetX) - offsetX;
     }
 
     if (y > offsetY) {
-      positionY = Math.min(y, bound2D.getMaxY() - offsetY) - offsetY;
+      positionY = Math.min(y, areaBound.getMaxY() - offsetY) - offsetY;
     }
 
     setX(positionX);

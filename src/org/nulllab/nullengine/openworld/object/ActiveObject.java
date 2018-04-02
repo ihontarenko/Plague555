@@ -4,7 +4,8 @@ import org.nulllab.nullengine.core.geometry.Bound2D;
 
 public class ActiveObject extends GameObject {
 
-  private Bound2D bound2D;
+  private Bound2D areaBound;
+  private Bound2D selfBound;
 
   public ActiveObject(int x, int y, int width, int height) {
     super(x, y, width, height);
@@ -12,12 +13,22 @@ public class ActiveObject extends GameObject {
     setStatic(false);
   }
 
-  public Bound2D getBound2D() {
-    return bound2D;
+  public Bound2D getAreaBound() {
+    return areaBound;
   }
 
-  public void setBound2D(Bound2D bound2D) {
-    this.bound2D = bound2D;
+  public void setAreaBound(Bound2D areaBound) {
+    this.areaBound = areaBound;
   }
 
+  public Bound2D getSelfBound() {
+    return selfBound;
+  }
+
+  public void setSelfBound(Bound2D selfBound) {
+//    selfBound.setX(getX());
+//    selfBound.setY(getMaxY() - selfBound.getHeight());
+
+    this.selfBound = selfBound;
+  }
 }
