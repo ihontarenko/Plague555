@@ -21,7 +21,7 @@ public class Character extends ActiveObject {
   private   Set<Equipment>        equipment;
 
   public Character(Breed breed, Input input) {
-    super(0, 0, 1 << 4, 1 << 4);
+    super(0, 0, 32, 48);
 
     this.state = new StandState();
     this.observable = new Observable<>();

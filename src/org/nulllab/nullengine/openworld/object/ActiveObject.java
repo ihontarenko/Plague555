@@ -9,7 +9,7 @@ public class ActiveObject extends GameObject {
 
   public ActiveObject(int x, int y, int width, int height) {
     super(x, y, width, height);
-
+    setSelfBound(new Bound2D(x, y, width, height));
     setStatic(false);
   }
 
@@ -26,9 +26,6 @@ public class ActiveObject extends GameObject {
   }
 
   public void setSelfBound(Bound2D selfBound) {
-//    selfBound.setX(getX());
-//    selfBound.setY(getMaxY() - selfBound.getHeight());
-
     this.selfBound = selfBound;
   }
 }
