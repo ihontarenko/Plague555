@@ -99,7 +99,7 @@ public class Character extends ActiveObject {
     this.state.update(this);
 
     // todo
-    getServiceLocator().getWorld().getCamera().syncPositionWith(getCentreX(), getCentreY());
+    getServiceLocator().getWorld().getCamera().moveTo(getCentreX(), getCentreY());
   }
 
 

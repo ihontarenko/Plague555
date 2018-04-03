@@ -9,7 +9,7 @@ public class Camera extends ActiveObject {
     super(x, y, width, height);
   }
 
-  public void syncPositionWith(double x, double y) {
+  public void moveTo(double x, double y) {
     Bound2D areaBound = getAreaBound();
     Bound2D selfBound = getSelfBound();
     double  offsetX   = getWidth() / 2;

@@ -1,5 +1,6 @@
 package org.nulllab.nullengine.openworld.object;
 
+import org.nulllab.nullengine.core.geometry.Bound2D;
 import org.nulllab.nullengine.core.geometry.Collidable;
 import org.nulllab.nullengine.core.geometry.Object2D;
 import org.nulllab.nullengine.core.graphics.Canvas;
@@ -18,6 +19,8 @@ abstract public class GameObject extends Object2D
   private int            layer;
   private Sprite         sprite;
   private Sprites        spritePackage;
+  private Bound2D        areaBound;
+  private Bound2D        selfBound;
   private ServiceLocator serviceLocator;
 
   public GameObject() {
@@ -29,6 +32,8 @@ abstract public class GameObject extends Object2D
 
     layer = 1;
     serviceLocator = ServiceLocator.getInstance();
+
+    setSelfBound(new Bound2D(x, y, width, height));
   }
 
   public boolean isStatic() {
@@ -85,6 +90,34 @@ abstract public class GameObject extends Object2D
 
   public ServiceLocator getServiceLocator() {
     return serviceLocator;
+  }
+
+  public Bound2D getAreaBound() {
+    return areaBound;
+  }
+
+  public void setAreaBound(Bound2D areaBound) {
+    this.areaBound = areaBound;
+  }
+
+  public Bound2D getSelfBound() {
+    return selfBound;
+  }
+
+  public void setSelfBound(Bound2D selfBound) {
+    this.selfBound = selfBound;
+  }
+
+  @Override
+  public void setX(double x) {
+    super.setX(x);
+    selfBound.setX(x);
+  }
+
+  @Override
+  public void setY(double y) {
+    super.setY(y);
+    selfBound.setY(y);
   }
 
   @Override
