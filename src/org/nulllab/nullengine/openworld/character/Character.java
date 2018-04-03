@@ -2,7 +2,7 @@ package org.nulllab.nullengine.openworld.character;
 
 import org.nulllab.nullengine.core.event.Observable;
 import org.nulllab.nullengine.core.input.Input;
-import org.nulllab.nullengine.openworld.object.ActiveObject;
+import org.nulllab.nullengine.openworld.object.MovableGameObject;
 import org.nulllab.nullengine.openworld.character.equipment.Equipment;
 import org.nulllab.nullengine.openworld.character.level.Level;
 import org.nulllab.nullengine.openworld.character.state.StandState;
@@ -11,7 +11,7 @@ import org.nulllab.nullengine.openworld.state.ObjectState;
 import java.util.Set;
 
 @SuppressWarnings("unused")
-public class Character extends ActiveObject {
+public class Character extends MovableGameObject {
 
   protected ObjectState           state;
   protected Input                 input;

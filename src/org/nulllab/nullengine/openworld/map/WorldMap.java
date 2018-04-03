@@ -55,10 +55,8 @@ public class WorldMap implements Initializable {
   @Override
   public void initialize() {
     if (!isInitialized()) {
-      System.out.printf("WorldMap: start parse map '%s'%n", getWorldMapData().getMapFile());
       WorldMapLoader loader = new WorldMapLoader(getWorldMapData().getMapFile());
       loader.toMapData(getWorldMapData());
-      System.out.printf("WorldMap: parsed map '%s'%n", getWorldMapData().getName());
       initialized = true;
     }
   }

@@ -15,37 +15,39 @@ abstract public class GameObject extends Object2D
     implements Renderable<Canvas>, Updateable, Collidable, Comparable<GameObject> {
 
   private boolean        isSolid;
-  private boolean        isStatic;
+  private boolean        isMovable;
   private int            layer;
   private Sprite         sprite;
   private Sprites        spritePackage;
-  private Bound2D        areaBound;
-  private Bound2D        selfBound;
   private ServiceLocator serviceLocator;
+  private Bound2D        bounds;
 
   public GameObject() {
-    this(0, 0, 1 << 4, 1 << 4);
+    this(0, 0, 32, 32, null);
+  }
+
+  public GameObject(int x, int y, int width, int height, Bound2D bounds) {
+    super(x, y, width, height);
+
+    this.bounds = bounds;
+    this.layer = 1;
+    this.serviceLocator = ServiceLocator.getInstance();
   }
 
   public GameObject(int x, int y, int width, int height) {
-    super(x, y, width, height);
-
-    layer = 1;
-    serviceLocator = ServiceLocator.getInstance();
-
-    setSelfBound(new Bound2D(x, y, width, height));
-  }
-
-  public boolean isStatic() {
-    return isStatic;
+    this(x, y, width, height, null);
   }
 
   public boolean isMovable() {
-    return !isStatic();
+    return isMovable;
   }
 
-  public void setStatic(boolean isStatic) {
-    this.isStatic = isStatic;
+  public boolean isStatic() {
+    return !isMovable();
+  }
+
+  public void setMovable(boolean isMovable) {
+    this.isMovable = isMovable;
   }
 
   public boolean isSolid() {
@@ -88,36 +90,16 @@ abstract public class GameObject extends Object2D
     this.sprite = sprite;
   }
 
+  public Bound2D getBounds() {
+    return bounds;
+  }
+
+  public void setBounds(Bound2D bounds) {
+    this.bounds = bounds;
+  }
+
   public ServiceLocator getServiceLocator() {
     return serviceLocator;
-  }
-
-  public Bound2D getAreaBound() {
-    return areaBound;
-  }
-
-  public void setAreaBound(Bound2D areaBound) {
-    this.areaBound = areaBound;
-  }
-
-  public Bound2D getSelfBound() {
-    return selfBound;
-  }
-
-  public void setSelfBound(Bound2D selfBound) {
-    this.selfBound = selfBound;
-  }
-
-  @Override
-  public void setX(double x) {
-    super.setX(x);
-    selfBound.setX(x);
-  }
-
-  @Override
-  public void setY(double y) {
-    super.setY(y);
-    selfBound.setY(y);
   }
 
   @Override
