@@ -10,6 +10,8 @@ import org.nulllab.nullengine.openworld.character.Breed;
 import org.nulllab.nullengine.openworld.character.Character;
 import org.nulllab.nullengine.openworld.character.Skills;
 import org.nulllab.nullengine.openworld.character.level.Level;
+import org.nulllab.nullengine.openworld.object.GameObject;
+import org.nulllab.nullengine.openworld.world.Camera;
 import org.nulllab.sorrowland.app.graphics.sheet.*;
 import org.nulllab.sorrowland.app.graphics.sheet.characters.*;
 import org.nulllab.sorrowland.app.graphics.sprite.PlayerSprites;
@@ -22,6 +24,8 @@ import org.nulllab.ui.process.view.AbstractView;
 import org.nulllab.ui.service.Context;
 
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class WorldTestScene extends Scene<AbstractView> {
 
@@ -131,9 +135,11 @@ public class WorldTestScene extends Scene<AbstractView> {
 
     world.addGameObject(character);
 
+    character.setCamera(world.getCamera());
+
     serviceLocator.addService(World.class, world);
 
-    System.out.println("SpatialHash Size: " + world.getSpatialHash().getSize());
+    System.out.println("SpatialHash Size: " + world.getSpatialHash().getObjects().size());
   }
 
   @Override
@@ -152,6 +158,17 @@ public class WorldTestScene extends Scene<AbstractView> {
   @Override
   public void render(Canvas canvas) {
     world.render(canvas);
+
+    Camera camera = world.getCamera();
+
+    List<GameObject> objects = new ArrayList<>(world.getSpatialHash().retrieve(character.getSelfBound()));
+
+    objects.forEach(object -> {
+      double x = object.getX() - camera.getX();
+      double y = object.getY() - camera.getY();
+
+      canvas.drawRectangle(x, y, object.getWidth(), object.getHeight());
+    });
 //    character.render(canvas);
   }
 }

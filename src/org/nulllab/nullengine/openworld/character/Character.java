@@ -1,12 +1,14 @@
 package org.nulllab.nullengine.openworld.character;
 
 import org.nulllab.nullengine.core.event.Observable;
+import org.nulllab.nullengine.core.geometry.Bound2D;
 import org.nulllab.nullengine.core.input.Input;
-import org.nulllab.nullengine.openworld.object.MovableGameObject;
 import org.nulllab.nullengine.openworld.character.equipment.Equipment;
 import org.nulllab.nullengine.openworld.character.level.Level;
 import org.nulllab.nullengine.openworld.character.state.StandState;
+import org.nulllab.nullengine.openworld.object.MovableGameObject;
 import org.nulllab.nullengine.openworld.state.ObjectState;
+import org.nulllab.nullengine.openworld.world.Camera;
 
 import java.util.Set;
 
@@ -19,6 +21,7 @@ public class Character extends MovableGameObject {
   private   Breed                 breed;
   private   Level                 level;
   private   Set<Equipment>        equipment;
+  private   Camera                camera;
 
   public Character(Breed breed, Input input) {
     super(0, 0, 32, 48);
@@ -79,6 +82,18 @@ public class Character extends MovableGameObject {
     this.state = state;
   }
 
+  public Camera getCamera() {
+    return camera;
+  }
+
+  public void setCamera(Camera camera) {
+    this.camera = camera;
+  }
+
+  public Bound2D getSelfBound() {
+    return new Bound2D(getX(), getY(), getWidth(), getHeight());
+  }
+
   @Override
   public String toString() {
     return String.format("Character (%s) {%s, super: %s}",
@@ -98,8 +113,7 @@ public class Character extends MovableGameObject {
 
     this.state.update(this);
 
-    // todo
-    getServiceLocator().getWorld().getCamera().moveTo(getCentreX(), getCentreY());
+    getCamera().toCenter(getCentreX(), getCentreY());
   }
 
 

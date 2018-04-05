@@ -14,10 +14,16 @@ public class MovableGameObject extends GameObject {
     setMovable(true);
   }
 
+  public void move(double x, double y) {
 
+  }
 
-  public void moveTo(double x, double y) {
+  public void setVelocity(double velocity) {
+    values.setValue(VELOCITY, velocity);
+  }
 
+  public double getVelocity() {
+    return values.getValue(VELOCITY);
   }
 
 }
