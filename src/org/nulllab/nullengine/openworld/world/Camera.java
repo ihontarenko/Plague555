@@ -18,7 +18,7 @@ public class Camera extends MovableGameObject {
   @Override
   public void toCenter(double x, double y) {
     // collision detection object component
-    Collision collisionDetection = (Collision) getCollision();
+    Collision collision = (Collision) getCollision();
 
     // save old coordinates
     double oldX = getX();
@@ -28,8 +28,8 @@ public class Camera extends MovableGameObject {
     super.toCenter(x, y);
 
     // updated coordinates
-    double newX = collisionDetection.isOutOfBoundsX() ? oldX : getX();
-    double newY = collisionDetection.isOutOfBoundsY() ? oldY : getY();
+    double newX = collision.isOutOfBoundsX() ? oldX : getX();
+    double newY = collision.isOutOfBoundsY() ? oldY : getY();
 
     // reset position
     setPositionTo(newX, newY);

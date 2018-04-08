@@ -56,7 +56,7 @@ public class CollisionDetector {
   }
 
   public boolean isOutOfBounds(Bounds2D inner, Bounds2D outer) {
-    return isOutOfBoundsX(inner, outer) && isOutOfBoundsY(inner, outer);
+    return !outer.inBounds(inner);
   }
 
   public boolean isOutOfBoundsX(Bounds2D inner, Bounds2D outer) {
