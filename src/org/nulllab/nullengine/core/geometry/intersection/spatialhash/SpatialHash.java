@@ -1,6 +1,6 @@
 package org.nulllab.nullengine.core.geometry.intersection.spatialhash;
 
-import org.nulllab.nullengine.core.geometry.Bound2D;
+import org.nulllab.nullengine.core.geometry.Bounds2D;
 import org.nulllab.nullengine.core.geometry.Object2D;
 import org.nulllab.nullengine.core.geometry.intersection.IntersectionInterface;
 
@@ -19,19 +19,19 @@ public class SpatialHash<T extends Object2D> implements IntersectionInterface<T>
 
   private Map<Integer, Set<T>> keyObjects;
   private Map<T, Set<Integer>> objectKeys;
-  private Bound2D              bound2D;
+  private Bounds2D             bounds2D;
 
-  public SpatialHash(Bound2D bound2D) {
-    this(bound2D, DEFAULT_SHIFT);
+  public SpatialHash(Bounds2D bounds2D) {
+    this(bounds2D, DEFAULT_SHIFT);
   }
 
-  public SpatialHash(Bound2D bound2D, int shift) {
+  public SpatialHash(Bounds2D bounds2D, int shift) {
     this.keyObjects = new HashMap<>();
     this.objectKeys = new HashMap<>();
-    this.bound2D = bound2D;
+    this.bounds2D = bounds2D;
     this.shift = shift;
-    this.inWidth = 1 + (bound2D.getWidth() >> shift);
-    this.inHeight = 1 + (bound2D.getHeight() >> shift);
+    this.inWidth = 1 + (bounds2D.getWidth() >> shift);
+    this.inHeight = 1 + (bounds2D.getHeight() >> shift);
     this.size = 1 << shift;
   }
 
@@ -72,8 +72,8 @@ public class SpatialHash<T extends Object2D> implements IntersectionInterface<T>
   public Set<Integer> calculateObjectKeys(Object2D object2D, int shift) {
     Set<Integer> keys = new HashSet<>();
 
-    int bx = (int) bound2D.getX();
-    int by = (int) bound2D.getY();
+    int bx = (int) bounds2D.getX();
+    int by = (int) bounds2D.getY();
 
     int sx = ((int) object2D.getX() - bx) >> shift;
     int sy = ((int) object2D.getY() - by) >> shift;
@@ -121,7 +121,7 @@ public class SpatialHash<T extends Object2D> implements IntersectionInterface<T>
   }
 
   public double getXPixel(int key) {
-    return getXPosition(key) * getSize() + getBound2D().getX();
+    return getXPosition(key) * getSize() + getBounds2D().getX();
   }
 
   public int getXPosition(int key) {
@@ -132,12 +132,12 @@ public class SpatialHash<T extends Object2D> implements IntersectionInterface<T>
     return size;
   }
 
-  public Bound2D getBound2D() {
-    return bound2D;
+  public Bounds2D getBounds2D() {
+    return bounds2D;
   }
 
   public double getYPixel(int key) {
-    return getYPosition(key) * getSize() + getBound2D().getY();
+    return getYPosition(key) * getSize() + getBounds2D().getY();
   }
 
   public int getYPosition(int key) {

@@ -7,6 +7,6 @@ abstract public class Observer<T> {
     onNotify(observable, event);
   }
 
-  abstract void onNotify(T observable, Event event);
+  abstract public void onNotify(T observable, Event event);
 
 }

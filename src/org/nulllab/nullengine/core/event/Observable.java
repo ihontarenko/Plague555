@@ -4,12 +4,17 @@ import org.nulllab.nullengine.core.event.Event;
 import org.nulllab.nullengine.core.event.NullEvent;
 import org.nulllab.nullengine.core.event.Observer;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @SuppressWarnings("unused")
 public class Observable<T> {
 
   private Set<Observer<T>> observers;
+
+  public Observable() {
+    this.observers = new HashSet<>();
+  }
 
   public void notify(T observable) {
     notify(observable, new NullEvent());

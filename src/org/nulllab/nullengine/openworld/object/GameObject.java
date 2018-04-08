@@ -1,6 +1,6 @@
 package org.nulllab.nullengine.openworld.object;
 
-import org.nulllab.nullengine.core.geometry.Bound2D;
+import org.nulllab.nullengine.core.geometry.Bounds2D;
 import org.nulllab.nullengine.core.geometry.Object2D;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.Renderable;
@@ -23,14 +23,14 @@ abstract public class GameObject extends Object2D
   private Sprite          sprite;
   private Sprites         objectSprites;
   private ServiceLocator  serviceLocator;
-  private Bound2D         outerBounds;
+  private Bounds2D        outerBounds;
   private GameObjectUtils objectUtils;
 
   public GameObject() {
     this(0, 0, 32, 32, null);
   }
 
-  public GameObject(int x, int y, int width, int height, Bound2D bounds) {
+  public GameObject(int x, int y, int width, int height, Bounds2D bounds) {
     super(x, y, width, height);
 
     ServiceLocator serviceLocator = ServiceLocator.getInstance();
@@ -110,19 +110,19 @@ abstract public class GameObject extends Object2D
     setSprite(spritePackage.getSprite(idParts.get(1)));
   }
 
-  public Bound2D getOuterBounds() {
+  public Bounds2D getOuterBounds() {
     return outerBounds;
   }
 
-  public Bound2D getInnerBound() {
-    return new Bound2D(getX(), getY(), getWidth(), getHeight());
+  public Bounds2D getInnerBound() {
+    return new Bounds2D(getX(), getY(), getWidth(), getHeight());
   }
 
-  public Bound2D getSpatialBounds() {
-    return new Bound2D(getX() - 10, getY() - 10, getWidth() + 20, getHeight() + 20);
+  public Bounds2D getSpatialBounds() {
+    return new Bounds2D(getX() - 10, getY() - 10, getWidth() + 20, getHeight() + 20);
   }
 
-  public void setOuterBounds(Bound2D bounds) {
+  public void setOuterBounds(Bounds2D bounds) {
     this.outerBounds = bounds;
   }
 

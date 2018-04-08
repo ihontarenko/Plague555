@@ -1,7 +1,7 @@
 package org.nulllab.sorrowland.app.scene;
 
 import org.nulllab.nullengine.core.common.Probability;
-import org.nulllab.nullengine.core.geometry.Bound2D;
+import org.nulllab.nullengine.core.geometry.Bounds2D;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.spritesheet.SpriteManager;
 import org.nulllab.nullengine.core.input.Keyboard;
@@ -27,7 +27,6 @@ import org.nulllab.ui.process.view.AbstractView;
 import org.nulllab.ui.service.Context;
 
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 import java.util.List;
 
 public class WorldTestScene extends Scene<AbstractView> {
@@ -141,7 +140,10 @@ public class WorldTestScene extends Scene<AbstractView> {
 
     world.addGameObject(character);
 
+    character.setOuterBounds(world.getWorldMap().getBound());
     character.setCamera(world.getCamera());
+
+    character.getObservable().addObserver(world.getCamera().getObserver());
 
     serviceLocator.addService(World.class, world);
 
@@ -178,8 +180,8 @@ public class WorldTestScene extends Scene<AbstractView> {
       canvas.drawFilledRectangle(x, y, object.getWidth(), object.getHeight());
     });
 
-    Bound2D spatialBounds = character.getSpatialBounds();
-    Bound2D innerBounds = character.getInnerBound();
+    Bounds2D spatialBounds = character.getSpatialBounds();
+    Bounds2D innerBounds   = character.getInnerBound();
 
     canvas.setColor(0x5500ff00);
     canvas.drawRectangle(spatialBounds.getX() - camera.getX(), spatialBounds.getY()  - camera.getY(), spatialBounds.getWidth(), spatialBounds.getHeight());

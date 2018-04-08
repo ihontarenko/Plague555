@@ -6,6 +6,7 @@ import org.nulllab.nullengine.openworld.character.equipment.Equipment;
 import org.nulllab.nullengine.openworld.character.level.Level;
 import org.nulllab.nullengine.openworld.character.state.StandState;
 import org.nulllab.nullengine.openworld.object.MovableGameObject;
+import org.nulllab.nullengine.openworld.object.geometry.Direction;
 import org.nulllab.nullengine.openworld.state.ObjectState;
 import org.nulllab.nullengine.openworld.world.Camera;
 
@@ -90,6 +91,12 @@ public class Character extends MovableGameObject {
   }
 
   @Override
+  public void move(Direction direction) {
+    super.move(direction);
+    getObservable().notify(this);
+  }
+
+  @Override
   public String toString() {
     return String.format("Character (%s) {%s, super: %s}",
         getClass().getSimpleName(), getBreed(), super.toString());
@@ -107,8 +114,6 @@ public class Character extends MovableGameObject {
     }
 
     this.state.update(this);
-
-    getCamera().toCenter(getCentreX(), getCentreY());
   }
 
 }

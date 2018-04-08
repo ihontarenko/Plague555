@@ -1,7 +1,7 @@
 package org.nulllab.sorrowland.app.scene.view;
 
 import org.nulllab.nullengine.core.common.time.Timer;
-import org.nulllab.nullengine.core.geometry.Bound2D;
+import org.nulllab.nullengine.core.geometry.Bounds2D;
 import org.nulllab.nullengine.core.geometry.Object2D;
 import org.nulllab.nullengine.core.geometry.intersection.spatialhash.SpatialHash;
 import org.nulllab.nullengine.core.graphics.Canvas;
@@ -35,7 +35,7 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
   private Configuration      configuration;
   private SpatialHash        spatialHash;
   private List<Integer>      integerList;
-  private Bound2D            bound2D;
+  private Bounds2D           bounds2D;
   private Object2D           object1;
   private Object2D           object2;
   private Object2D           object3;
@@ -87,8 +87,8 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
     configuration = (Configuration) getContext().getConfiguration();
     configuration.initialize();
 
-    bound2D = new Bound2D(0, 0, 800, 600);
-    spatialHash = new SpatialHash(bound2D, 5);
+    bounds2D = new Bounds2D(0, 0, 800, 600);
+    spatialHash = new SpatialHash(bounds2D, 5);
     object1 = new Object2D(120, 150, 40, 40);
 
     spatialHash.insert(object1);
@@ -170,11 +170,11 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
     //    spriteAnimated.draw(canvas, 0, 0);
 
     spriteFontMap.draw(canvas, 100, 100);
-    if (object1.getMaxX() > bound2D.getMaxX()) {
+    if (object1.getMaxX() > bounds2D.getMaxX()) {
       velocity = -1;
     }
 
-    if (object1.getX() < bound2D.getX()) {
+    if (object1.getX() < bounds2D.getX()) {
       velocity = 1;
     }
 
@@ -186,8 +186,8 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
 
     //    canvas.setColor(Color.WHITE);
 
-    for (double x = bound2D.getX(); x < bound2D.getMaxX(); x += sprite.getWidth()) {
-      for (double y = bound2D.getY(); y < bound2D.getMaxY(); y += sprite.getHeight()) {
+    for (double x = bounds2D.getX(); x < bounds2D.getMaxX(); x += sprite.getWidth()) {
+      for (double y = bounds2D.getY(); y < bounds2D.getMaxY(); y += sprite.getHeight()) {
 
         //                canvas.drawRectangle((int)x, (int)y, size, size);
         spriteAnimated.draw(canvas, x, y);
@@ -199,7 +199,7 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
 //    character.render(canvas);
 
     //    canvas.setColor(Color.RED.getRGB());
-    //    canvas.drawRectangle(bound2D.getPositionX(), bound2D.getPositionY(), bound2D.getWidth(), bound2D.getHeight());
+    //    canvas.drawRectangle(bounds2D.getPositionX(), bounds2D.getPositionY(), bounds2D.getWidth(), bounds2D.getHeight());
 
     //    for (Object2D object2D : spatialHash.getObjects()) {
     //      g2d.setColor(Color.GREEN);

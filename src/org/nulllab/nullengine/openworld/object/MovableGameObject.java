@@ -1,5 +1,6 @@
 package org.nulllab.nullengine.openworld.object;
 
+import org.nulllab.nullengine.core.geometry.Bounds2D;
 import org.nulllab.nullengine.openworld.character.Sprites;
 import org.nulllab.nullengine.openworld.character.Values;
 import org.nulllab.nullengine.openworld.object.collision.CollisionDetector;
@@ -26,20 +27,38 @@ public class MovableGameObject extends GameObject {
   }
 
   public void move(Direction direction) {
-    double velocityX = (direction.getFactorX() * getVelocity());
-    double velocityY = (direction.getFactorY() * getVelocity());
     double oldX      = getX();
     double oldY      = getY();
-    double newX      = getX() + velocityX;
-    double newY      = getY() + velocityY;
+    double newX      = getX() + (direction.getFactorX() * getVelocity());
+    double newY      = getY() + (direction.getFactorY() * getVelocity());
 
     setPositionTo(newX, newY);
 
-    if (isCollidedWithNearest()) {
+    if (isCollidedWithNearest() || isOutOfBounds()) {
       setPositionTo(oldX, oldY);
     }
 
     setDirectionSprite(direction);
+  }
+
+  public void toCenter(double x, double y) {
+    Bounds2D outer = getOuterBounds();
+
+    double oldX = getX();
+    double oldY = getY();
+    double offsetX = getWidth() / 2;
+    double offsetY = getHeight() / 2;
+    double newX = Math.min(x, outer.getMaxX() - offsetX) - offsetX;
+    double newY = Math.min(y, outer.getMaxY() - offsetY) - offsetY;
+
+    setPositionTo(newX, newY);
+
+    if (isOutOfBoundsX() || isOutOfBoundsY()) {
+      newX = isOutOfBoundsX() ? oldX : newX;
+      newY = isOutOfBoundsY() ? oldY : newY;
+    }
+
+    setPositionTo(newX, newY);
   }
 
   public void setPositionTo(double x, double y) {
@@ -74,6 +93,18 @@ public class MovableGameObject extends GameObject {
 
   public boolean isCollidedWithNearest() {
     return getCollisionDetector().isCollidedWithNearestSolid(this);
+  }
+
+  public boolean isOutOfBounds() {
+    return getCollisionDetector().isOutOfBounds(getInnerBound(), getOuterBounds());
+  }
+
+  public boolean isOutOfBoundsX() {
+    return getCollisionDetector().isOutOfBoundsX(getInnerBound(), getOuterBounds());
+  }
+
+  public boolean isOutOfBoundsY() {
+    return getCollisionDetector().isOutOfBoundsY(getInnerBound(), getOuterBounds());
   }
 
 }

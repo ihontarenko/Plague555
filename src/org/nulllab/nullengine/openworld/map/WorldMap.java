@@ -1,7 +1,7 @@
 package org.nulllab.nullengine.openworld.map;
 
 import org.nulllab.nullengine.core.common.Initializable;
-import org.nulllab.nullengine.core.geometry.Bound2D;
+import org.nulllab.nullengine.core.geometry.Bounds2D;
 import org.nulllab.nullengine.openworld.World;
 
 public class WorldMap implements Initializable {
@@ -13,7 +13,7 @@ public class WorldMap implements Initializable {
     this.worldMapData = new WorldMapData(mapFile);
   }
 
-  public Bound2D getBound() {
+  public Bounds2D getBound() {
     return getWorldMapData().getBound();
   }
 

@@ -1,6 +1,6 @@
 package org.nulllab.nullengine.openworld.map;
 
-import org.nulllab.nullengine.core.geometry.Bound2D;
+import org.nulllab.nullengine.core.geometry.Bounds2D;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -114,8 +114,8 @@ public class WorldMapData {
     this.mapFile = mapFile;
   }
 
-  public Bound2D getBound() {
-    return new Bound2D(0, 0, tileSize * width, tileSize * height);
+  public Bounds2D getBound() {
+    return new Bounds2D(0, 0, tileSize * width, tileSize * height);
   }
 
   public class Tile {
