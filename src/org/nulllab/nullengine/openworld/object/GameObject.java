@@ -16,12 +16,13 @@ abstract public class GameObject extends Object2D
     implements Renderable<Canvas>, Updateable, Collidable, Comparable<GameObject> {
 
   private boolean        isSolid;
-  private boolean        isMovable;
-  private int            priority;
-  private Sprite         sprite;
-  private Sprites        spritePackage;
-  private ServiceLocator serviceLocator;
-  private Bound2D        bounds;
+  private boolean         isMovable;
+  private int             priority;
+  private Sprite          sprite;
+  private Sprites         objectSprites;
+  private ServiceLocator  serviceLocator;
+  private Bound2D         bounds;
+  private GameObjectUtils objectUtils;
 
   public GameObject() {
     this(0, 0, 32, 32, null);
@@ -30,9 +31,12 @@ abstract public class GameObject extends Object2D
   public GameObject(int x, int y, int width, int height, Bound2D bounds) {
     super(x, y, width, height);
 
+    ServiceLocator serviceLocator = ServiceLocator.getInstance();
+
     this.bounds = bounds;
     this.priority = 1;
-    this.serviceLocator = ServiceLocator.getInstance();
+    this.objectUtils = serviceLocator.getGameObjectUtils();
+    this.serviceLocator = serviceLocator;
   }
 
   public GameObject(int x, int y, int width, int height) {
@@ -75,12 +79,12 @@ abstract public class GameObject extends Object2D
     this.priority = priority;
   }
 
-  public Sprites getSpritePackage() {
-    return spritePackage;
+  public Sprites getObjectSprites() {
+    return objectSprites;
   }
 
-  public void setSpritePackage(Sprites spritePackage) {
-    this.spritePackage = spritePackage;
+  public void setObjectSprites(Sprites objectSprites) {
+    this.objectSprites = objectSprites;
   }
 
   public Sprite getSprite() {
@@ -91,7 +95,7 @@ abstract public class GameObject extends Object2D
     this.sprite = sprite;
   }
 
-  public void setSprite(String id) {
+  public void setSpriteFromPackage(String id) {
     SpriteManager spriteManager = getServiceLocator().getSpriteManager();
     setSprite(spriteManager.getSpriteFromPackage(id));
   }
@@ -106,6 +110,10 @@ abstract public class GameObject extends Object2D
 
   public ServiceLocator getServiceLocator() {
     return serviceLocator;
+  }
+
+  public GameObjectUtils getObjectUtils() {
+    return objectUtils;
   }
 
   @Override

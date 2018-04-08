@@ -5,6 +5,8 @@ import org.nulllab.nullengine.openworld.character.Character;
 import org.nulllab.nullengine.openworld.object.direction.Direction;
 import org.nulllab.nullengine.openworld.state.ObjectState;
 
+import java.util.Map;
+
 public class MoveState extends ObjectState<Character> {
 
   @Override
@@ -20,25 +22,11 @@ public class MoveState extends ObjectState<Character> {
 
   @Override
   public void update(Character object) {
-    Input  input    = object.getInput();
-    double velocity = 2D;
+    Map<Integer, Direction> map        = object.getObjectUtils().getMovement().getKeyMapDirection();
+    Integer                 pressedKey = object.getInput().getPressed();
 
-    if (input.isPressed(Input.UP)) {
-      object.move(Direction.UP);
-//      object.setY(object.getY() - velocity);
-//      object.setSprite(object.getSpritePackage().getMoveNorth());
-    } else if (input.isPressed(Input.DOWN)) {
-      object.move(Direction.DOWN);
-//      object.setY(object.getY() + velocity);
-//      object.setSprite(object.getSpritePackage().getMoveSouth());
-    } else if (input.isPressed(Input.LEFT)) {
-      object.move(Direction.LEFT);
-//      object.setX(object.getX() - velocity);
-//      object.setSprite(object.getSpritePackage().getMoveWest());
-    } else if (input.isPressed(Input.RIGHT)) {
-      object.move(Direction.RIGHT);
-//      object.setX(object.getX() + velocity);
-//      object.setSprite(object.getSpritePackage().getMoveEast());
+    if (map.containsKey(pressedKey)) {
+      object.move(map.get(pressedKey));
     }
   }
 }

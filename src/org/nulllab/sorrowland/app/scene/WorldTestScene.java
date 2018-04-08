@@ -11,6 +11,7 @@ import org.nulllab.nullengine.openworld.character.Character;
 import org.nulllab.nullengine.openworld.character.Skills;
 import org.nulllab.nullengine.openworld.character.level.Level;
 import org.nulllab.nullengine.openworld.object.GameObject;
+import org.nulllab.nullengine.openworld.object.GameObjectUtils;
 import org.nulllab.nullengine.openworld.world.Camera;
 import org.nulllab.sorrowland.app.graphics.sheet.*;
 import org.nulllab.sorrowland.app.graphics.sheet.characters.*;
@@ -43,6 +44,7 @@ public class WorldTestScene extends Scene<AbstractView> {
 
     ServiceLocator serviceLocator = ServiceLocator.getInstance();
 
+    serviceLocator.addService(GameObjectUtils.class);
     serviceLocator.addService(Keyboard.class, getContext().getInputKey());
 
 //    for (int i = 1; i < 100; i++) {
@@ -115,9 +117,9 @@ public class WorldTestScene extends Scene<AbstractView> {
 //    System.exit(1);
 
     character = new Character(trollDarkElf, serviceLocator.getInputKeyboard());
-    character.setSpritePackage(new PlayerSprites());
+    character.setObjectSprites(new PlayerSprites());
     character.layerUp();
-    character.setSprite(character.getSpritePackage().getStandWest());
+    character.setSprite(character.getObjectSprites().getStandWest());
 //    new Character(new ElfBreed());
 
 //    character.getSkills().getDefense();

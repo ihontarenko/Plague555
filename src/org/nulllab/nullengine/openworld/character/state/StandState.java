@@ -10,7 +10,7 @@ public class StandState extends ObjectState<Character> {
   public void entryAction(Character object) {
     super.entryAction(object);
 
-    object.setSprite(object.getSpritePackage().getDefaultSprite());
+    object.setSprite(object.getObjectSprites().getDefaultSprite());
   }
 
   @Override

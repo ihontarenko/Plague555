@@ -33,11 +33,11 @@ public class WorldMap implements Initializable {
       for (int positionY = 0; positionY < height; positionY++) {
 
         Terrain terrain = new Terrain(data.getX(positionX), data.getY(positionY), tileSize, tileSize);
-        terrain.setSprite(defaultSpriteID);
+        terrain.setSpriteFromPackage(defaultSpriteID);
 
         if (data.hasTile(positionX, positionY)) {
           tile = data.getTile(positionX, positionY);
-          terrain.setSprite(tile.getSpriteID());
+          terrain.setSpriteFromPackage(tile.getSpriteID());
           terrain.setSolid(tile.isSolid());
           terrain.setPriority(tile.getLayer());
         }
