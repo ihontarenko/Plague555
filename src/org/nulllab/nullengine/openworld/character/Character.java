@@ -90,10 +90,6 @@ public class Character extends MovableGameObject {
     this.camera = camera;
   }
 
-  public Bound2D getSelfBound() {
-    return new Bound2D(getX(), getY(), getWidth(), getHeight());
-  }
-
   @Override
   public String toString() {
     return String.format("Character (%s) {%s, super: %s}",

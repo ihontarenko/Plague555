@@ -12,6 +12,7 @@ import org.nulllab.nullengine.openworld.character.Skills;
 import org.nulllab.nullengine.openworld.character.level.Level;
 import org.nulllab.nullengine.openworld.object.GameObject;
 import org.nulllab.nullengine.openworld.object.GameObjectUtils;
+import org.nulllab.nullengine.openworld.object.collision.CollisionDetector;
 import org.nulllab.nullengine.openworld.world.Camera;
 import org.nulllab.sorrowland.app.graphics.sheet.*;
 import org.nulllab.sorrowland.app.graphics.sheet.characters.*;
@@ -45,6 +46,7 @@ public class WorldTestScene extends Scene<AbstractView> {
     ServiceLocator serviceLocator = ServiceLocator.getInstance();
 
     serviceLocator.addService(GameObjectUtils.class);
+    serviceLocator.addService(CollisionDetector.class);
     serviceLocator.addService(Keyboard.class, getContext().getInputKey());
 
 //    for (int i = 1; i < 100; i++) {
@@ -164,13 +166,15 @@ public class WorldTestScene extends Scene<AbstractView> {
 
     Camera camera = world.getCamera();
 
-    List<GameObject> objects = new ArrayList<>(world.getSpatialHash().retrieve(character.getSelfBound()));
+    List<GameObject> objects = character.getNearestSolidObjects();
+
+    canvas.setColor(0x55ff0000);
 
     objects.forEach(object -> {
       double x = object.getX() - camera.getX();
       double y = object.getY() - camera.getY();
 
-      canvas.drawRectangle(x, y, object.getWidth(), object.getHeight());
+      canvas.drawFilledRectangle(x, y, object.getWidth(), object.getHeight());
     });
 //    character.render(canvas);
   }

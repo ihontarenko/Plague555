@@ -33,10 +33,10 @@ abstract public class GameObject extends Object2D
 
     ServiceLocator serviceLocator = ServiceLocator.getInstance();
 
+    this.serviceLocator = serviceLocator;
     this.bounds = bounds;
     this.priority = 1;
     this.objectUtils = serviceLocator.getGameObjectUtils();
-    this.serviceLocator = serviceLocator;
   }
 
   public GameObject(int x, int y, int width, int height) {
@@ -102,6 +102,10 @@ abstract public class GameObject extends Object2D
 
   public Bound2D getBounds() {
     return bounds;
+  }
+
+  public Bound2D getSelfBound() {
+    return new Bound2D(getX(), getY() + (getHeight() / 2), getWidth(), getHeight() / 2);
   }
 
   public void setBounds(Bound2D bounds) {

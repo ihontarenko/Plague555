@@ -2,8 +2,10 @@ package org.nulllab.nullengine.openworld.object;
 
 import org.nulllab.nullengine.openworld.character.Sprites;
 import org.nulllab.nullengine.openworld.character.Values;
+import org.nulllab.nullengine.openworld.object.collision.CollisionDetector;
 import org.nulllab.nullengine.openworld.object.direction.Direction;
 
+import java.util.List;
 import java.util.Map;
 
 public class MovableGameObject extends GameObject {
@@ -26,11 +28,20 @@ public class MovableGameObject extends GameObject {
   public void move(Direction direction) {
     double velocityX = (direction.getFactorX() * getVelocity());
     double velocityY = (direction.getFactorY() * getVelocity());
+    double oldX      = getX();
+    double oldY      = getY();
+    double newX      = getX() + velocityX;
+    double newY      = getY() + velocityY;
+
+    setX(newX);
+    setY(newY);
+
+    if (isCollidedWithNearest()) {
+      setX(oldX);
+      setY(oldY);
+    }
 
     setDirectionSprite(direction);
-
-    setX(getX() + velocityX);
-    setY(getY() + velocityY);
   }
 
   public void setDirectionSprite(Direction direction) {
@@ -46,6 +57,20 @@ public class MovableGameObject extends GameObject {
     return values.getValue(VELOCITY);
   }
 
+  public CollisionDetector getCollisionDetector() {
+    return getServiceLocator().getCollisionDetector();
+  }
 
+  public List<GameObject> getNearestObjects() {
+    return getCollisionDetector().getNearestObjectsFor(this);
+  }
+
+  public List<GameObject> getNearestSolidObjects() {
+    return getCollisionDetector().getNearestSolidObjectsFor(this);
+  }
+
+  public boolean isCollidedWithNearest() {
+    return getCollisionDetector().isCollidedWithNearestSolid(this);
+  }
 
 }

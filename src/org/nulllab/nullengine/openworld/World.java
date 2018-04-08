@@ -43,7 +43,7 @@ public class World implements Renderable<Canvas>, Updateable, Collidable, Initia
     spatialHash.remove(object);
   }
 
-  public SpatialHash getSpatialHash() {
+  public SpatialHash<GameObject> getSpatialHash() {
     return spatialHash;
   }
 

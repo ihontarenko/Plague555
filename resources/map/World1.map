@@ -10,14 +10,14 @@ Size
 Default
 tilesB.grassDefault
 
-// spriteID positionX positionY priority solid
+// x y priority solid spriteID
 Map
 0 1 4 0 tilesA.cave
 2 2 4 1 tilesA.ice
 4 5 2 0 tilesA.cave
 10 11 2 0 tilesB.grass1
-10 12 2 0 tilesA.cave
+10 12 2 1 tilesA.cave
 10 13 2 0 tilesB.grass1
-11 13 2 0 tilesB.grassDefault
+11 13 2 1 tilesB.grassDefault
 12 13 2 0 tilesA.ice
-13 13 2 0 player.moveSouth
+13 13 2 1 player.moveSouth
