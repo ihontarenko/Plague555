@@ -14,6 +14,23 @@ public class Camera extends MovableGameObject {
     observer = new CameraObserver();
   }
 
+  @Override
+  public void toCenter(double x, double y) {
+    // save old coordinates
+    double oldX = getX();
+    double oldY = getY();
+
+    // update coordinates
+    super.toCenter(x, y);
+
+    // updated coordinates
+    double newX = isOutOfBoundsX() ? oldX : getX();
+    double newY = isOutOfBoundsY() ? oldY : getY();
+
+    // reset position
+    setPositionTo(newX, newY);
+  }
+
   public Observer getObserver() {
     return observer;
   }

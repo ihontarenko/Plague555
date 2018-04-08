@@ -119,7 +119,7 @@ abstract public class GameObject extends Object2D
   }
 
   public Bounds2D getSpatialBounds() {
-    return new Bounds2D(getX() - 10, getY() - 10, getWidth() + 20, getHeight() + 20);
+    return new Bounds2D(getX(), getY(), getWidth(), getHeight());
   }
 
   public void setOuterBounds(Bounds2D bounds) {

@@ -65,7 +65,6 @@ public class World implements Renderable<Canvas>, Updateable, Initializable {
       double y = object.getY() - camera.getY();
 
       object.getSprite().draw(canvas, x, y);
-//      canvas.drawRectangle(x, y, object.getWidth(), object.getHeight());
     });
   }
 

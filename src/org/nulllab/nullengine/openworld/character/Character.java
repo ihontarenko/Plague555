@@ -1,6 +1,7 @@
 package org.nulllab.nullengine.openworld.character;
 
 import org.nulllab.nullengine.core.event.Observable;
+import org.nulllab.nullengine.core.geometry.Bounds2D;
 import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.openworld.character.equipment.Equipment;
 import org.nulllab.nullengine.openworld.character.level.Level;
@@ -32,6 +33,31 @@ public class Character extends MovableGameObject {
     this.breed = breed;
 
     this.setPriority(1 << 2);
+  }
+
+  @Override
+  public Bounds2D getInnerBound() {
+    Bounds2D bounds = super.getInnerBound();
+    double   offset = bounds.getHeight() / 2;
+
+    bounds.setY(bounds.getY() + offset);
+    bounds.setHeight((int) offset);
+
+    return bounds;
+  }
+
+  @Override
+  public Bounds2D getSpatialBounds() {
+    Bounds2D bounds = super.getSpatialBounds();
+    double   offset = 15D;
+
+    bounds.setX(bounds.getX() - offset);
+    bounds.setWidth((int) (bounds.getWidth() + (offset * 2)));
+
+    bounds.setY(bounds.getY() - offset);
+    bounds.setHeight((int) (bounds.getHeight() + (offset * 2)));
+
+    return bounds;
   }
 
   public double getHealth() {

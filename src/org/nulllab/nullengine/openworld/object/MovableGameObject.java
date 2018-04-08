@@ -44,19 +44,10 @@ public class MovableGameObject extends GameObject {
   public void toCenter(double x, double y) {
     Bounds2D outer = getOuterBounds();
 
-    double oldX = getX();
-    double oldY = getY();
     double offsetX = getWidth() / 2;
     double offsetY = getHeight() / 2;
     double newX = Math.min(x, outer.getMaxX() - offsetX) - offsetX;
     double newY = Math.min(y, outer.getMaxY() - offsetY) - offsetY;
-
-    setPositionTo(newX, newY);
-
-    if (isOutOfBoundsX() || isOutOfBoundsY()) {
-      newX = isOutOfBoundsX() ? oldX : newX;
-      newY = isOutOfBoundsY() ? oldY : newY;
-    }
 
     setPositionTo(newX, newY);
   }
