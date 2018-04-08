@@ -1,6 +1,7 @@
 package org.nulllab.sorrowland.app.scene;
 
 import org.nulllab.nullengine.core.common.Probability;
+import org.nulllab.nullengine.core.geometry.Bound2D;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.spritesheet.SpriteManager;
 import org.nulllab.nullengine.core.input.Keyboard;
@@ -176,6 +177,15 @@ public class WorldTestScene extends Scene<AbstractView> {
 
       canvas.drawFilledRectangle(x, y, object.getWidth(), object.getHeight());
     });
+
+    Bound2D spatialBounds = character.getSpatialBounds();
+    Bound2D innerBounds = character.getInnerBound();
+
+    canvas.setColor(0x5500ff00);
+    canvas.drawRectangle(spatialBounds.getX() - camera.getX(), spatialBounds.getY()  - camera.getY(), spatialBounds.getWidth(), spatialBounds.getHeight());
+    canvas.setColor(0x550000ff);
+    canvas.drawRectangle(innerBounds.getX() - camera.getX(), innerBounds.getY()  - camera.getY(), innerBounds.getWidth(), innerBounds.getHeight());
+
 //    character.render(canvas);
   }
 }

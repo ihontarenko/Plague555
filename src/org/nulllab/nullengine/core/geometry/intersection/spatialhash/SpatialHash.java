@@ -36,7 +36,7 @@ public class SpatialHash<T extends Object2D> implements IntersectionInterface<T>
   }
 
   @Override
-  public Set<T> retrieve(T object) {
+  public Set<T> retrieve(Object2D object) {
     Set<T>          results = new HashSet<>();
     Stream<Integer> stream  = calculateObjectKeys(object).stream();
 
@@ -65,11 +65,11 @@ public class SpatialHash<T extends Object2D> implements IntersectionInterface<T>
     keyObjects = new HashMap<>();
   }
 
-  public Set<Integer> calculateObjectKeys(T object2D) {
+  public Set<Integer> calculateObjectKeys(Object2D object2D) {
     return calculateObjectKeys(object2D, shift);
   }
 
-  public Set<Integer> calculateObjectKeys(T object2D, int shift) {
+  public Set<Integer> calculateObjectKeys(Object2D object2D, int shift) {
     Set<Integer> keys = new HashSet<>();
 
     int bx = (int) bound2D.getX();

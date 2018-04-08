@@ -22,29 +22,38 @@ public class WorldMap implements Initializable {
   }
 
   public void buildWorldMap(World world) {
-    WorldMapData      data            = getWorldMapData();
-    String            defaultSpriteID = data.getDefaultTile().getSpriteID();
-    int               tileSize        = data.getTileSize();
-    int               width           = data.getWidth();
-    int               height          = data.getHeight();
-    WorldMapData.Tile tile;
+    WorldMapData data            = getWorldMapData();
+    String       defaultSpriteID = data.getDefaultTile().getSpriteID();
+    int          size            = data.getTileSize();
+    int          width           = data.getWidth();
+    int          height          = data.getHeight();
 
     for (int positionX = 0; positionX < width; positionX++) {
       for (int positionY = 0; positionY < height; positionY++) {
 
-        Terrain terrain = new Terrain(data.getX(positionX), data.getY(positionY), tileSize, tileSize);
-        terrain.setSpriteFromPackage(defaultSpriteID);
+        final int x = data.getX(positionX);
+        final int y = data.getY(positionY);
 
-        if (data.hasTile(positionX, positionY)) {
-          tile = data.getTile(positionX, positionY);
-          terrain.setSpriteFromPackage(tile.getSpriteID());
-          terrain.setSolid(tile.isSolid());
-          terrain.setPriority(tile.getLayer());
+        Terrain defaultTerrain = createTerrainObject(x, y, size, world);
+        defaultTerrain.setSpriteFromPackage(defaultSpriteID);
+
+        if (data.hasTiles(positionX, positionY)) {
+          data.getTiles(positionX, positionY).forEach(tile -> {
+            Terrain terrain = createTerrainObject(x, y, size, world);
+            terrain.setSpriteFromPackage(tile.getSpriteID());
+            terrain.setSolid(tile.isSolid());
+            terrain.setPriority(tile.getLayer());
+          });
         }
-
-        world.addGameObject(terrain);
       }
     }
+  }
+
+  private Terrain createTerrainObject(int x, int y, int tileSize, World world) {
+    Terrain terrain = new Terrain(x, y, tileSize, tileSize);
+    world.addGameObject(terrain);
+
+    return terrain;
   }
 
   @Override

@@ -1,7 +1,6 @@
 package org.nulllab.nullengine.openworld;
 
 import org.nulllab.nullengine.core.common.Initializable;
-import org.nulllab.nullengine.core.geometry.Collidable;
 import org.nulllab.nullengine.core.geometry.intersection.spatialhash.SpatialHash;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.Renderable;
@@ -15,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-public class World implements Renderable<Canvas>, Updateable, Collidable, Initializable {
+public class World implements Renderable<Canvas>, Updateable, Initializable {
 
   private SpatialHash<GameObject> spatialHash;
   private Camera                  camera;
@@ -27,7 +26,7 @@ public class World implements Renderable<Canvas>, Updateable, Collidable, Initia
     Camera   camera   = new Camera(0, 0, 800, 640);
 
     worldMap.initialize();
-    camera.setBounds(worldMap.getBound());
+    camera.setOuterBounds(worldMap.getBound());
 
     this.spatialHash = new SpatialHash<>(worldMap.getBound(), 4);
 
@@ -78,11 +77,6 @@ public class World implements Renderable<Canvas>, Updateable, Collidable, Initia
       object.update(nano);
       spatialHash.reinsert(object);
     });
-  }
-
-  @Override
-  public void collide() {
-    // collision detection here
   }
 
   @Override

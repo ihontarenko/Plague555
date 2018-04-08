@@ -2,18 +2,20 @@ package org.nulllab.nullengine.openworld.map;
 
 import org.nulllab.nullengine.core.geometry.Bound2D;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class WorldMapData {
 
-  private String             name;
-  private int                width;
-  private int                height;
-  private int                tileSize;
-  private Map<Integer, Tile> tiles;
-  private String             mapFile;
-  private Tile               defaultTile;
+  private String                   name;
+  private int                      width;
+  private int                      height;
+  private int                      tileSize;
+  private Map<Integer, List<Tile>> tiles;
+  private String                   mapFile;
+  private Tile                     defaultTile;
 
   public WorldMapData(String mapFile) {
     this.tiles = new HashMap<>();
@@ -54,15 +56,34 @@ public class WorldMapData {
   }
 
   public void addTile(Tile tile) {
-    tiles.put(getPositionFor(tile.getPositionX(), tile.getPositionY()), tile);
+    getTiles(tile.getPositionX(), tile.getPositionY()).add(tile);
   }
 
-  public Tile getTile(int x, int y) {
-    return tiles.get(getPositionFor(x, y));
+  public List<Tile> getTiles(int x, int y) {
+    return getTiles(getPositionFor(x, y));
   }
 
-  public boolean hasTile(int x, int y) {
-    return tiles.containsKey(getPositionFor(x, y));
+  public List<Tile> getTiles(int position) {
+    List<Tile> tiles = this.tiles.get(position);
+
+    if (!hasTiles(position)) {
+      tiles = new ArrayList<>();
+      this.tiles.put(position, tiles);
+    }
+
+    return tiles;
+  }
+
+  public Tile getTile(int x, int y, int position) {
+    return getTiles(x, y).get(position);
+  }
+
+  public boolean hasTiles(int x, int y) {
+    return hasTiles(getPositionFor(x, y));
+  }
+
+  public boolean hasTiles(int position) {
+    return tiles.containsKey(position);
   }
 
   public int getPositionFor(int positionX, int positionY) {

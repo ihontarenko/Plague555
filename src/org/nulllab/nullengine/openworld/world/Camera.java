@@ -11,7 +11,7 @@ public class Camera extends MovableGameObject {
 
   public void toCenter(double x, double y) {
     // todo
-    Bound2D worldBound = getBounds();
+    Bound2D worldBound = getOuterBounds();
 
     double  offsetX   = getWidth() / 2;
     double  offsetY   = getHeight() / 2;

@@ -2,7 +2,7 @@ package org.nulllab.nullengine.openworld.character.state;
 
 import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.openworld.character.Character;
-import org.nulllab.nullengine.openworld.object.direction.Direction;
+import org.nulllab.nullengine.openworld.object.geometry.Direction;
 import org.nulllab.nullengine.openworld.state.ObjectState;
 
 import java.util.Map;

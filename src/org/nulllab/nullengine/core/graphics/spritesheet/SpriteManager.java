@@ -7,6 +7,11 @@ import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheetPackage
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.Sprite;
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpritePackage;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 @SuppressWarnings("unused")
 public class SpriteManager extends ObjectManager<GraphicsPackage> {
 
@@ -38,15 +43,23 @@ public class SpriteManager extends ObjectManager<GraphicsPackage> {
   }
 
   public SpriteSheet getSheetFromPackage(String id) {
-    String[] sheetID     = id.split("\\.");
+    List<String> idParts = getIDParts(id);
 
-    return getSheetFromPackage(sheetID[0], sheetID[1]);
+    return getSheetFromPackage(idParts.get(0), idParts.get(1));
   }
 
   public Sprite getSpriteFromPackage(String id) {
-    String[] spriteID     = id.split("\\.");
+    List<String> idParts = getIDParts(id);
 
-    return getSpriteFromPackage(spriteID[0], spriteID[1]);
+    return getSpriteFromPackage(idParts.get(0), idParts.get(1));
+  }
+
+  public static List<String> getIDParts(String id, String separator) {
+    return Arrays.asList(id.split(separator));
+  }
+
+  public static List<String> getIDParts(String id) {
+    return getIDParts(id, "\\.");
   }
 
 }

@@ -1,5 +1,6 @@
 package org.nulllab.nullengine.openworld.object.collision;
 
+import org.nulllab.nullengine.core.geometry.Bound2D;
 import org.nulllab.nullengine.core.geometry.intersection.spatialhash.SpatialHash;
 import org.nulllab.nullengine.openworld.ServiceLocator;
 import org.nulllab.nullengine.openworld.object.GameObject;
@@ -18,7 +19,8 @@ public class CollisionDetector {
   }
 
   public List<GameObject> getNearestObjectsFor(GameObject object) {
-    List<GameObject> nearestObjects    = new ArrayList<>(spatialHash.retrieve(object));
+    Bound2D          spatialBounds  = object.getSpatialBounds();
+    List<GameObject> nearestObjects = new ArrayList<>(spatialHash.retrieve(spatialBounds));
 
     Collections.sort(nearestObjects);
 
@@ -30,7 +32,7 @@ public class CollisionDetector {
   }
 
   public boolean isCollidedWith(GameObject targetObject, GameObject solidObject) {
-    return targetObject.getSelfBound().intersects(solidObject.getSelfBound());
+    return targetObject.getInnerBound().intersects(solidObject.getInnerBound());
   }
 
   public boolean isCollidedWith(GameObject targetObject, List<GameObject> solidObjects) {

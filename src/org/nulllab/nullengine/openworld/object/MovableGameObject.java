@@ -3,7 +3,7 @@ package org.nulllab.nullengine.openworld.object;
 import org.nulllab.nullengine.openworld.character.Sprites;
 import org.nulllab.nullengine.openworld.character.Values;
 import org.nulllab.nullengine.openworld.object.collision.CollisionDetector;
-import org.nulllab.nullengine.openworld.object.direction.Direction;
+import org.nulllab.nullengine.openworld.object.geometry.Direction;
 
 import java.util.List;
 import java.util.Map;
@@ -33,15 +33,18 @@ public class MovableGameObject extends GameObject {
     double newX      = getX() + velocityX;
     double newY      = getY() + velocityY;
 
-    setX(newX);
-    setY(newY);
+    setPositionTo(newX, newY);
 
     if (isCollidedWithNearest()) {
-      setX(oldX);
-      setY(oldY);
+      setPositionTo(oldX, oldY);
     }
 
     setDirectionSprite(direction);
+  }
+
+  public void setPositionTo(double x, double y) {
+    setX(x);
+    setY(y);
   }
 
   public void setDirectionSprite(Direction direction) {

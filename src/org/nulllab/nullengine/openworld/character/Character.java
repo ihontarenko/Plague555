@@ -1,7 +1,6 @@
 package org.nulllab.nullengine.openworld.character;
 
 import org.nulllab.nullengine.core.event.Observable;
-import org.nulllab.nullengine.core.geometry.Bound2D;
 import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.openworld.character.equipment.Equipment;
 import org.nulllab.nullengine.openworld.character.level.Level;
@@ -112,9 +111,4 @@ public class Character extends MovableGameObject {
     getCamera().toCenter(getCentreX(), getCentreY());
   }
 
-
-  @Override
-  public void collide() {
-
-  }
 }

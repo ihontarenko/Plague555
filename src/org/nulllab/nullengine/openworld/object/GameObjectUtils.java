@@ -3,7 +3,7 @@ package org.nulllab.nullengine.openworld.object;
 import org.nulllab.nullengine.core.common.Initializable;
 import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.openworld.character.Sprites;
-import org.nulllab.nullengine.openworld.object.direction.Direction;
+import org.nulllab.nullengine.openworld.object.geometry.Direction;
 
 import java.util.EnumMap;
 import java.util.HashMap;

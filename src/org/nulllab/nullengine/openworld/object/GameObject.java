@@ -1,27 +1,29 @@
 package org.nulllab.nullengine.openworld.object;
 
 import org.nulllab.nullengine.core.geometry.Bound2D;
-import org.nulllab.nullengine.core.geometry.Collidable;
 import org.nulllab.nullengine.core.geometry.Object2D;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.Renderable;
 import org.nulllab.nullengine.core.graphics.spritesheet.SpriteManager;
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.Sprite;
+import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpritePackage;
 import org.nulllab.nullengine.core.loop.Updateable;
 import org.nulllab.nullengine.openworld.ServiceLocator;
 import org.nulllab.nullengine.openworld.character.Sprites;
 
+import java.util.List;
+
 @SuppressWarnings("unused")
 abstract public class GameObject extends Object2D
-    implements Renderable<Canvas>, Updateable, Collidable, Comparable<GameObject> {
+    implements Renderable<Canvas>, Updateable, Comparable<GameObject> {
 
-  private boolean        isSolid;
+  private boolean         isSolid;
   private boolean         isMovable;
   private int             priority;
   private Sprite          sprite;
   private Sprites         objectSprites;
   private ServiceLocator  serviceLocator;
-  private Bound2D         bounds;
+  private Bound2D         outerBounds;
   private GameObjectUtils objectUtils;
 
   public GameObject() {
@@ -34,13 +36,18 @@ abstract public class GameObject extends Object2D
     ServiceLocator serviceLocator = ServiceLocator.getInstance();
 
     this.serviceLocator = serviceLocator;
-    this.bounds = bounds;
+    this.outerBounds = bounds;
     this.priority = 1;
     this.objectUtils = serviceLocator.getGameObjectUtils();
   }
 
   public GameObject(int x, int y, int width, int height) {
     this(x, y, width, height, null);
+  }
+
+  public void setPositionTo(double x, double y) {
+    setX(x);
+    setY(y);
   }
 
   public boolean isMovable() {
@@ -97,19 +104,26 @@ abstract public class GameObject extends Object2D
 
   public void setSpriteFromPackage(String id) {
     SpriteManager spriteManager = getServiceLocator().getSpriteManager();
-    setSprite(spriteManager.getSpriteFromPackage(id));
+    List<String>  idParts       = SpriteManager.getIDParts(id);
+    SpritePackage spritePackage = spriteManager.getSpritePackage(idParts.get(0));
+
+    setSprite(spritePackage.getSprite(idParts.get(1)));
   }
 
-  public Bound2D getBounds() {
-    return bounds;
+  public Bound2D getOuterBounds() {
+    return outerBounds;
   }
 
-  public Bound2D getSelfBound() {
-    return new Bound2D(getX(), getY() + (getHeight() / 2), getWidth(), getHeight() / 2);
+  public Bound2D getInnerBound() {
+    return new Bound2D(getX(), getY(), getWidth(), getHeight());
   }
 
-  public void setBounds(Bound2D bounds) {
-    this.bounds = bounds;
+  public Bound2D getSpatialBounds() {
+    return new Bound2D(getX() - 10, getY() - 10, getWidth() + 20, getHeight() + 20);
+  }
+
+  public void setOuterBounds(Bound2D bounds) {
+    this.outerBounds = bounds;
   }
 
   public ServiceLocator getServiceLocator() {
@@ -128,11 +142,6 @@ abstract public class GameObject extends Object2D
   @Override
   public void render(Canvas canvas) {
     getSprite().draw(canvas, getX(), getY());
-  }
-
-  @Override
-  public void collide() {
-    // null object ...
   }
 
   @Override

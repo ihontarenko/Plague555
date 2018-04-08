@@ -1,4 +1,4 @@
-package org.nulllab.nullengine.openworld.object.direction;
+package org.nulllab.nullengine.openworld.object.geometry;
 
 public enum Direction {
 
