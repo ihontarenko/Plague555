@@ -39,7 +39,7 @@ public class WorldMap implements Initializable {
           tile = data.getTile(positionX, positionY);
           terrain.setSprite(tile.getSpriteID());
           terrain.setSolid(tile.isSolid());
-          terrain.setLayer(tile.getLayer());
+          terrain.setPriority(tile.getLayer());
         }
 
         world.addGameObject(terrain);

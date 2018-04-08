@@ -31,7 +31,7 @@ public class Character extends MovableGameObject {
     this.input = input;
     this.breed = breed;
 
-    this.setLayer(1 << 2);
+    this.setPriority(1 << 2);
   }
 
   public double getHealth() {
