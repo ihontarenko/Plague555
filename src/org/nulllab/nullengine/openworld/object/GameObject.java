@@ -5,6 +5,7 @@ import org.nulllab.nullengine.core.geometry.Collidable;
 import org.nulllab.nullengine.core.geometry.Object2D;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.Renderable;
+import org.nulllab.nullengine.core.graphics.spritesheet.SpriteManager;
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.Sprite;
 import org.nulllab.nullengine.core.loop.Updateable;
 import org.nulllab.nullengine.openworld.ServiceLocator;
@@ -16,7 +17,7 @@ abstract public class GameObject extends Object2D
 
   private boolean        isSolid;
   private boolean        isMovable;
-  private int            layer;
+  private int            priority;
   private Sprite         sprite;
   private Sprites        spritePackage;
   private ServiceLocator serviceLocator;
@@ -30,7 +31,7 @@ abstract public class GameObject extends Object2D
     super(x, y, width, height);
 
     this.bounds = bounds;
-    this.layer = 1;
+    this.priority = 1;
     this.serviceLocator = ServiceLocator.getInstance();
   }
 
@@ -59,19 +60,19 @@ abstract public class GameObject extends Object2D
   }
 
   public void layerDown() {
-    layer >>= 1;
+    priority >>= 1;
   }
 
   public void layerUp() {
-    layer <<= 1;
+    priority <<= 1;
   }
 
-  public int getLayer() {
-    return layer;
+  public int getPriority() {
+    return priority;
   }
 
-  public void setLayer(int layer) {
-    this.layer = layer;
+  public void setPriority(int priority) {
+    this.priority = priority;
   }
 
   public Sprites getSpritePackage() {
@@ -90,6 +91,11 @@ abstract public class GameObject extends Object2D
     this.sprite = sprite;
   }
 
+  public void setSprite(String id) {
+    SpriteManager spriteManager = getServiceLocator().getSpriteManager();
+    setSprite(spriteManager.getSpriteFromPackage(id));
+  }
+
   public Bound2D getBounds() {
     return bounds;
   }
@@ -104,7 +110,7 @@ abstract public class GameObject extends Object2D
 
   @Override
   public int compareTo(GameObject object) {
-    return this.getLayer() - object.getLayer();
+    return this.getPriority() - object.getPriority();
   }
 
   @Override

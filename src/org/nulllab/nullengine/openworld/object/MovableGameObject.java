@@ -33,7 +33,7 @@ public class MovableGameObject extends GameObject {
     double velocityX = (direction.getFactorX() * getVelocity());
     double velocityY = (direction.getFactorY() * getVelocity());
 
-    setSprite(directionMap.get(direction));
+    setSprite(getSpritePackage().getSprite(directionMap.get(direction)));
 
     setX(getX() + velocityX);
     setY(getY() + velocityY);

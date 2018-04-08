@@ -10,7 +10,7 @@ Size
 Default
 tilesB.grassDefault
 
-// spriteID positionX positionY layer solid
+// spriteID positionX positionY priority solid
 Map
 0 1 4 0 tilesA.grass2
 2 2 4 1 tilesA.ice
