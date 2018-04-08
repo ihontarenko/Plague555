@@ -1,6 +1,5 @@
 package org.nulllab.nullengine.openworld.character.state;
 
-import org.nulllab.nullengine.core.event.Event;
 import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.openworld.character.Character;
 import org.nulllab.nullengine.openworld.state.ObjectState;

@@ -1,32 +1,29 @@
 package org.nulllab.nullengine.openworld.world;
 
 import org.nulllab.nullengine.core.geometry.Bound2D;
-import org.nulllab.nullengine.openworld.object.ActiveObject;
+import org.nulllab.nullengine.openworld.object.MovableGameObject;
 
-public class Camera extends ActiveObject {
+public class Camera extends MovableGameObject {
 
   public Camera(int x, int y, int width, int height) {
     super(x, y, width, height);
   }
 
-  public void syncPositionWith(double x, double y) {
-    Bound2D areaBound = getAreaBound();
-    Bound2D selfBound = getSelfBound();
+  public void toCenter(double x, double y) {
+    // todo
+    Bound2D worldBound = getBounds();
+
     double  offsetX   = getWidth() / 2;
     double  offsetY   = getHeight() / 2;
-    double  positionX = areaBound.getX();
-    double  positionY = areaBound.getY();
-
-    if (selfBound.getMaxX() > areaBound.getMaxX()) {
-
-    }
+    double  positionX = worldBound.getX();
+    double  positionY = worldBound.getY();
 
     if (x > offsetX) {
-      positionX = Math.min(x, areaBound.getMaxX() - offsetX) - offsetX;
+      positionX = Math.min(x, worldBound.getMaxX() - offsetX) - offsetX;
     }
 
     if (y > offsetY) {
-      positionY = Math.min(y, areaBound.getMaxY() - offsetY) - offsetY;
+      positionY = Math.min(y, worldBound.getMaxY() - offsetY) - offsetY;
     }
 
     setX(positionX);
