@@ -78,7 +78,7 @@ public class Breed {
   }
 
   public void setParentBreed(Breed breed) {
-    this.values.foldWith(breed.getValues());
+    this.values.addWith(breed.getValues());
     this.parent = breed;
   }
 
