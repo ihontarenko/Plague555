@@ -5,7 +5,7 @@ import org.nulllab.nullengine.openworld.object.collision.CollisionDetector;
 
 import java.util.List;
 
-public interface CollisionDetectionInterface {
+public interface CollisionInterface {
 
   CollisionDetector getCollisionDetector();
 

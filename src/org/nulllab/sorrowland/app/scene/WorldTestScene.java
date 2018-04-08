@@ -172,7 +172,7 @@ public class WorldTestScene extends Scene<AbstractView> {
 
     Camera camera = world.getCamera();
 
-    List<GameObject> objects = character.getCollisionDetection().getNearestSolidObjects();
+    List<GameObject> objects = character.getCollision().getNearestSolidObjects();
 
     canvas.setColor(0x55ff0000);
 

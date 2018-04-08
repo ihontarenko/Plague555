@@ -3,18 +3,14 @@ package org.nulllab.nullengine.openworld.object.component.collision;
 import org.nulllab.nullengine.openworld.object.GameObject;
 import org.nulllab.nullengine.openworld.object.collision.CollisionDetector;
 import org.nulllab.nullengine.openworld.object.component.Component;
-import org.nulllab.nullengine.openworld.object.component.bounds.BoundsInterface;
 
 import java.util.List;
 
-public class CollisionDetection extends Component implements CollisionDetectionInterface {
-
-  private BoundsInterface bounds;
+public class Collision extends Component implements CollisionInterface {
 
   @Override
   public void setGameObject(GameObject object) {
     super.setGameObject(object);
-    bounds = object.getBounds();
   }
 
   @Override
@@ -39,17 +35,17 @@ public class CollisionDetection extends Component implements CollisionDetectionI
 
   @Override
   public boolean isOutOfBounds() {
-    return getCollisionDetector().isOutOfBounds(bounds.getInnerBound(), bounds.getOuterBounds());
+    return getCollisionDetector().isOutOfBounds(getGameObject().getBounds().getInnerBound(), getGameObject().getBounds().getOuterBounds());
   }
 
   @Override
   public boolean isOutOfBoundsX() {
-    return getCollisionDetector().isOutOfBoundsX(bounds.getInnerBound(), bounds.getOuterBounds());
+    return getCollisionDetector().isOutOfBoundsX(getGameObject().getBounds().getInnerBound(), getGameObject().getBounds().getOuterBounds());
   }
 
   @Override
   public boolean isOutOfBoundsY() {
-    return getCollisionDetector().isOutOfBoundsY(bounds.getInnerBound(), bounds.getOuterBounds());
+    return getCollisionDetector().isOutOfBoundsY(getGameObject().getBounds().getInnerBound(), getGameObject().getBounds().getOuterBounds());
   }
 
 }

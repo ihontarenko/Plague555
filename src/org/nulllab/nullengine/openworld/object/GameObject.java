@@ -8,8 +8,8 @@ import org.nulllab.nullengine.core.loop.Updateable;
 import org.nulllab.nullengine.openworld.ServiceLocator;
 import org.nulllab.nullengine.openworld.object.component.bounds.Bounds;
 import org.nulllab.nullengine.openworld.object.component.bounds.BoundsInterface;
-import org.nulllab.nullengine.openworld.object.component.collision.CollisionDetection;
-import org.nulllab.nullengine.openworld.object.component.collision.CollisionDetectionInterface;
+import org.nulllab.nullengine.openworld.object.component.collision.Collision;
+import org.nulllab.nullengine.openworld.object.component.collision.CollisionInterface;
 import org.nulllab.nullengine.openworld.object.component.graphics.Graphics;
 import org.nulllab.nullengine.openworld.object.component.graphics.GraphicsInterface;
 
@@ -17,14 +17,14 @@ import org.nulllab.nullengine.openworld.object.component.graphics.GraphicsInterf
 abstract public class GameObject extends Object2D
     implements Renderable<Canvas>, Updateable, Comparable<GameObject> {
 
-  private boolean                     isSolid;
-  private boolean                     isMovable;
-  private int                         priority;
-  private ServiceLocator              serviceLocator;
-  private GameObjectUtils             objectUtils;
-  private GraphicsInterface           graphics;
-  private BoundsInterface             bounds;
-  private CollisionDetectionInterface collisionDetection;
+  private boolean            isSolid;
+  private boolean            isMovable;
+  private int                priority;
+  private ServiceLocator     serviceLocator;
+  private GameObjectUtils    objectUtils;
+  private GraphicsInterface  graphics;
+  private BoundsInterface    bounds;
+  private CollisionInterface collision;
 
   public GameObject() {
     this(0, 0, 32, 32, null);
@@ -38,7 +38,7 @@ abstract public class GameObject extends Object2D
 
     setGraphics(new Graphics());
     setBounds(new Bounds());
-    setCollisionDetection(new CollisionDetection());
+    setCollision(new Collision());
   }
 
   public GameObject(int x, int y, int width, int height) {
@@ -108,13 +108,17 @@ abstract public class GameObject extends Object2D
     this.bounds = bounds;
   }
 
-  public CollisionDetectionInterface getCollisionDetection() {
-    return collisionDetection;
+  public CollisionInterface getCollision() {
+    return collision;
   }
 
-  public void setCollisionDetection(CollisionDetection collisionDetection) {
-    collisionDetection.setGameObject(this);
-    this.collisionDetection = collisionDetection;
+  public void setCollision(Collision collision) {
+    collision.setGameObject(this);
+    this.collision = collision;
+  }
+
+  public GameObjectUtils getObjectUtils() {
+    return getServiceLocator().getGameObjectUtils();
   }
 
   @Override

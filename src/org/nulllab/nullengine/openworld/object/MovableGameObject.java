@@ -3,38 +3,34 @@ package org.nulllab.nullengine.openworld.object;
 import org.nulllab.nullengine.core.geometry.Bounds2D;
 import org.nulllab.nullengine.openworld.character.Values;
 import org.nulllab.nullengine.openworld.object.component.bounds.BoundsInterface;
-import org.nulllab.nullengine.openworld.object.component.collision.CollisionDetection;
+import org.nulllab.nullengine.openworld.object.component.collision.Collision;
 import org.nulllab.nullengine.openworld.object.geometry.Direction;
-
-import java.util.Map;
 
 public class MovableGameObject extends GameObject {
 
   public static final String VELOCITY = "VELOCITY";
 
   private Values                 values;
-  private Map<Direction, String> spritesMap;
 
   public MovableGameObject(int x, int y, int width, int height) {
     super(x, y, width, height);
 
     this.values = new Values();
-    this.spritesMap = getObjectUtils().getMovement().getSpritesMapDirection();
 
     setMovable(true);
     setVelocity(3D);
   }
 
   public void move(Direction direction) {
-    CollisionDetection collisionDetection = (CollisionDetection) getCollisionDetection();
-    double             oldX               = getX();
-    double             oldY               = getY();
-    double             newX               = getX() + (direction.getFactorX() * getVelocity());
-    double             newY               = getY() + (direction.getFactorY() * getVelocity());
+    Collision collision = (Collision) getCollision();
+    double    oldX      = getX();
+    double    oldY      = getY();
+    double    newX      = getX() + (direction.getFactorX() * getVelocity());
+    double    newY      = getY() + (direction.getFactorY() * getVelocity());
 
     setPositionTo(newX, newY);
 
-    if (collisionDetection.isCollidedWithNearest() || collisionDetection.isOutOfBounds()) {
+    if (collision.isCollidedWithNearest() || collision.isOutOfBounds()) {
       setPositionTo(oldX, oldY);
     }
 
