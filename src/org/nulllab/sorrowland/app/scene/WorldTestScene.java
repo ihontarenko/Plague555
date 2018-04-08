@@ -105,6 +105,7 @@ public class WorldTestScene extends Scene<AbstractView> {
 
     spriteManager.addSpritePackage(new TilesASprites());
     spriteManager.addSpritePackage(new TilesBSprites());
+    spriteManager.addSpritePackage(new PlayerSprites());
 
 //    System.out.println(serviceLocator.getService(InputComponent.class));
 //    System.exit(1);
