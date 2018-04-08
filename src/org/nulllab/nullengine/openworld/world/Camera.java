@@ -4,6 +4,7 @@ import org.nulllab.nullengine.core.event.Event;
 import org.nulllab.nullengine.core.event.Observer;
 import org.nulllab.nullengine.openworld.character.Character;
 import org.nulllab.nullengine.openworld.object.MovableGameObject;
+import org.nulllab.nullengine.openworld.object.component.collision.CollisionDetection;
 
 public class Camera extends MovableGameObject {
 
@@ -16,6 +17,9 @@ public class Camera extends MovableGameObject {
 
   @Override
   public void toCenter(double x, double y) {
+    // collision detection object component
+    CollisionDetection collisionDetection = (CollisionDetection) getCollisionDetection();
+
     // save old coordinates
     double oldX = getX();
     double oldY = getY();
@@ -24,8 +28,8 @@ public class Camera extends MovableGameObject {
     super.toCenter(x, y);
 
     // updated coordinates
-    double newX = isOutOfBoundsX() ? oldX : getX();
-    double newY = isOutOfBoundsY() ? oldY : getY();
+    double newX = collisionDetection.isOutOfBoundsX() ? oldX : getX();
+    double newY = collisionDetection.isOutOfBoundsY() ? oldY : getY();
 
     // reset position
     setPositionTo(newX, newY);

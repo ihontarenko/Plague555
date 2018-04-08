@@ -1,12 +1,11 @@
 package org.nulllab.nullengine.openworld.object;
 
 import org.nulllab.nullengine.core.geometry.Bounds2D;
-import org.nulllab.nullengine.openworld.character.Sprites;
 import org.nulllab.nullengine.openworld.character.Values;
-import org.nulllab.nullengine.openworld.object.collision.CollisionDetector;
+import org.nulllab.nullengine.openworld.object.component.bounds.BoundsInterface;
+import org.nulllab.nullengine.openworld.object.component.collision.CollisionDetection;
 import org.nulllab.nullengine.openworld.object.geometry.Direction;
 
-import java.util.List;
 import java.util.Map;
 
 public class MovableGameObject extends GameObject {
@@ -27,27 +26,28 @@ public class MovableGameObject extends GameObject {
   }
 
   public void move(Direction direction) {
-    double oldX      = getX();
-    double oldY      = getY();
-    double newX      = getX() + (direction.getFactorX() * getVelocity());
-    double newY      = getY() + (direction.getFactorY() * getVelocity());
+    CollisionDetection collisionDetection = (CollisionDetection) getCollisionDetection();
+    double             oldX               = getX();
+    double             oldY               = getY();
+    double             newX               = getX() + (direction.getFactorX() * getVelocity());
+    double             newY               = getY() + (direction.getFactorY() * getVelocity());
 
     setPositionTo(newX, newY);
 
-    if (isCollidedWithNearest() || isOutOfBounds()) {
+    if (collisionDetection.isCollidedWithNearest() || collisionDetection.isOutOfBounds()) {
       setPositionTo(oldX, oldY);
     }
 
-    setDirectionSprite(direction);
+    getGraphics().setDirectionSprite(direction);
   }
 
   public void toCenter(double x, double y) {
-    Bounds2D outer = getOuterBounds();
-
-    double offsetX = getWidth() / 2;
-    double offsetY = getHeight() / 2;
-    double newX = Math.min(x, outer.getMaxX() - offsetX) - offsetX;
-    double newY = Math.min(y, outer.getMaxY() - offsetY) - offsetY;
+    BoundsInterface bounds  = getBounds();
+    Bounds2D        outer   = bounds.getOuterBounds();
+    double          offsetX = getWidth() / 2;
+    double          offsetY = getHeight() / 2;
+    double          newX    = Math.min(x, outer.getMaxX() - offsetX) - offsetX;
+    double          newY    = Math.min(y, outer.getMaxY() - offsetY) - offsetY;
 
     setPositionTo(newX, newY);
   }
@@ -55,11 +55,6 @@ public class MovableGameObject extends GameObject {
   public void setPositionTo(double x, double y) {
     setX(x);
     setY(y);
-  }
-
-  public void setDirectionSprite(Direction direction) {
-    Sprites sprites = getObjectSprites();
-    setSprite(sprites.getSprite(spritesMap.get(direction)));
   }
 
   public void setVelocity(double velocity) {
@@ -70,32 +65,6 @@ public class MovableGameObject extends GameObject {
     return values.getValue(VELOCITY);
   }
 
-  public CollisionDetector getCollisionDetector() {
-    return getServiceLocator().getCollisionDetector();
-  }
 
-  public List<GameObject> getNearestObjects() {
-    return getCollisionDetector().getNearestObjectsFor(this);
-  }
-
-  public List<GameObject> getNearestSolidObjects() {
-    return getCollisionDetector().getNearestSolidObjectsFor(this);
-  }
-
-  public boolean isCollidedWithNearest() {
-    return getCollisionDetector().isCollidedWithNearestSolid(this);
-  }
-
-  public boolean isOutOfBounds() {
-    return getCollisionDetector().isOutOfBounds(getInnerBound(), getOuterBounds());
-  }
-
-  public boolean isOutOfBoundsX() {
-    return getCollisionDetector().isOutOfBoundsX(getInnerBound(), getOuterBounds());
-  }
-
-  public boolean isOutOfBoundsY() {
-    return getCollisionDetector().isOutOfBoundsY(getInnerBound(), getOuterBounds());
-  }
 
 }

@@ -4,27 +4,27 @@ import org.nulllab.nullengine.core.geometry.Bounds2D;
 import org.nulllab.nullengine.core.geometry.Object2D;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.Renderable;
-import org.nulllab.nullengine.core.graphics.spritesheet.SpriteManager;
-import org.nulllab.nullengine.core.graphics.spritesheet.sprite.Sprite;
-import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpritePackage;
 import org.nulllab.nullengine.core.loop.Updateable;
 import org.nulllab.nullengine.openworld.ServiceLocator;
-import org.nulllab.nullengine.openworld.character.Sprites;
-
-import java.util.List;
+import org.nulllab.nullengine.openworld.object.component.bounds.Bounds;
+import org.nulllab.nullengine.openworld.object.component.bounds.BoundsInterface;
+import org.nulllab.nullengine.openworld.object.component.collision.CollisionDetection;
+import org.nulllab.nullengine.openworld.object.component.collision.CollisionDetectionInterface;
+import org.nulllab.nullengine.openworld.object.component.graphics.Graphics;
+import org.nulllab.nullengine.openworld.object.component.graphics.GraphicsInterface;
 
 @SuppressWarnings("unused")
 abstract public class GameObject extends Object2D
     implements Renderable<Canvas>, Updateable, Comparable<GameObject> {
 
-  private boolean         isSolid;
-  private boolean         isMovable;
-  private int             priority;
-  private Sprite          sprite;
-  private Sprites         objectSprites;
-  private ServiceLocator  serviceLocator;
-  private Bounds2D        outerBounds;
-  private GameObjectUtils objectUtils;
+  private boolean                     isSolid;
+  private boolean                     isMovable;
+  private int                         priority;
+  private ServiceLocator              serviceLocator;
+  private GameObjectUtils             objectUtils;
+  private GraphicsInterface           graphics;
+  private BoundsInterface             bounds;
+  private CollisionDetectionInterface collisionDetection;
 
   public GameObject() {
     this(0, 0, 32, 32, null);
@@ -33,16 +33,20 @@ abstract public class GameObject extends Object2D
   public GameObject(int x, int y, int width, int height, Bounds2D bounds) {
     super(x, y, width, height);
 
-    ServiceLocator serviceLocator = ServiceLocator.getInstance();
-
-    this.serviceLocator = serviceLocator;
-    this.outerBounds = bounds;
+    this.serviceLocator = ServiceLocator.getInstance();
     this.priority = 1;
-    this.objectUtils = serviceLocator.getGameObjectUtils();
+
+    setGraphics(new Graphics());
+    setBounds(new Bounds());
+    setCollisionDetection(new CollisionDetection());
   }
 
   public GameObject(int x, int y, int width, int height) {
     this(x, y, width, height, null);
+  }
+
+  public ServiceLocator getServiceLocator() {
+    return serviceLocator;
   }
 
   public void setPositionTo(double x, double y) {
@@ -54,12 +58,12 @@ abstract public class GameObject extends Object2D
     return isMovable;
   }
 
-  public boolean isStatic() {
-    return !isMovable();
-  }
-
   public void setMovable(boolean isMovable) {
     this.isMovable = isMovable;
+  }
+
+  public boolean isStatic() {
+    return !isMovable();
   }
 
   public boolean isSolid() {
@@ -86,52 +90,31 @@ abstract public class GameObject extends Object2D
     this.priority = priority;
   }
 
-  public Sprites getObjectSprites() {
-    return objectSprites;
+  public GraphicsInterface getGraphics() {
+    return graphics;
   }
 
-  public void setObjectSprites(Sprites objectSprites) {
-    this.objectSprites = objectSprites;
+  public void setGraphics(Graphics graphics) {
+    graphics.setGameObject(this);
+    this.graphics = graphics;
   }
 
-  public Sprite getSprite() {
-    return sprite;
+  public BoundsInterface getBounds() {
+    return bounds;
   }
 
-  public void setSprite(Sprite sprite) {
-    this.sprite = sprite;
+  public void setBounds(Bounds bounds) {
+    bounds.setGameObject(this);
+    this.bounds = bounds;
   }
 
-  public void setSpriteFromPackage(String id) {
-    SpriteManager spriteManager = getServiceLocator().getSpriteManager();
-    List<String>  idParts       = SpriteManager.getIDParts(id);
-    SpritePackage spritePackage = spriteManager.getSpritePackage(idParts.get(0));
-
-    setSprite(spritePackage.getSprite(idParts.get(1)));
+  public CollisionDetectionInterface getCollisionDetection() {
+    return collisionDetection;
   }
 
-  public Bounds2D getOuterBounds() {
-    return outerBounds;
-  }
-
-  public Bounds2D getInnerBound() {
-    return new Bounds2D(getX(), getY(), getWidth(), getHeight());
-  }
-
-  public Bounds2D getSpatialBounds() {
-    return new Bounds2D(getX(), getY(), getWidth(), getHeight());
-  }
-
-  public void setOuterBounds(Bounds2D bounds) {
-    this.outerBounds = bounds;
-  }
-
-  public ServiceLocator getServiceLocator() {
-    return serviceLocator;
-  }
-
-  public GameObjectUtils getObjectUtils() {
-    return objectUtils;
+  public void setCollisionDetection(CollisionDetection collisionDetection) {
+    collisionDetection.setGameObject(this);
+    this.collisionDetection = collisionDetection;
   }
 
   @Override
@@ -141,7 +124,7 @@ abstract public class GameObject extends Object2D
 
   @Override
   public void render(Canvas canvas) {
-    getSprite().draw(canvas, getX(), getY());
+    getGraphics().getSprite().draw(canvas, getX(), getY());
   }
 
   @Override

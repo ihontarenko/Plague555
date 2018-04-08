@@ -7,6 +7,7 @@ import org.nulllab.nullengine.openworld.character.equipment.Equipment;
 import org.nulllab.nullengine.openworld.character.level.Level;
 import org.nulllab.nullengine.openworld.character.state.StandState;
 import org.nulllab.nullengine.openworld.object.MovableGameObject;
+import org.nulllab.nullengine.openworld.object.component.bounds.CharacterBounds;
 import org.nulllab.nullengine.openworld.object.geometry.Direction;
 import org.nulllab.nullengine.openworld.state.ObjectState;
 import org.nulllab.nullengine.openworld.world.Camera;
@@ -33,31 +34,7 @@ public class Character extends MovableGameObject {
     this.breed = breed;
 
     this.setPriority(1 << 2);
-  }
-
-  @Override
-  public Bounds2D getInnerBound() {
-    Bounds2D bounds = super.getInnerBound();
-    double   offset = bounds.getHeight() / 2;
-
-    bounds.setY(bounds.getY() + offset);
-    bounds.setHeight((int) offset);
-
-    return bounds;
-  }
-
-  @Override
-  public Bounds2D getSpatialBounds() {
-    Bounds2D bounds = super.getSpatialBounds();
-    double   offset = 15D;
-
-    bounds.setX(bounds.getX() - offset);
-    bounds.setWidth((int) (bounds.getWidth() + (offset * 2)));
-
-    bounds.setY(bounds.getY() - offset);
-    bounds.setHeight((int) (bounds.getHeight() + (offset * 2)));
-
-    return bounds;
+    this.setBounds(new CharacterBounds());
   }
 
   public double getHealth() {

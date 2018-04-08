@@ -1,7 +1,9 @@
 package org.nulllab.nullengine.openworld.character.state;
 
+import org.nulllab.nullengine.core.graphics.spritesheet.sprite.Sprite;
 import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.openworld.character.Character;
+import org.nulllab.nullengine.openworld.object.component.graphics.GraphicsInterface;
 import org.nulllab.nullengine.openworld.state.ObjectState;
 
 public class StandState extends ObjectState<Character> {
@@ -10,7 +12,10 @@ public class StandState extends ObjectState<Character> {
   public void entryAction(Character object) {
     super.entryAction(object);
 
-    object.setSprite(object.getObjectSprites().getDefaultSprite());
+    GraphicsInterface graphics      = object.getGraphics();
+    Sprite            defaultSprite = graphics.getObjectSprites().getDefaultSprite();
+
+    graphics.setSprite(defaultSprite);
   }
 
   @Override
