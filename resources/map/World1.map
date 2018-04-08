@@ -4,7 +4,7 @@ Sorrow Land (World 1)
 
 // width height tile-size
 Size
-1280 960 32
+256 256 32
 
 // default tile
 Default

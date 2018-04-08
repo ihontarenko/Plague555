@@ -34,7 +34,7 @@ public class Values {
   }
 
   public void increaseValue(String keyName, Double value) {
-    foldWith(keyName, value);
+    addWith(keyName, value);
   }
 
   public void averageWith(Values values) {
@@ -45,8 +45,8 @@ public class Values {
     values.getValues().forEach(this::subtractWith);
   }
 
-  public void foldWith(Values values) {
-    values.getValues().forEach(this::foldWith);
+  public void addWith(Values values) {
+    values.getValues().forEach(this::addWith);
   }
 
   public void averageWith(String keyName, Double value) {
@@ -57,7 +57,7 @@ public class Values {
     setValue(keyName, getValue(keyName) - value);
   }
 
-  public void foldWith(String keyName, Double value) {
+  public void addWith(String keyName, Double value) {
     setValue(keyName, getValue(keyName) + value);
   }
 
