@@ -1,7 +1,6 @@
 package org.nulllab.sorrowland.app.scene;
 
 import org.nulllab.nullengine.core.common.Probability;
-import org.nulllab.nullengine.core.geometry.Bounds2D;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.spritesheet.SpriteManager;
 import org.nulllab.nullengine.core.input.Keyboard;
@@ -11,13 +10,13 @@ import org.nulllab.nullengine.openworld.character.Breed;
 import org.nulllab.nullengine.openworld.character.Character;
 import org.nulllab.nullengine.openworld.character.Skills;
 import org.nulllab.nullengine.openworld.character.level.Level;
-import org.nulllab.nullengine.openworld.object.GameObject;
-import org.nulllab.nullengine.openworld.object.GameObjectUtils;
+import org.nulllab.nullengine.openworld.object.ObjectHelper;
 import org.nulllab.nullengine.openworld.object.collision.CollisionDetector;
 import org.nulllab.nullengine.openworld.object.component.graphics.GraphicsInterface;
 import org.nulllab.nullengine.openworld.world.Camera;
 import org.nulllab.sorrowland.app.graphics.sheet.*;
 import org.nulllab.sorrowland.app.graphics.sheet.characters.*;
+import org.nulllab.sorrowland.app.graphics.sprite.Nature1Sprites;
 import org.nulllab.sorrowland.app.graphics.sprite.PlayerSprites;
 import org.nulllab.sorrowland.app.graphics.sprite.TilesASprites;
 import org.nulllab.sorrowland.app.graphics.sprite.TilesBSprites;
@@ -28,7 +27,6 @@ import org.nulllab.ui.process.view.AbstractView;
 import org.nulllab.ui.service.Context;
 
 import java.awt.event.KeyEvent;
-import java.util.List;
 
 public class WorldTestScene extends Scene<AbstractView> {
 
@@ -46,7 +44,7 @@ public class WorldTestScene extends Scene<AbstractView> {
 
     ServiceLocator serviceLocator = ServiceLocator.getInstance();
 
-    serviceLocator.addService(GameObjectUtils.class);
+    serviceLocator.addService(ObjectHelper.class);
     serviceLocator.addService(CollisionDetector.class);
     serviceLocator.addService(Keyboard.class, getContext().getInputKey());
 
@@ -111,10 +109,12 @@ public class WorldTestScene extends Scene<AbstractView> {
     spriteManager.addSheetPackage(new IconsSheetPackage());
     spriteManager.addSheetPackage(new TileSet2SheetPackage());
     spriteManager.addSheetPackage(new TileSet1SheetPackage());
+    spriteManager.addSheetPackage(new Nature1SheetPackage());
 
     spriteManager.addSpritePackage(new TilesASprites());
     spriteManager.addSpritePackage(new TilesBSprites());
     spriteManager.addSpritePackage(new PlayerSprites());
+    spriteManager.addSpritePackage(new Nature1Sprites());
 
 //    System.out.println(serviceLocator.getService(InputComponent.class));
 //    System.exit(1);
@@ -172,24 +172,24 @@ public class WorldTestScene extends Scene<AbstractView> {
 
     Camera camera = world.getCamera();
 
-    List<GameObject> objects = character.getCollision().getNearestSolidObjects();
+//    List<GameObject> objects = character.getCollision().getNearestSolidObjects();
 
-    canvas.setColor(0x55ff0000);
+//    canvas.setColor(0x55ff0000);
+//
+//    objects.forEach(object -> {
+//      double x = object.getX() - camera.getX();
+//      double y = object.getY() - camera.getY();
+//
+//      canvas.drawFilledRectangle(x, y, object.getWidth(), object.getHeight());
+//    });
 
-    objects.forEach(object -> {
-      double x = object.getX() - camera.getX();
-      double y = object.getY() - camera.getY();
+//    Bounds2D spatialBounds = character.getBounds().getSpatialBounds();
+//    Bounds2D innerBounds   = character.getBounds().getInnerBound();
 
-      canvas.drawFilledRectangle(x, y, object.getWidth(), object.getHeight());
-    });
-
-    Bounds2D spatialBounds = character.getBounds().getSpatialBounds();
-    Bounds2D innerBounds   = character.getBounds().getInnerBound();
-
-    canvas.setColor(0x5500ff00);
-    canvas.drawRectangle(spatialBounds.getX() - camera.getX(), spatialBounds.getY()  - camera.getY(), spatialBounds.getWidth(), spatialBounds.getHeight());
-    canvas.setColor(0x550000ff);
-    canvas.drawRectangle(innerBounds.getX() - camera.getX(), innerBounds.getY()  - camera.getY(), innerBounds.getWidth(), innerBounds.getHeight());
+//    canvas.setColor(0x5500ff00);
+//    canvas.drawRectangle(spatialBounds.getX() - camera.getX(), spatialBounds.getY()  - camera.getY(), spatialBounds.getWidth(), spatialBounds.getHeight());
+//    canvas.setColor(0x550000ff);
+//    canvas.drawRectangle(innerBounds.getX() - camera.getX(), innerBounds.getY()  - camera.getY(), innerBounds.getWidth(), innerBounds.getHeight());
 
 //    character.render(canvas);
   }

@@ -4,7 +4,7 @@ import org.nulllab.nullengine.core.AbstractServiceLocator;
 import org.nulllab.nullengine.core.graphics.spritesheet.SpriteManager;
 import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.core.input.Keyboard;
-import org.nulllab.nullengine.openworld.object.GameObjectUtils;
+import org.nulllab.nullengine.openworld.object.ObjectHelper;
 import org.nulllab.nullengine.openworld.object.collision.CollisionDetector;
 
 public class ServiceLocator extends AbstractServiceLocator {
@@ -25,8 +25,8 @@ public class ServiceLocator extends AbstractServiceLocator {
     return getService(Keyboard.class);
   }
 
-  public GameObjectUtils getGameObjectUtils() {
-    return getService(GameObjectUtils.class);
+  public ObjectHelper getObjectHelper() {
+    return getService(ObjectHelper.class);
   }
 
   public CollisionDetector getCollisionDetector() {

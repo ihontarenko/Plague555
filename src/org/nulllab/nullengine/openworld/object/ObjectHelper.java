@@ -3,26 +3,25 @@ package org.nulllab.nullengine.openworld.object;
 import org.nulllab.nullengine.core.common.Initializable;
 import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.openworld.character.Sprites;
-import org.nulllab.nullengine.openworld.object.geometry.Direction;
 
 import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GameObjectUtils {
+public class ObjectHelper {
 
-  private MovementUtils movement;
+  private Movement movement;
 
-  public GameObjectUtils() {
-    this.movement = new MovementUtils();
+  public ObjectHelper() {
+    this.movement = new Movement();
     this.movement.initialize();
   }
 
-  public MovementUtils getMovement() {
+  public Movement getMovement() {
     return movement;
   }
 
-  public class MovementUtils implements Initializable {
+  public class Movement implements Initializable {
 
     private Map<Direction, String>  spritesMap;
     private Map<Integer, Direction> keyMap;

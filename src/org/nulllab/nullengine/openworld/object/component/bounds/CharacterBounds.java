@@ -6,11 +6,14 @@ public class CharacterBounds extends Bounds {
 
   @Override
   public Bounds2D getInnerBound() {
-    Bounds2D bounds = super.getInnerBound();
-    double   offset = bounds.getHeight() / 2;
+    Bounds2D bounds  = super.getInnerBound();
+    double   offsetY = bounds.getHeight() / 2;
+    double   offsetX = 4.0D;
 
-    bounds.setY(bounds.getY() + offset);
-    bounds.setHeight((int) offset);
+    bounds.setY(bounds.getY() + offsetY);
+    bounds.setHeight((int) offsetY);
+    bounds.setX(bounds.getX() + offsetX);
+    bounds.setWidth((int) (bounds.getWidth() - (offsetX * 2)));
 
     return bounds;
   }

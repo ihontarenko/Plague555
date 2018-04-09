@@ -6,7 +6,7 @@ import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpritePackage;
 import org.nulllab.nullengine.openworld.character.Sprites;
 import org.nulllab.nullengine.openworld.object.GameObject;
 import org.nulllab.nullengine.openworld.object.component.Component;
-import org.nulllab.nullengine.openworld.object.geometry.Direction;
+import org.nulllab.nullengine.openworld.object.Direction;
 
 import java.util.List;
 import java.util.Map;
@@ -20,7 +20,7 @@ public class Graphics extends Component implements GraphicsInterface {
   @Override
   public void setGameObject(GameObject object) {
     super.setGameObject(object);
-    spritesMap = getServiceLocator().getGameObjectUtils().getMovement().getSpritesMapDirection();
+    spritesMap = getServiceLocator().getObjectHelper().getMovement().getSpritesMapDirection();
   }
 
   @Override

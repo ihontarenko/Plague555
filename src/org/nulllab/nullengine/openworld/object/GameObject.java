@@ -6,25 +6,29 @@ import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.Renderable;
 import org.nulllab.nullengine.core.loop.Updateable;
 import org.nulllab.nullengine.openworld.ServiceLocator;
+import org.nulllab.nullengine.openworld.character.Values;
 import org.nulllab.nullengine.openworld.object.component.bounds.Bounds;
 import org.nulllab.nullengine.openworld.object.component.bounds.BoundsInterface;
 import org.nulllab.nullengine.openworld.object.component.collision.Collision;
 import org.nulllab.nullengine.openworld.object.component.collision.CollisionInterface;
 import org.nulllab.nullengine.openworld.object.component.graphics.Graphics;
 import org.nulllab.nullengine.openworld.object.component.graphics.GraphicsInterface;
+import org.nulllab.nullengine.openworld.object.component.physics.Physics;
+import org.nulllab.nullengine.openworld.object.component.physics.PhysicsInterface;
 
 @SuppressWarnings("unused")
-abstract public class GameObject extends Object2D
-    implements Renderable<Canvas>, Updateable, Comparable<GameObject> {
+abstract public class GameObject extends Object2D implements Renderable<Canvas>, Updateable, Comparable<GameObject> {
 
   private boolean            isSolid;
   private boolean            isMovable;
   private int                priority;
+  private Values             values;
   private ServiceLocator     serviceLocator;
-  private GameObjectUtils    objectUtils;
+  private ObjectHelper       objectUtils;
   private GraphicsInterface  graphics;
   private BoundsInterface    bounds;
   private CollisionInterface collision;
+  private PhysicsInterface   physics;
 
   public GameObject() {
     this(0, 0, 32, 32, null);
@@ -33,25 +37,30 @@ abstract public class GameObject extends Object2D
   public GameObject(int x, int y, int width, int height, Bounds2D bounds) {
     super(x, y, width, height);
 
+    this.values = new Values();
     this.serviceLocator = ServiceLocator.getInstance();
     this.priority = 1;
 
     setGraphics(new Graphics());
     setBounds(new Bounds());
     setCollision(new Collision());
+    setPhysics(new Physics());
   }
 
   public GameObject(int x, int y, int width, int height) {
     this(x, y, width, height, null);
   }
 
-  public ServiceLocator getServiceLocator() {
-    return serviceLocator;
+  public void setValue(String key, Double value) {
+    values.setValue(key, value);
   }
 
-  public void setPositionTo(double x, double y) {
-    setX(x);
-    setY(y);
+  public Double getValue(String key) {
+    return values.getValue(key);
+  }
+
+  public boolean isStatic() {
+    return !isMovable();
   }
 
   public boolean isMovable() {
@@ -60,10 +69,6 @@ abstract public class GameObject extends Object2D
 
   public void setMovable(boolean isMovable) {
     this.isMovable = isMovable;
-  }
-
-  public boolean isStatic() {
-    return !isMovable();
   }
 
   public boolean isSolid() {
@@ -80,23 +85,6 @@ abstract public class GameObject extends Object2D
 
   public void layerUp() {
     priority <<= 1;
-  }
-
-  public int getPriority() {
-    return priority;
-  }
-
-  public void setPriority(int priority) {
-    this.priority = priority;
-  }
-
-  public GraphicsInterface getGraphics() {
-    return graphics;
-  }
-
-  public void setGraphics(Graphics graphics) {
-    graphics.setGameObject(this);
-    this.graphics = graphics;
   }
 
   public BoundsInterface getBounds() {
@@ -117,8 +105,30 @@ abstract public class GameObject extends Object2D
     this.collision = collision;
   }
 
-  public GameObjectUtils getObjectUtils() {
-    return getServiceLocator().getGameObjectUtils();
+  public PhysicsInterface getPhysics() {
+    return physics;
+  }
+
+  public void setPhysics(Physics physics) {
+    physics.setGameObject(this);
+    this.physics = physics;
+  }
+
+  public GraphicsInterface getGraphics() {
+    return graphics;
+  }
+
+  public void setGraphics(Graphics graphics) {
+    graphics.setGameObject(this);
+    this.graphics = graphics;
+  }
+
+  public ObjectHelper getObjectUtils() {
+    return getServiceLocator().getObjectHelper();
+  }
+
+  public ServiceLocator getServiceLocator() {
+    return serviceLocator;
   }
 
   @Override
@@ -126,10 +136,20 @@ abstract public class GameObject extends Object2D
     return this.getPriority() - object.getPriority();
   }
 
+  public int getPriority() {
+    return priority;
+  }
+
+  public void setPriority(int priority) {
+    this.priority = priority;
+  }
+
   @Override
   public void render(Canvas canvas) {
     getGraphics().getSprite().draw(canvas, getX(), getY());
   }
+
+
 
   @Override
   public void update(float nano) {

@@ -5,16 +5,16 @@ import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.openworld.character.equipment.Equipment;
 import org.nulllab.nullengine.openworld.character.level.Level;
 import org.nulllab.nullengine.openworld.character.state.StandState;
-import org.nulllab.nullengine.openworld.object.MovableGameObject;
+import org.nulllab.nullengine.openworld.object.GameObject;
 import org.nulllab.nullengine.openworld.object.component.bounds.CharacterBounds;
-import org.nulllab.nullengine.openworld.object.geometry.Direction;
+import org.nulllab.nullengine.openworld.object.component.physics.CharacterPhysics;
 import org.nulllab.nullengine.openworld.state.ObjectState;
 import org.nulllab.nullengine.openworld.world.Camera;
 
 import java.util.Set;
 
 @SuppressWarnings("unused")
-public class Character extends MovableGameObject {
+public class Character extends GameObject {
 
   protected ObjectState           state;
   protected Input                 input;
@@ -33,7 +33,12 @@ public class Character extends MovableGameObject {
     this.breed = breed;
 
     this.setPriority(1 << 2);
+    this.setPhysics(new CharacterPhysics());
     this.setBounds(new CharacterBounds());
+
+    this.setMovable(true);
+
+    getPhysics().setVelocity(2.0D);
   }
 
   public double getHealth() {
@@ -90,12 +95,6 @@ public class Character extends MovableGameObject {
 
   public void setCamera(Camera camera) {
     this.camera = camera;
-  }
-
-  @Override
-  public void move(Direction direction) {
-    super.move(direction);
-    getObservable().notify(this);
   }
 
   @Override

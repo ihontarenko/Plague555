@@ -2,7 +2,8 @@ package org.nulllab.nullengine.openworld.character.state;
 
 import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.openworld.character.Character;
-import org.nulllab.nullengine.openworld.object.geometry.Direction;
+import org.nulllab.nullengine.openworld.object.Direction;
+import org.nulllab.nullengine.openworld.object.component.physics.Physics;
 import org.nulllab.nullengine.openworld.state.ObjectState;
 
 import java.util.Map;
@@ -22,11 +23,13 @@ public class MoveState extends ObjectState<Character> {
 
   @Override
   public void update(Character object) {
+    Physics                 physics    = (Physics) object.getPhysics();
     Map<Integer, Direction> map        = object.getObjectUtils().getMovement().getKeyMapDirection();
     Integer                 pressedKey = object.getInput().getPressed();
 
     if (map.containsKey(pressedKey)) {
-      object.move(map.get(pressedKey));
+      physics.move(map.get(pressedKey));
+      object.getObservable().notify(object);
     }
   }
 }

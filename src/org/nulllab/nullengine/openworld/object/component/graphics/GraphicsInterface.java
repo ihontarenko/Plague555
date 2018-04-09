@@ -2,7 +2,7 @@ package org.nulllab.nullengine.openworld.object.component.graphics;
 
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.Sprite;
 import org.nulllab.nullengine.openworld.character.Sprites;
-import org.nulllab.nullengine.openworld.object.geometry.Direction;
+import org.nulllab.nullengine.openworld.object.Direction;
 
 public interface GraphicsInterface {
 
