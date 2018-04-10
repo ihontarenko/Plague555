@@ -140,7 +140,7 @@ public class MenuView extends AbstractView<MenuScene, AbstractView> {
     //    spriteAnimated = spriteManager.getSheetFromPackage(TileSet2SheetPackage.class, "sheet3")
 
     spriteAnimated = new SpriteAnimated(icons, 5);
-    spriteAnimated.setDirection(SpriteAnimated.Direction.PING_PONG);
+    spriteAnimated.setLoopType(SpriteAnimated.LoopType.PING_PONG);
 
     System.out.println(spriteAnimated.countImages());
 //    System.out.println(character.getHealth());

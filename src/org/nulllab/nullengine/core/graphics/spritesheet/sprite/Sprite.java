@@ -37,7 +37,7 @@ abstract public class Sprite implements Drawable<Canvas> {
     return argbImage;
   }
 
-  private void convertToARGB() {
+  public void convertToARGB() {
     BufferedImage[] argbImages = new BufferedImage[images.length];
     int             counter    = 0;
 

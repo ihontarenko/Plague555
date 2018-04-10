@@ -6,37 +6,37 @@ import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheet;
 
 public class SpriteAnimated extends Sprite {
 
-  public enum Direction {
+  public enum LoopType {
     LOOPED, PING_PONG
   }
 
   public static final int DEFAULT_FPS = 30;
 
-  private Direction      direction;
-  private Timer          timer;
-  private int            incrementer;
+  private LoopType loopType;
+  private Timer    timer;
+  private int      incrementer;
 
   public SpriteAnimated(SpriteSheet sheet) {
-    this(sheet, DEFAULT_FPS, DEFAULT_SCALE, DEFAULT_INDEX, sheet.count(), Direction.LOOPED);
+    this(sheet, DEFAULT_FPS, DEFAULT_SCALE, DEFAULT_INDEX, sheet.count(), LoopType.LOOPED);
   }
 
   public SpriteAnimated(SpriteSheet sheet, int fps) {
-    this(sheet, fps, DEFAULT_SCALE, DEFAULT_INDEX, sheet.count(), Direction.LOOPED);
+    this(sheet, fps, DEFAULT_SCALE, DEFAULT_INDEX, sheet.count(), LoopType.LOOPED);
   }
 
   public SpriteAnimated(SpriteSheet sheet, int fps, double scale) {
-    this(sheet, fps, scale, DEFAULT_INDEX, sheet.count(), Direction.LOOPED);
+    this(sheet, fps, scale, DEFAULT_INDEX, sheet.count(), LoopType.LOOPED);
   }
 
   public SpriteAnimated(SpriteSheet sheet, int fps, double scale, int startIndex, int lastIndex) {
-    this(sheet, fps, scale, startIndex, lastIndex, Direction.LOOPED);
+    this(sheet, fps, scale, startIndex, lastIndex, LoopType.LOOPED);
   }
 
-  public SpriteAnimated(SpriteSheet sheet, int fps, double scale, int startIndex, int lastIndex, Direction direction) {
+  public SpriteAnimated(SpriteSheet sheet, int fps, double scale, int startIndex, int lastIndex, LoopType loopType) {
     super(sheet.getBufferedImages(startIndex, lastIndex));
     setScale(scale);
     this.incrementer = 1;
-    this.direction = direction;
+    this.loopType = loopType;
     this.timer = new Timer(1D / fps);
   }
 
@@ -54,7 +54,7 @@ public class SpriteAnimated extends Sprite {
   }
 
   private void updateIncrementer() {
-    switch (direction) {
+    switch (loopType) {
       case PING_PONG:
         if (getActiveIndex() == countImages() - 1) {
           incrementer = -1;
@@ -67,11 +67,11 @@ public class SpriteAnimated extends Sprite {
     }
   }
 
-  public Direction getDirection() {
-    return direction;
+  public LoopType getLoopType() {
+    return loopType;
   }
 
-  public void setDirection(Direction direction) {
-    this.direction = direction;
+  public void setLoopType(LoopType loopType) {
+    this.loopType = loopType;
   }
 }

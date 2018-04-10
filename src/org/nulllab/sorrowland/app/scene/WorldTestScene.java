@@ -3,6 +3,8 @@ package org.nulllab.sorrowland.app.scene;
 import org.nulllab.nullengine.core.common.Probability;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.spritesheet.SpriteManager;
+import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheet;
+import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpriteStaticBatch;
 import org.nulllab.nullengine.core.input.Keyboard;
 import org.nulllab.nullengine.openworld.ServiceLocator;
 import org.nulllab.nullengine.openworld.World;
@@ -22,16 +24,20 @@ import org.nulllab.sorrowland.app.graphics.sprite.TilesASprites;
 import org.nulllab.sorrowland.app.graphics.sprite.TilesBSprites;
 import org.nulllab.sorrowland.app.manager.Manager;
 import org.nulllab.sorrowland.app.scene.view.WorldTestView;
+import org.nulllab.ui.gui.GUIFrame;
 import org.nulllab.ui.process.scene.Scene;
 import org.nulllab.ui.process.view.AbstractView;
 import org.nulllab.ui.service.Context;
 
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 
 public class WorldTestScene extends Scene<AbstractView> {
 
   private Character character;
   private World world;
+
+  private SpriteStaticBatch spriteBatch;
 
   public WorldTestScene(Context context) {
     super(context);
@@ -139,6 +145,16 @@ public class WorldTestScene extends Scene<AbstractView> {
 //    WorldMapLoader reader = new WorldMapLoader("map/World1.map");
 //    reader.toMapData();
 
+    SpriteSheet sheet = spriteManager.getSheetFromPackage("nature1.set1");
+    BufferedImage[] bufferedImages = new BufferedImage[4];
+
+    bufferedImages[0] = sheet.getBufferedImage(22);
+    bufferedImages[1] = sheet.getBufferedImage(23);
+    bufferedImages[2] = sheet.getBufferedImage(30);
+    bufferedImages[3] = sheet.getBufferedImage(31);
+
+    spriteBatch = new SpriteStaticBatch(bufferedImages, 2);
+
     world = new World();
     world.initialize();
 
@@ -146,6 +162,11 @@ public class WorldTestScene extends Scene<AbstractView> {
 
     character.getPhysics().setOuterBounds(world.getWorldMap().getBound());
     character.getObservable().addObserver(world.getCamera().getObserver());
+
+    Camera camera = world.getCamera();
+    GUIFrame frame = getContext().getGuiWindow().getMainFrame();
+
+    frame.setSize(camera.getWidth(), camera.getHeight());
 
     serviceLocator.addService(World.class, world);
 
@@ -168,8 +189,10 @@ public class WorldTestScene extends Scene<AbstractView> {
   @Override
   public void render(Canvas canvas) {
     world.render(canvas);
+    spriteBatch.draw(canvas, 40, 40);
 
-    Camera camera = world.getCamera();
+//    Camera camera = world.getCamera();
+
 
 //    List<GameObject> objects = character.getCollision().getNearestSolidObjects();
 

@@ -63,7 +63,7 @@ abstract public class SpritePackage implements GraphicsPackage {
   }
 
   private Sprite createSprite(SpriteSheet sheet, SpriteAnimatedMapper setup) {
-    return new SpriteAnimated(sheet, setup.getFps(), setup.getScale(), setup.getStart(), setup.getEnd(), setup.getDirection());
+    return new SpriteAnimated(sheet, setup.getFps(), setup.getScale(), setup.getStart(), setup.getEnd(), setup.getLoopType());
   }
 
   private Sprite createSprite(SpriteSheet sheet, SpriteStaticMapper setup) {

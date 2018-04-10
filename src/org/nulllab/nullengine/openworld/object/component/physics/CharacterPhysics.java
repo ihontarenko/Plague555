@@ -31,7 +31,7 @@ public class CharacterPhysics extends Physics {
   public Bounds2D getInnerBounds() {
     Bounds2D bounds  = super.getInnerBounds();
     double   offsetY = bounds.getHeight() / 2;
-    double   offsetX = 4.0D;
+    double   offsetX = 8.0D;
 
     bounds.setY(bounds.getY() + offsetY);
     bounds.setHeight((int) offsetY);
