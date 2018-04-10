@@ -144,7 +144,7 @@ public class WorldTestScene extends Scene<AbstractView> {
 
     world.addGameObject(character);
 
-    character.getBounds().setOuterBounds(world.getWorldMap().getBound());
+    character.getPhysics().setOuterBounds(world.getWorldMap().getBound());
     character.setCamera(world.getCamera());
     character.getObservable().addObserver(world.getCamera().getObserver());
 

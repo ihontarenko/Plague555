@@ -26,7 +26,7 @@ public class World implements Renderable<Canvas>, Updateable, Initializable {
     Camera   camera   = new Camera(0, 0, 800, 640);
 
     worldMap.initialize();
-    camera.getBounds().setOuterBounds(worldMap.getBound());
+    camera.getPhysics().setOuterBounds(worldMap.getBound());
 
     this.spatialHash = new SpatialHash<>(worldMap.getBound(), 4);
 

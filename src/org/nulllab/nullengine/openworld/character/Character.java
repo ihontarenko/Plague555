@@ -6,7 +6,6 @@ import org.nulllab.nullengine.openworld.character.equipment.Equipment;
 import org.nulllab.nullengine.openworld.character.level.Level;
 import org.nulllab.nullengine.openworld.character.state.StandState;
 import org.nulllab.nullengine.openworld.object.GameObject;
-import org.nulllab.nullengine.openworld.object.component.bounds.CharacterBounds;
 import org.nulllab.nullengine.openworld.object.component.physics.CharacterPhysics;
 import org.nulllab.nullengine.openworld.state.ObjectState;
 import org.nulllab.nullengine.openworld.world.Camera;
@@ -34,8 +33,6 @@ public class Character extends GameObject {
 
     this.setPriority(1 << 2);
     this.setPhysics(new CharacterPhysics());
-    this.setBounds(new CharacterBounds());
-
     this.setMovable(true);
 
     getPhysics().setVelocity(2.0D);

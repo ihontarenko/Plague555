@@ -4,7 +4,7 @@ import org.nulllab.nullengine.core.geometry.Bounds2D;
 import org.nulllab.nullengine.core.geometry.intersection.spatialhash.SpatialHash;
 import org.nulllab.nullengine.openworld.ServiceLocator;
 import org.nulllab.nullengine.openworld.object.GameObject;
-import org.nulllab.nullengine.openworld.object.component.bounds.BoundsInterface;
+import org.nulllab.nullengine.openworld.object.component.physics.PhysicsInterface;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,9 +20,8 @@ public class CollisionDetector {
   }
 
   public List<GameObject> getNearestObjectsFor(GameObject object) {
-    BoundsInterface  bounds         = object.getBounds();
-    Bounds2D         spatialBounds  = bounds.getSpatialBounds();
-    List<GameObject> nearestObjects = new ArrayList<>(spatialHash.retrieve(spatialBounds));
+    PhysicsInterface physics = object.getPhysics();
+    List<GameObject> nearestObjects = new ArrayList<>(spatialHash.retrieve(physics.getSpatialBounds()));
 
     Collections.sort(nearestObjects);
 
@@ -34,7 +33,7 @@ public class CollisionDetector {
   }
 
   public boolean isCollidedWith(GameObject targetObject, GameObject solidObject) {
-    return targetObject.getBounds().getInnerBound().intersects(solidObject.getBounds().getInnerBound());
+    return targetObject.getPhysics().getInnerBound().intersects(solidObject.getPhysics().getInnerBound());
   }
 
   public boolean isCollidedWith(GameObject targetObject, List<GameObject> solidObjects) {

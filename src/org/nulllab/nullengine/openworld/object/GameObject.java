@@ -7,10 +7,6 @@ import org.nulllab.nullengine.core.graphics.Renderable;
 import org.nulllab.nullengine.core.loop.Updateable;
 import org.nulllab.nullengine.openworld.ServiceLocator;
 import org.nulllab.nullengine.openworld.character.Values;
-import org.nulllab.nullengine.openworld.object.component.bounds.Bounds;
-import org.nulllab.nullengine.openworld.object.component.bounds.BoundsInterface;
-import org.nulllab.nullengine.openworld.object.component.collision.Collision;
-import org.nulllab.nullengine.openworld.object.component.collision.CollisionInterface;
 import org.nulllab.nullengine.openworld.object.component.graphics.Graphics;
 import org.nulllab.nullengine.openworld.object.component.graphics.GraphicsInterface;
 import org.nulllab.nullengine.openworld.object.component.physics.Physics;
@@ -19,16 +15,14 @@ import org.nulllab.nullengine.openworld.object.component.physics.PhysicsInterfac
 @SuppressWarnings("unused")
 abstract public class GameObject extends Object2D implements Renderable<Canvas>, Updateable, Comparable<GameObject> {
 
-  private boolean            isSolid;
-  private boolean            isMovable;
-  private int                priority;
-  private Values             values;
-  private ServiceLocator     serviceLocator;
-  private ObjectHelper       objectUtils;
-  private GraphicsInterface  graphics;
-  private BoundsInterface    bounds;
-  private CollisionInterface collision;
-  private PhysicsInterface   physics;
+  private boolean           isSolid;
+  private boolean           isMovable;
+  private int               priority;
+  private Values            values;
+  private ServiceLocator    serviceLocator;
+  private ObjectHelper      objectHelper;
+  private GraphicsInterface graphics;
+  private PhysicsInterface  physics;
 
   public GameObject() {
     this(0, 0, 32, 32, null);
@@ -42,8 +36,6 @@ abstract public class GameObject extends Object2D implements Renderable<Canvas>,
     this.priority = 1;
 
     setGraphics(new Graphics());
-    setBounds(new Bounds());
-    setCollision(new Collision());
     setPhysics(new Physics());
   }
 
@@ -87,24 +79,6 @@ abstract public class GameObject extends Object2D implements Renderable<Canvas>,
     priority <<= 1;
   }
 
-  public BoundsInterface getBounds() {
-    return bounds;
-  }
-
-  public void setBounds(Bounds bounds) {
-    bounds.setGameObject(this);
-    this.bounds = bounds;
-  }
-
-  public CollisionInterface getCollision() {
-    return collision;
-  }
-
-  public void setCollision(Collision collision) {
-    collision.setGameObject(this);
-    this.collision = collision;
-  }
-
   public PhysicsInterface getPhysics() {
     return physics;
   }
@@ -123,7 +97,7 @@ abstract public class GameObject extends Object2D implements Renderable<Canvas>,
     this.graphics = graphics;
   }
 
-  public ObjectHelper getObjectUtils() {
+  public ObjectHelper getObjectHelper() {
     return getServiceLocator().getObjectHelper();
   }
 
@@ -148,8 +122,6 @@ abstract public class GameObject extends Object2D implements Renderable<Canvas>,
   public void render(Canvas canvas) {
     getGraphics().getSprite().draw(canvas, getX(), getY());
   }
-
-
 
   @Override
   public void update(float nano) {

@@ -24,7 +24,7 @@ public class MoveState extends ObjectState<Character> {
   @Override
   public void update(Character object) {
     Physics                 physics    = (Physics) object.getPhysics();
-    Map<Integer, Direction> map        = object.getObjectUtils().getMovement().getKeyMapDirection();
+    Map<Integer, Direction> map        = object.getObjectHelper().getMovement().getKeyMapDirection();
     Integer                 pressedKey = object.getInput().getPressed();
 
     if (map.containsKey(pressedKey)) {
