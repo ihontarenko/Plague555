@@ -3,7 +3,7 @@ package org.nulllab.nullengine.openworld.map;
 import org.nulllab.nullengine.core.common.Initializable;
 import org.nulllab.nullengine.core.geometry.Bounds2D;
 import org.nulllab.nullengine.openworld.World;
-import org.nulllab.nullengine.openworld.object.component.graphics.GraphicsInterface;
+import org.nulllab.nullengine.openworld.object.component.graphics.Graphics;
 
 public class WorldMap implements Initializable {
 
@@ -35,14 +35,14 @@ public class WorldMap implements Initializable {
         final int x = data.getX(positionX);
         final int y = data.getY(positionY);
 
-        Terrain           defaultTerrain         = createTerrainObject(x, y, size, world);
-        GraphicsInterface defaultTerrainGraphics = defaultTerrain.getGraphics();
+        Terrain  defaultTerrain         = createTerrainObject(x, y, size, world);
+        Graphics defaultTerrainGraphics = defaultTerrain.getGraphics();
         defaultTerrainGraphics.setSpriteFromPackage(defaultSpriteID);
 
         if (data.hasTiles(positionX, positionY)) {
           data.getTiles(positionX, positionY).forEach(tile -> {
-            Terrain           terrain  = createTerrainObject(x, y, size, world);
-            GraphicsInterface graphics = terrain.getGraphics();
+            Terrain  terrain  = createTerrainObject(x, y, size, world);
+            Graphics graphics = terrain.getGraphics();
             graphics.setSpriteFromPackage(tile.getSpriteID());
             terrain.setSolid(tile.isSolid());
             terrain.setPriority(tile.getLayer());

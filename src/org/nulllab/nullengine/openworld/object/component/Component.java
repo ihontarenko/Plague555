@@ -1,37 +1,23 @@
 package org.nulllab.nullengine.openworld.object.component;
 
-import org.nulllab.nullengine.core.common.Initializable;
 import org.nulllab.nullengine.openworld.ServiceLocator;
 import org.nulllab.nullengine.openworld.object.GameObject;
 
-abstract public class Component implements Initializable {
+abstract public class Component implements ComponentInterface {
 
   protected GameObject object;
 
+  @Override
   public GameObject getGameObject() {
     return object;
   }
 
+  @Override
   public void setGameObject(GameObject object) {
     this.object = object;
   }
 
-  public ServiceLocator getServiceLocator() {
+  protected ServiceLocator getServiceLocator() {
     return ServiceLocator.getInstance();
-  }
-
-  @Override
-  public boolean isInitialized() {
-    return object != null;
-  }
-
-  @Override
-  public void initialize() {
-    // do nothing
-  }
-
-  @Override
-  public void reinitialize() {
-    // do nothing
   }
 }

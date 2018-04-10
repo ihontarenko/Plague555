@@ -12,7 +12,7 @@ import org.nulllab.nullengine.openworld.character.Skills;
 import org.nulllab.nullengine.openworld.character.level.Level;
 import org.nulllab.nullengine.openworld.object.ObjectHelper;
 import org.nulllab.nullengine.openworld.object.collision.CollisionDetector;
-import org.nulllab.nullengine.openworld.object.component.graphics.GraphicsInterface;
+import org.nulllab.nullengine.openworld.object.component.graphics.Graphics;
 import org.nulllab.nullengine.openworld.world.Camera;
 import org.nulllab.sorrowland.app.graphics.sheet.*;
 import org.nulllab.sorrowland.app.graphics.sheet.characters.*;
@@ -122,7 +122,7 @@ public class WorldTestScene extends Scene<AbstractView> {
     character = new Character(trollDarkElf, serviceLocator.getInputKeyboard());
     character.layerUp();
 
-    GraphicsInterface graphics = character.getGraphics();
+    Graphics graphics = character.getGraphics();
     graphics.setObjectSprites(new PlayerSprites());
     graphics.setSprite(graphics.getObjectSprites().getStandWest());
 

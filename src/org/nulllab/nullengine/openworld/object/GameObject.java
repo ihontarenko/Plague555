@@ -8,21 +8,19 @@ import org.nulllab.nullengine.core.loop.Updateable;
 import org.nulllab.nullengine.openworld.ServiceLocator;
 import org.nulllab.nullengine.openworld.character.Values;
 import org.nulllab.nullengine.openworld.object.component.graphics.Graphics;
-import org.nulllab.nullengine.openworld.object.component.graphics.GraphicsInterface;
 import org.nulllab.nullengine.openworld.object.component.physics.Physics;
-import org.nulllab.nullengine.openworld.object.component.physics.PhysicsInterface;
 
 @SuppressWarnings("unused")
 abstract public class GameObject extends Object2D implements Renderable<Canvas>, Updateable, Comparable<GameObject> {
 
-  private boolean           isSolid;
-  private boolean           isMovable;
-  private int               priority;
-  private Values            values;
-  private ServiceLocator    serviceLocator;
-  private ObjectHelper      objectHelper;
-  private GraphicsInterface graphics;
-  private PhysicsInterface  physics;
+  private boolean        isSolid;
+  private boolean        isMovable;
+  private int            priority;
+  private Values         values;
+  private ServiceLocator serviceLocator;
+  private ObjectHelper   objectHelper;
+  private Graphics       graphics;
+  private Physics        physics;
 
   public GameObject() {
     this(0, 0, 32, 32, null);
@@ -79,7 +77,7 @@ abstract public class GameObject extends Object2D implements Renderable<Canvas>,
     priority <<= 1;
   }
 
-  public PhysicsInterface getPhysics() {
+  public Physics getPhysics() {
     return physics;
   }
 
@@ -88,7 +86,7 @@ abstract public class GameObject extends Object2D implements Renderable<Canvas>,
     this.physics = physics;
   }
 
-  public GraphicsInterface getGraphics() {
+  public Graphics getGraphics() {
     return graphics;
   }
 

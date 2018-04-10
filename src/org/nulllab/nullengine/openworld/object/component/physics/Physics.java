@@ -8,7 +8,7 @@ import org.nulllab.nullengine.openworld.object.component.Component;
 
 import java.util.List;
 
-public class Physics extends Component implements PhysicsInterface {
+public class Physics extends Component {
 
   public static final String VELOCITY = "VELOCITY";
 
@@ -36,72 +36,60 @@ public class Physics extends Component implements PhysicsInterface {
     return getGameObject().getValue(VELOCITY);
   }
 
+  public void setVelocity(double velocity) {
+    getGameObject().setValue(VELOCITY, velocity);
+  }
+
   public void setPositionTo(double x, double y) {
     GameObject object = getGameObject();
     object.setX(x);
     object.setY(y);
   }
 
-  public void setVelocity(double velocity) {
-    getGameObject().setValue(VELOCITY, velocity);
-  }
-
-  @Override
   public Bounds2D getOuterBounds() {
     return outerBounds;
   }
 
-  @Override
   public Bounds2D getInnerBound() {
     return new Bounds2D(object.getX(), object.getY(), object.getWidth(), object.getHeight());
   }
 
-  @Override
   public Bounds2D getSpatialBounds() {
     return new Bounds2D(object.getX(), object.getY(), object.getWidth(), object.getHeight());
   }
 
-  @Override
   public void setOuterBounds(Bounds2D bounds) {
     this.outerBounds = bounds;
   }
 
-  @Override
   public void setGameObject(GameObject object) {
     super.setGameObject(object);
   }
 
-  @Override
   public CollisionDetector getCollisionDetector() {
     return getServiceLocator().getCollisionDetector();
   }
 
-  @Override
   public List<GameObject> getNearestObjects() {
     return getCollisionDetector().getNearestObjectsFor(getGameObject());
   }
 
-  @Override
   public List<GameObject> getNearestSolidObjects() {
     return getCollisionDetector().getNearestSolidObjectsFor(getGameObject());
   }
 
-  @Override
   public boolean isCollidedWithNearest() {
     return getCollisionDetector().isCollidedWithNearestSolid(getGameObject());
   }
 
-  @Override
   public boolean isOutOfBounds() {
     return getCollisionDetector().isOutOfBounds(getInnerBound(), getOuterBounds());
   }
 
-  @Override
   public boolean isOutOfBoundsX() {
     return getCollisionDetector().isOutOfBoundsX(getInnerBound(), getOuterBounds());
   }
 
-  @Override
   public boolean isOutOfBoundsY() {
     return getCollisionDetector().isOutOfBoundsY(getInnerBound(), getOuterBounds());
   }

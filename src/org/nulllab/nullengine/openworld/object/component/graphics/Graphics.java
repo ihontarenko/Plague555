@@ -11,44 +11,37 @@ import org.nulllab.nullengine.openworld.object.Direction;
 import java.util.List;
 import java.util.Map;
 
-public class Graphics extends Component implements GraphicsInterface {
+public class Graphics extends Component {
 
   private Map<Direction, String> spritesMap;
   private Sprite                 sprite;
   private Sprites                objectSprites;
 
-  @Override
   public void setGameObject(GameObject object) {
     super.setGameObject(object);
     spritesMap = getServiceLocator().getObjectHelper().getMovement().getSpritesMapDirection();
   }
 
-  @Override
   public void setDirectionSprite(Direction direction) {
     setSprite(objectSprites.getSprite(spritesMap.get(direction)));
   }
 
-  @Override
   public Sprites getObjectSprites() {
     return objectSprites;
   }
 
-  @Override
   public void setObjectSprites(Sprites objectSprites) {
     this.objectSprites = objectSprites;
   }
 
-  @Override
   public Sprite getSprite() {
     return sprite;
   }
 
-  @Override
   public void setSprite(Sprite sprite) {
     this.sprite = sprite;
   }
 
-  @Override
   public void setSpriteFromPackage(String id) {
     SpriteManager spriteManager = getServiceLocator().getSpriteManager();
     List<String>  idParts       = SpriteManager.getIDParts(id);
