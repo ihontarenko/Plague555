@@ -1,4 +1,4 @@
-package org.nulllab.nullengine.core.graphics.spritesheet.sheet;
+package org.nulllab.nullengine.core.graphics.spritesheet.sheet.pack;
 
 public class SpriteSheetMapper {
 

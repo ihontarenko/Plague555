@@ -1,9 +1,10 @@
 package org.nulllab.sorrowland.app.graphics.sprite;
 
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.Sprite;
-import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpritePackage;
-import org.nulllab.nullengine.core.graphics.spritesheet.sprite.mapping.SpriteMapper;
-import org.nulllab.nullengine.core.graphics.spritesheet.sprite.mapping.SpriteStaticMapper;
+import org.nulllab.nullengine.core.graphics.spritesheet.sprite.pack.SpritePackage;
+import org.nulllab.nullengine.core.graphics.spritesheet.sprite.pack.mapping.SpriteBatchMapper;
+import org.nulllab.nullengine.core.graphics.spritesheet.sprite.pack.mapping.SpriteMapper;
+import org.nulllab.nullengine.core.graphics.spritesheet.sprite.pack.mapping.SpriteStaticMapper;
 
 public class Nature1Sprites extends SpritePackage {
 
@@ -15,7 +16,7 @@ public class Nature1Sprites extends SpritePackage {
   public SpriteMapper[] getSpriteMappers() {
     double scale = 1.07D;
 
-    return new SpriteMapper[] {
+    return new SpriteMapper[]{
         new SpriteStaticMapper("bush1", scale, 1),
         new SpriteStaticMapper("bush2", scale, 2),
         new SpriteStaticMapper("bush3", scale, 3),
@@ -37,6 +38,8 @@ public class Nature1Sprites extends SpritePackage {
 
         new SpriteStaticMapper("dt1t", scale, 18),
         new SpriteStaticMapper("dt1b", scale, 26),
+
+        new SpriteBatchMapper("bt1", 1, new int[]{22, 23, 30, 31}, 2)
     };
   }
 

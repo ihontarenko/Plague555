@@ -8,7 +8,7 @@ import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.StringDrawer;
 import org.nulllab.nullengine.core.graphics.spritesheet.SpriteManager;
 import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheet;
-import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheetPackage;
+import org.nulllab.nullengine.core.graphics.spritesheet.sheet.pack.SpriteSheetPackage;
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.Sprite;
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpriteAnimated;
 import org.nulllab.nullengine.core.input.Input;

@@ -1,6 +1,4 @@
-package org.nulllab.nullengine.core.graphics.spritesheet.sprite.mapping;
-
-import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpriteStatic;
+package org.nulllab.nullengine.core.graphics.spritesheet.sprite.pack.mapping;
 
 public class SpriteStaticMapper extends SpriteMapper {
 
@@ -11,7 +9,7 @@ public class SpriteStaticMapper extends SpriteMapper {
   }
 
   public SpriteStaticMapper(String name, double scale, int position, int color) {
-    super(SpriteStatic.class, name, scale, color);
+    super(name, scale, color);
 
     this.position = position;
   }

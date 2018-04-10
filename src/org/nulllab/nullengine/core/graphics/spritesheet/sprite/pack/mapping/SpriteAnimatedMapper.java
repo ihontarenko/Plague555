@@ -1,4 +1,4 @@
-package org.nulllab.nullengine.core.graphics.spritesheet.sprite.mapping;
+package org.nulllab.nullengine.core.graphics.spritesheet.sprite.pack.mapping;
 
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpriteAnimated;
 
@@ -19,7 +19,7 @@ public class SpriteAnimatedMapper extends SpriteMapper {
   }
 
   public SpriteAnimatedMapper(String name, double scale, int start, int end, int fps, SpriteAnimated.LoopType loopType, int color) {
-    super(SpriteAnimated.class, name, scale, color);
+    super(name, scale, color);
 
     this.start = start;
     this.end = end;

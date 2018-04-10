@@ -1,16 +1,12 @@
-package org.nulllab.nullengine.core.graphics.spritesheet.sprite.mapping;
-
-import org.nulllab.nullengine.core.graphics.spritesheet.sprite.Sprite;
+package org.nulllab.nullengine.core.graphics.spritesheet.sprite.pack.mapping;
 
 abstract public class SpriteMapper {
 
   private String                  name;
-  private Class<? extends Sprite> spriteClass;
   private double                  scale;
   private int                     colorRemove;
 
-  public SpriteMapper(Class<? extends Sprite> spriteClass, String name, double scale, int color) {
-    this.spriteClass = spriteClass;
+  public SpriteMapper(String name, double scale, int color) {
     this.name = name;
     this.scale = scale;
     this.colorRemove = color;
@@ -18,10 +14,6 @@ abstract public class SpriteMapper {
 
   public String getName() {
     return name;
-  }
-
-  public Class<? extends Sprite> getSpriteClass() {
-    return spriteClass;
   }
 
   public double getScale() {

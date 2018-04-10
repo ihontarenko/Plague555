@@ -1,8 +1,7 @@
 package org.nulllab.nullengine.openworld.character;
 
-import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheetPackage;
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.Sprite;
-import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpritePackage;
+import org.nulllab.nullengine.core.graphics.spritesheet.sprite.pack.SpritePackage;
 
 abstract public class Sprites extends SpritePackage {
 

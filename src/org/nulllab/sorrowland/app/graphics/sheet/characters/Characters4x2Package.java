@@ -1,7 +1,7 @@
 package org.nulllab.sorrowland.app.graphics.sheet.characters;
 
-import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheetMapper;
-import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheetPackage;
+import org.nulllab.nullengine.core.graphics.spritesheet.sheet.pack.SpriteSheetMapper;
+import org.nulllab.nullengine.core.graphics.spritesheet.sheet.pack.SpriteSheetPackage;
 
 abstract public class Characters4x2Package extends SpriteSheetPackage {
 

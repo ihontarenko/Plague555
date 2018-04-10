@@ -3,13 +3,11 @@ package org.nulllab.nullengine.core.graphics.spritesheet;
 import org.nulllab.nullengine.core.container.ObjectManager;
 import org.nulllab.nullengine.core.graphics.GraphicsPackage;
 import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheet;
-import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheetPackage;
+import org.nulllab.nullengine.core.graphics.spritesheet.sheet.pack.SpriteSheetPackage;
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.Sprite;
-import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpritePackage;
+import org.nulllab.nullengine.core.graphics.spritesheet.sprite.pack.SpritePackage;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @SuppressWarnings("unused")

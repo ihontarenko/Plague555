@@ -4,7 +4,7 @@ import org.nulllab.nullengine.core.common.Probability;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.spritesheet.SpriteManager;
 import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheet;
-import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpriteStaticBatch;
+import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpriteBatch;
 import org.nulllab.nullengine.core.input.Keyboard;
 import org.nulllab.nullengine.openworld.ServiceLocator;
 import org.nulllab.nullengine.openworld.World;
@@ -37,7 +37,7 @@ public class WorldTestScene extends Scene<AbstractView> {
   private Character character;
   private World world;
 
-  private SpriteStaticBatch spriteBatch;
+  private SpriteBatch spriteBatch;
 
   public WorldTestScene(Context context) {
     super(context);
@@ -145,15 +145,6 @@ public class WorldTestScene extends Scene<AbstractView> {
 //    WorldMapLoader reader = new WorldMapLoader("map/World1.map");
 //    reader.toMapData();
 
-    SpriteSheet sheet = spriteManager.getSheetFromPackage("nature1.set1");
-    BufferedImage[] bufferedImages = new BufferedImage[4];
-
-    bufferedImages[0] = sheet.getBufferedImage(22);
-    bufferedImages[1] = sheet.getBufferedImage(23);
-    bufferedImages[2] = sheet.getBufferedImage(30);
-    bufferedImages[3] = sheet.getBufferedImage(31);
-
-    spriteBatch = new SpriteStaticBatch(bufferedImages, 2);
 
     world = new World();
     world.initialize();
@@ -189,7 +180,6 @@ public class WorldTestScene extends Scene<AbstractView> {
   @Override
   public void render(Canvas canvas) {
     world.render(canvas);
-    spriteBatch.draw(canvas, 40, 40);
 
 //    Camera camera = world.getCamera();
 

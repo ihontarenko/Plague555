@@ -1,7 +1,8 @@
-package org.nulllab.nullengine.core.graphics.spritesheet.sheet;
+package org.nulllab.nullengine.core.graphics.spritesheet.sheet.pack;
 
 import org.nulllab.nullengine.core.common.resource.ImageLoader;
 import org.nulllab.nullengine.core.graphics.GraphicsPackage;
+import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheet;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

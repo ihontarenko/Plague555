@@ -14,27 +14,24 @@ public class CharacterPhysics extends Physics {
   @Override
   public void move(Direction direction) {
     Graphics   graphics  = object.getGraphics();
-
     double     oldX      = object.getX();
     double     oldY      = object.getY();
 
     super.move(direction);
-
-    if (isCollidedWithNearest() || isOutOfBounds()) {
-      setPositionTo(oldX, oldY);
-    }
-
     graphics.setDirectionSprite(direction);
+
+    if (isCollidedWithNearest() || isOutOfBounds())
+      setPositionTo(oldX, oldY);
   }
 
   @Override
   public Bounds2D getInnerBounds() {
     Bounds2D bounds  = super.getInnerBounds();
-    double   offsetY = bounds.getHeight() / 2;
+    double   offsetY = 32.0D;
     double   offsetX = 8.0D;
 
     bounds.setY(bounds.getY() + offsetY);
-    bounds.setHeight((int) offsetY);
+    bounds.setHeight((int) (bounds.getHeight() - offsetY));
     bounds.setX(bounds.getX() + offsetX);
     bounds.setWidth((int) (bounds.getWidth() - (offsetX * 2)));
 

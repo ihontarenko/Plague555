@@ -2,7 +2,7 @@ package org.nulllab.nullengine.openworld.object.component.graphics;
 
 import org.nulllab.nullengine.core.graphics.spritesheet.SpriteManager;
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.Sprite;
-import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpritePackage;
+import org.nulllab.nullengine.core.graphics.spritesheet.sprite.pack.SpritePackage;
 import org.nulllab.nullengine.openworld.character.Sprites;
 import org.nulllab.nullengine.openworld.object.GameObject;
 import org.nulllab.nullengine.openworld.object.component.Component;

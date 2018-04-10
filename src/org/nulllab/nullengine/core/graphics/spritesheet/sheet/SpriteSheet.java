@@ -62,13 +62,24 @@ public class SpriteSheet {
 
   public BufferedImage[] getBufferedImages(int start, int end) {
     int             length         = end - start + 1;
-    BufferedImage[] bufferedImages = new BufferedImage[length];
+    BufferedImage[] images = new BufferedImage[length];
 
     for (int i = 0; i < length; i++) {
-      bufferedImages[i] = getBufferedImage(i + start);
+      images[i] = getBufferedImage(i + start);
     }
 
-    return bufferedImages;
+    return images;
+  }
+
+  public BufferedImage[] getBufferedImages(int[] positions) {
+    int             length      = positions.length;
+    BufferedImage[] images      = new BufferedImage[length];
+
+    for (int i = 0; i < length; i++) {
+      images[i] = getBufferedImage(positions[i]);
+    }
+
+    return images;
   }
 
   public SpriteStatic getSprite(int index) {
