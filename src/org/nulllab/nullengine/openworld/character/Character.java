@@ -32,7 +32,7 @@ public class Character extends GameObject {
     this.breed = breed;
 
     this.setPriority(1 << 2);
-    this.setPhysics(new CharacterPhysics());
+    this.setPhysics(new CharacterPhysics(this));
     this.setMovable(true);
 
     getPhysics().setVelocity(2.0D);

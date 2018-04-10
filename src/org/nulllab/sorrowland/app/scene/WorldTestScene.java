@@ -145,7 +145,6 @@ public class WorldTestScene extends Scene<AbstractView> {
     world.addGameObject(character);
 
     character.getPhysics().setOuterBounds(world.getWorldMap().getBound());
-    character.setCamera(world.getCamera());
     character.getObservable().addObserver(world.getCamera().getObserver());
 
     serviceLocator.addService(World.class, world);
@@ -184,7 +183,7 @@ public class WorldTestScene extends Scene<AbstractView> {
 //    });
 
 //    Bounds2D spatialBounds = character.getBounds().getSpatialBounds();
-//    Bounds2D innerBounds   = character.getBounds().getInnerBound();
+//    Bounds2D innerBounds   = character.getBounds().getInnerBounds();
 
 //    canvas.setColor(0x5500ff00);
 //    canvas.drawRectangle(spatialBounds.getX() - camera.getX(), spatialBounds.getY()  - camera.getY(), spatialBounds.getWidth(), spatialBounds.getHeight());

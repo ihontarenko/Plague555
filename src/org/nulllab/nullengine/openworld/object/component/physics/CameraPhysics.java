@@ -4,6 +4,10 @@ import org.nulllab.nullengine.openworld.object.GameObject;
 
 public class CameraPhysics extends Physics {
 
+  public CameraPhysics(GameObject object) {
+    super(object);
+  }
+
   @Override
   public void toCenter(double x, double y) {
     GameObject object    = getGameObject();

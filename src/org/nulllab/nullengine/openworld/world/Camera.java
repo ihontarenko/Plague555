@@ -13,8 +13,9 @@ public class Camera extends GameObject {
   public Camera(int x, int y, int width, int height) {
     super(x, y, width, height);
 
-    setObserver(new CameraObserver());
-    setPhysics(new CameraPhysics());
+    this.observer = new CameraObserver();
+
+    setPhysics(new CameraPhysics(this));
   }
 
   public Observer getObserver() {

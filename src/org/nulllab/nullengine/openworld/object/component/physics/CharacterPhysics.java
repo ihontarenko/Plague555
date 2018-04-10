@@ -2,13 +2,18 @@ package org.nulllab.nullengine.openworld.object.component.physics;
 
 import org.nulllab.nullengine.core.geometry.Bounds2D;
 import org.nulllab.nullengine.openworld.object.Direction;
+import org.nulllab.nullengine.openworld.object.GameObject;
 import org.nulllab.nullengine.openworld.object.component.graphics.Graphics;
 
 public class CharacterPhysics extends Physics {
 
+  public CharacterPhysics(GameObject object) {
+    super(object);
+  }
+
   @Override
   public void move(Direction direction) {
-    Graphics   graphics  = (Graphics) object.getGraphics();
+    Graphics   graphics  = object.getGraphics();
 
     double     oldX      = object.getX();
     double     oldY      = object.getY();
@@ -23,8 +28,8 @@ public class CharacterPhysics extends Physics {
   }
 
   @Override
-  public Bounds2D getInnerBound() {
-    Bounds2D bounds  = super.getInnerBound();
+  public Bounds2D getInnerBounds() {
+    Bounds2D bounds  = super.getInnerBounds();
     double   offsetY = bounds.getHeight() / 2;
     double   offsetX = 4.0D;
 

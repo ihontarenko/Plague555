@@ -17,9 +17,13 @@ public class Graphics extends Component {
   private Sprite                 sprite;
   private Sprites                objectSprites;
 
+  public Graphics(GameObject object) {
+    super(object);
+    this.spritesMap = getServiceLocator().getObjectHelper().getDirectionMaps().getSpritesMapDirection();
+  }
+
   public void setGameObject(GameObject object) {
     super.setGameObject(object);
-    spritesMap = getServiceLocator().getObjectHelper().getMovement().getSpritesMapDirection();
   }
 
   public void setDirectionSprite(Direction direction) {

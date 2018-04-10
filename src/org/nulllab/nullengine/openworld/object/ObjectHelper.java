@@ -10,28 +10,28 @@ import java.util.Map;
 
 public class ObjectHelper {
 
-  private Movement movement;
+  private Direction direction;
 
   public ObjectHelper() {
-    this.movement = new Movement();
-    this.movement.initialize();
+    this.direction = new Direction();
+    this.direction.initialize();
   }
 
-  public Movement getMovement() {
-    return movement;
+  public Direction getDirectionMaps() {
+    return direction;
   }
 
-  public class Movement implements Initializable {
+  public class Direction implements Initializable {
 
-    private Map<Direction, String>  spritesMap;
-    private Map<Integer, Direction> keyMap;
-    private boolean                 initialized;
+    private Map<org.nulllab.nullengine.openworld.object.Direction, String>  spritesMap;
+    private Map<Integer, org.nulllab.nullengine.openworld.object.Direction> keyMap;
+    private boolean                                                         initialized;
 
-    public Map<Direction, String> getSpritesMapDirection() {
+    public Map<org.nulllab.nullengine.openworld.object.Direction, String> getSpritesMapDirection() {
       return spritesMap;
     }
 
-    public Map<Integer, Direction> getKeyMapDirection() {
+    public Map<Integer, org.nulllab.nullengine.openworld.object.Direction> getKeyMapDirection() {
       return keyMap;
     }
 
@@ -44,17 +44,17 @@ public class ObjectHelper {
     public void initialize() {
       if (!isInitialized()) {
         keyMap = new HashMap<>();
-        spritesMap = new EnumMap<>(Direction.class);
+        spritesMap = new EnumMap<>(org.nulllab.nullengine.openworld.object.Direction.class);
 
-        spritesMap.put(Direction.LEFT, Sprites.KEY_MOVE_WEST);
-        spritesMap.put(Direction.RIGHT, Sprites.KEY_MOVE_EAST);
-        spritesMap.put(Direction.UP, Sprites.KEY_MOVE_NORTH);
-        spritesMap.put(Direction.DOWN, Sprites.KEY_MOVE_SOUTH);
+        spritesMap.put(org.nulllab.nullengine.openworld.object.Direction.LEFT, Sprites.KEY_MOVE_WEST);
+        spritesMap.put(org.nulllab.nullengine.openworld.object.Direction.RIGHT, Sprites.KEY_MOVE_EAST);
+        spritesMap.put(org.nulllab.nullengine.openworld.object.Direction.UP, Sprites.KEY_MOVE_NORTH);
+        spritesMap.put(org.nulllab.nullengine.openworld.object.Direction.DOWN, Sprites.KEY_MOVE_SOUTH);
 
-        keyMap.put(Input.LEFT, Direction.LEFT);
-        keyMap.put(Input.RIGHT, Direction.RIGHT);
-        keyMap.put(Input.UP, Direction.UP);
-        keyMap.put(Input.DOWN, Direction.DOWN);
+        keyMap.put(Input.LEFT, org.nulllab.nullengine.openworld.object.Direction.LEFT);
+        keyMap.put(Input.RIGHT, org.nulllab.nullengine.openworld.object.Direction.RIGHT);
+        keyMap.put(Input.UP, org.nulllab.nullengine.openworld.object.Direction.UP);
+        keyMap.put(Input.DOWN, org.nulllab.nullengine.openworld.object.Direction.DOWN);
 
         initialized = true;
       }

@@ -7,6 +7,10 @@ abstract public class Component implements ComponentInterface {
 
   protected GameObject object;
 
+  public Component(GameObject object) {
+    this.object = object;
+  }
+
   @Override
   public GameObject getGameObject() {
     return object;

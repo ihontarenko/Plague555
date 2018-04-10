@@ -14,6 +14,10 @@ public class Physics extends Component {
 
   private Bounds2D outerBounds;
 
+  public Physics(GameObject object) {
+    super(object);
+  }
+
   public void move(Direction direction) {
     double     newX      = object.getX() + (direction.getFactorX() * getVelocity());
     double     newY      = object.getY() + (direction.getFactorY() * getVelocity());
@@ -50,7 +54,7 @@ public class Physics extends Component {
     return outerBounds;
   }
 
-  public Bounds2D getInnerBound() {
+  public Bounds2D getInnerBounds() {
     return new Bounds2D(object.getX(), object.getY(), object.getWidth(), object.getHeight());
   }
 
@@ -83,15 +87,15 @@ public class Physics extends Component {
   }
 
   public boolean isOutOfBounds() {
-    return getCollisionDetector().isOutOfBounds(getInnerBound(), getOuterBounds());
+    return getCollisionDetector().isOutOfBounds(getInnerBounds(), getOuterBounds());
   }
 
   public boolean isOutOfBoundsX() {
-    return getCollisionDetector().isOutOfBoundsX(getInnerBound(), getOuterBounds());
+    return getCollisionDetector().isOutOfBoundsX(getInnerBounds(), getOuterBounds());
   }
 
   public boolean isOutOfBoundsY() {
-    return getCollisionDetector().isOutOfBoundsY(getInnerBound(), getOuterBounds());
+    return getCollisionDetector().isOutOfBoundsY(getInnerBounds(), getOuterBounds());
   }
 
 }

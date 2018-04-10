@@ -33,7 +33,7 @@ public class CollisionDetector {
   }
 
   public boolean isCollidedWith(GameObject targetObject, GameObject solidObject) {
-    return targetObject.getPhysics().getInnerBound().intersects(solidObject.getPhysics().getInnerBound());
+    return targetObject.getPhysics().getInnerBounds().intersects(solidObject.getPhysics().getInnerBounds());
   }
 
   public boolean isCollidedWith(GameObject targetObject, List<GameObject> solidObjects) {

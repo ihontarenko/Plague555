@@ -33,8 +33,8 @@ abstract public class GameObject extends Object2D implements Renderable<Canvas>,
     this.serviceLocator = ServiceLocator.getInstance();
     this.priority = 1;
 
-    setGraphics(new Graphics());
-    setPhysics(new Physics());
+    setGraphics(new Graphics(this));
+    setPhysics(new Physics(this));
   }
 
   public GameObject(int x, int y, int width, int height) {
@@ -82,7 +82,6 @@ abstract public class GameObject extends Object2D implements Renderable<Canvas>,
   }
 
   public void setPhysics(Physics physics) {
-    physics.setGameObject(this);
     this.physics = physics;
   }
 
@@ -91,7 +90,6 @@ abstract public class GameObject extends Object2D implements Renderable<Canvas>,
   }
 
   public void setGraphics(Graphics graphics) {
-    graphics.setGameObject(this);
     this.graphics = graphics;
   }
 
