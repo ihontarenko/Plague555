@@ -12,7 +12,6 @@ import java.util.Map;
 
 public class MoveState extends ObjectState<Character> {
 
-  private Integer                 pressedKey;
   private Map<Integer, Direction> keyMap;
 
   @Override
@@ -29,7 +28,7 @@ public class MoveState extends ObjectState<Character> {
   @Override
   public void update(Character object) {
     Observable<Character> observable = object.getObservable();
-    Direction             direction  = getCurrentDirection();
+    Direction             direction  = getCurrentDirection(object);
     Physics               physics    = object.getPhysics();
     Graphics              graphics   = object.getGraphics();
 
@@ -41,7 +40,6 @@ public class MoveState extends ObjectState<Character> {
 
   @Override
   public void entryAction(Character object) {
-    pressedKey = object.getInput().getPressed();
     keyMap = object.getObjectHelper().getDirectionMaps().getKeyMapDirection();
   }
 
@@ -50,8 +48,9 @@ public class MoveState extends ObjectState<Character> {
 
   }
 
-  private Direction getCurrentDirection() {
-    Direction direction = null;
+  private Direction getCurrentDirection(Character object) {
+    Direction direction  = null;
+    Integer   pressedKey = object.getInput().getPressed();
 
     if (keyMap.containsKey(pressedKey)) {
       direction = keyMap.get(pressedKey);
