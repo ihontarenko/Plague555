@@ -116,7 +116,11 @@ abstract public class GameObject extends Object2D implements Renderable<Canvas>,
 
   @Override
   public void render(Canvas canvas) {
-    getGraphics().getSprite().draw(canvas, getX(), getY());
+    render(canvas, getX(), getY());
+  }
+
+  public void render(Canvas canvas, double x, double y) {
+    getGraphics().getSprite().draw(canvas, x, y);
   }
 
   @Override

@@ -13,12 +13,10 @@ public class CharacterPhysics extends Physics {
 
   @Override
   public void move(Direction direction) {
-    Graphics   graphics  = object.getGraphics();
     double     oldX      = object.getX();
     double     oldY      = object.getY();
 
     super.move(direction);
-    graphics.setDirectionSprite(direction);
 
     if (isCollidedWithNearest() || isOutOfBounds())
       setPositionTo(oldX, oldY);

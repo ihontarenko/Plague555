@@ -4,9 +4,12 @@ import org.nulllab.nullengine.core.common.resource.ImageLoader;
 import org.nulllab.nullengine.core.graphics.AWTGraphicsCanvas;
 import org.nulllab.nullengine.core.graphics.spritesheet.SpriteFont;
 import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheet;
+import org.nulllab.nullengine.core.graphics.spritesheet.sheet.pack.SpriteSheetPackage;
 import org.nulllab.sorrowland.app.config.Configuration;
 import org.nulllab.sorrowland.app.graphics.BoxySpriteFontMap;
 import org.nulllab.nullengine.core.graphics.StringDrawer;
+import org.nulllab.sorrowland.app.graphics.DefaultFontMap;
+import org.nulllab.sorrowland.app.graphics.sheet.DefaultFontSheetPackage;
 import org.nulllab.sorrowland.app.manager.Manager;
 import org.nulllab.ui.gui.GUIWindow;
 import org.nulllab.nullengine.core.input.Keyboard;
@@ -61,7 +64,10 @@ public class GameLoop extends Loop implements ContextAware {
         e.printStackTrace();
       }
 
-      context.registerService(Context.STRING_DRAWER, StringDrawer.class, new SpriteFont(spriteSheet, new BoxySpriteFontMap(), 0.5D));
+      SpriteSheetPackage sheetPackage = new DefaultFontSheetPackage();
+
+//      context.registerService(Context.STRING_DRAWER, StringDrawer.class, new SpriteFont(spriteSheet, new BoxySpriteFontMap(), 0.5D));
+      context.registerService(Context.STRING_DRAWER, StringDrawer.class, new SpriteFont(sheetPackage.getSpriteSheet("map1"), new DefaultFontMap(), 0.5D));
 
       context.setGuiWindow(gui);
       context.setInputKey(inputKey);
