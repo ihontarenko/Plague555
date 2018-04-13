@@ -8,7 +8,7 @@ public class FontLoader extends FileResourceLoader<Font> {
     super(filepath);
   }
 
-  public Font getFont() {
+  public Font load() {
     if (!hasCache(getFilename())) {
       try {
         Font font = Font.createFont(Font.TRUETYPE_FONT, getFileStream());

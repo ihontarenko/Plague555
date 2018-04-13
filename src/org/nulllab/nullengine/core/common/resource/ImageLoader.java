@@ -10,8 +10,16 @@ public class ImageLoader extends FileResourceLoader {
     super(filepath);
   }
 
-  public BufferedImage load() throws IOException {
-    return ImageIO.read(getFileStream());
+  public BufferedImage load() {
+    BufferedImage bufferedImage = null;
+
+    try {
+      bufferedImage = ImageIO.read(getFileStream());
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    return bufferedImage;
   }
 
 }
