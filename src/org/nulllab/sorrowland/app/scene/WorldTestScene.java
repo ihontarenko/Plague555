@@ -1,10 +1,13 @@
 package org.nulllab.sorrowland.app.scene;
 
+import org.nulllab.nullengine.core.audio.Audio;
+import org.nulllab.nullengine.core.audio.AudioManager;
 import org.nulllab.nullengine.core.common.Probability;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.spritesheet.SpriteManager;
 import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheet;
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpriteBatch;
+import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.core.input.Keyboard;
 import org.nulllab.nullengine.openworld.ServiceLocator;
 import org.nulllab.nullengine.openworld.World;
@@ -37,6 +40,7 @@ public class WorldTestScene extends Scene<AbstractView> {
   private Character character;
   private World world;
 
+  private AudioManager audioManager;
   private SpriteBatch spriteBatch;
 
   public WorldTestScene(Context context) {
@@ -89,12 +93,10 @@ public class WorldTestScene extends Scene<AbstractView> {
     trollDarkElf.getParent().setParentBreed(new Breed("Zombie Genom"));
     System.out.println(trollDarkElf.getFullName("/"));
 
-//    Orc orc = new Orc();
-//    orc.getBreed().setParentBreed(new Breed("Dwarf"));
-//    System.out.println(orc);
-
     SpriteManager spriteManager = new SpriteManager();
+
     serviceLocator.addService(spriteManager.getClass(), spriteManager);
+    serviceLocator.addService(AudioManager.class, new AudioManager());
 
     spriteManager.addSheetPackage(new A01ASheetPackage());
     spriteManager.addSheetPackage(new A01BSheetPackage());
@@ -132,6 +134,11 @@ public class WorldTestScene extends Scene<AbstractView> {
     graphics.setObjectSprites(new PlayerSprites());
     graphics.setSprite(graphics.getObjectSprites().getStandWest());
 
+    audioManager = serviceLocator.getAudioManager();
+    audioManager.addAudio(new Audio("walk", "sounds/walk.wav"));
+
+//    audioManager.loop("walk");
+
 //    new Character(new ElfBreed());
 
 //    character.getSkills().getDefense();
@@ -167,6 +174,10 @@ public class WorldTestScene extends Scene<AbstractView> {
   @Override
   public void doUpdate(float nano) {
     getGuiWindow().getCanvas().setDefaultColor(0xffcccccc);
+
+    if (getContext().getInputKey().isPressed(Input.RIGHT)){
+      audioManager.loop("walk", .2D);
+    }
 
     if (getInputKey().isPressed(KeyEvent.VK_ESCAPE)) {
       getSceneManager().setActiveScene(Manager.STATE_INTRO);

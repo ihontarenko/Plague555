@@ -53,9 +53,7 @@ public class ObjectManager<Clazz> extends AbstractObjectContainer<Clazz> {
   }
 
   public void resolveAll() {
-    getServices().forEach((name, service) -> {
-      setObject(name, (Clazz) service.resolve());
-    });
+    getServices().forEach((name, service) -> setObject(name, (Clazz) service.resolve()));
   }
 
   public boolean hasService(String name) {
@@ -89,6 +87,7 @@ public class ObjectManager<Clazz> extends AbstractObjectContainer<Clazz> {
   @Override
   public String toString() {
     StringBuilder stringBuilder = new StringBuilder();
+    stringBuilder.append(String.format("ObjectManager [%s]\n", getClass().getSimpleName()));
 
     this.forEach((key, object) -> stringBuilder.append(String.format("'%s': [%s]\n", key, object.getClass().getSimpleName())));
     getServices().forEach((key, object) -> stringBuilder.append(String.format("'%s': Service[%s]\n", key, object.getClassObject().getSimpleName())));

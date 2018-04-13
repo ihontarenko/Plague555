@@ -1,6 +1,7 @@
 package org.nulllab.nullengine.openworld;
 
 import org.nulllab.nullengine.core.AbstractServiceLocator;
+import org.nulllab.nullengine.core.audio.AudioManager;
 import org.nulllab.nullengine.core.graphics.spritesheet.SpriteManager;
 import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.core.input.Keyboard;
@@ -15,6 +16,10 @@ public class ServiceLocator extends AbstractServiceLocator {
 
   public SpriteManager getSpriteManager() {
     return getService(SpriteManager.class);
+  }
+
+  public AudioManager getAudioManager() {
+    return getService(AudioManager.class);
   }
 
   public World getWorld() {

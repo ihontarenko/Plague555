@@ -46,6 +46,14 @@ public class Timer {
     return factor;
   }
 
+  public double getInterval() {
+    return interval;
+  }
+
+  public void setInterval(double interval) {
+    this.interval = interval;
+  }
+
   public enum Factor {
 
     NANO(1), MICRO(1E3D), MILLI(1E6D), SECOND(1000000000F);
