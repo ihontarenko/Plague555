@@ -4,10 +4,9 @@ import org.nulllab.nullengine.core.event.Observable;
 import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.openworld.character.equipment.Equipment;
 import org.nulllab.nullengine.openworld.character.level.Level;
-import org.nulllab.nullengine.openworld.character.state.StandState;
 import org.nulllab.nullengine.openworld.object.GameObject;
+import org.nulllab.nullengine.openworld.object.component.input.CharacterHandler;
 import org.nulllab.nullengine.openworld.object.component.physics.CharacterPhysics;
-import org.nulllab.nullengine.openworld.state.ObjectState;
 import org.nulllab.nullengine.openworld.world.Camera;
 
 import java.util.Set;
@@ -15,25 +14,28 @@ import java.util.Set;
 @SuppressWarnings("unused")
 public class Character extends GameObject {
 
-  protected ObjectState           state;
-  protected Input                 input;
-  private   Observable<Character> observable;
-  private   Breed                 breed;
-  private   Level                 level;
-  private   Set<Equipment>        equipment;
-  private   Camera                camera;
+//  private ObjectState           state;
+  private Input                 input;
+  private Observable<Character> observable;
+  private Breed                 breed;
+  private Level                 level;
+  private Set<Equipment>        equipment;
+  private Camera                camera;
 
   public Character(Breed breed, Input input) {
     super(0, 0, 32, 48);
 
-    this.state = new StandState();
+//    this.state = new StandState();
     this.observable = new Observable<>();
-    this.input = input;
     this.breed = breed;
 
     this.setPriority(1 << 2);
-    this.setPhysics(new CharacterPhysics(this));
     this.setMovable(true);
+
+    // overwrite state handler for character
+    this.setStateHandler(new CharacterHandler(this, input));
+    // overwrite physics for character
+    this.setPhysics(new CharacterPhysics(this));
 
     getPhysics().setVelocity(2.0D);
   }
@@ -66,24 +68,8 @@ public class Character extends GameObject {
     return equipment;
   }
 
-  public Input getInput() {
-    return input;
-  }
-
-  public void setInput(Input input) {
-    this.input = input;
-  }
-
   public void setObservable(Observable<Character> observable) {
     this.observable = observable;
-  }
-
-  public ObjectState getState() {
-    return state;
-  }
-
-  public void setState(ObjectState state) {
-    this.state = state;
   }
 
   public Camera getCamera() {
@@ -103,15 +89,7 @@ public class Character extends GameObject {
   @Override
   @SuppressWarnings("unchecked")
   public void update(float nano) {
-    ObjectState state = this.state.handle(this, input);
-
-    if (state != null) {
-      this.state.exitAction(this);
-      setState(state);
-      this.state.entryAction(this);
-    }
-
-    this.state.update(this);
+    getStateHandler().update(nano);
   }
 
 }

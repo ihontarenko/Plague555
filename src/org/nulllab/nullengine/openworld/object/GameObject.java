@@ -8,6 +8,8 @@ import org.nulllab.nullengine.core.loop.Updateable;
 import org.nulllab.nullengine.openworld.ServiceLocator;
 import org.nulllab.nullengine.openworld.character.Values;
 import org.nulllab.nullengine.openworld.object.component.graphics.Graphics;
+import org.nulllab.nullengine.openworld.object.component.input.StateHandler;
+import org.nulllab.nullengine.openworld.object.component.input.NullHandler;
 import org.nulllab.nullengine.openworld.object.component.physics.Physics;
 
 @SuppressWarnings("unused")
@@ -19,6 +21,7 @@ abstract public class GameObject extends Object2D implements Renderable<Canvas>,
   private Values         values;
   private ServiceLocator serviceLocator;
   private ObjectHelper   objectHelper;
+  private StateHandler   stateHandler;
   private Graphics       graphics;
   private Physics        physics;
 
@@ -35,6 +38,7 @@ abstract public class GameObject extends Object2D implements Renderable<Canvas>,
 
     setGraphics(new Graphics(this));
     setPhysics(new Physics(this));
+    setStateHandler(new NullHandler(this));
   }
 
   public GameObject(int x, int y, int width, int height) {
@@ -91,6 +95,14 @@ abstract public class GameObject extends Object2D implements Renderable<Canvas>,
 
   public void setGraphics(Graphics graphics) {
     this.graphics = graphics;
+  }
+
+  public StateHandler getStateHandler() {
+    return stateHandler;
+  }
+
+  public void setStateHandler(StateHandler stateHandler) {
+    this.stateHandler = stateHandler;
   }
 
   public ObjectHelper getObjectHelper() {

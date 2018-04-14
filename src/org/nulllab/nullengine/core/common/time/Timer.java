@@ -56,7 +56,7 @@ public class Timer {
 
   public enum Factor {
 
-    NANO(1), MICRO(1E3D), MILLI(1E6D), SECOND(1000000000F);
+    NANO(1), MICRO(1E3D), MILLI(1E6D), SECOND(1E9D);
 
     private double factor;
 

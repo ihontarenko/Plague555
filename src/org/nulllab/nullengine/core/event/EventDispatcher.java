@@ -19,7 +19,7 @@ public class EventDispatcher<T> {
     try {
       observable = listeners.get(eventName);
     } catch (NullPointerException e) {
-      observable = new InnerObservable();
+      observable = new NullObjectObservable();
       listeners.put(eventName, observable);
     }
 
@@ -40,7 +40,7 @@ public class EventDispatcher<T> {
     }
   }
 
-  private class InnerObservable extends Observable<T> {
+  private class NullObjectObservable extends Observable<T> {
     @Override
     public void notify(T observable) {
       super.notify(observable);

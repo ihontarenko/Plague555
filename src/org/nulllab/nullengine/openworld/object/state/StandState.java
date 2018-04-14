@@ -1,17 +1,14 @@
-package org.nulllab.nullengine.openworld.character.state;
+package org.nulllab.nullengine.openworld.object.state;
 
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.Sprite;
 import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.openworld.character.Character;
 import org.nulllab.nullengine.openworld.object.component.graphics.Graphics;
-import org.nulllab.nullengine.openworld.state.ObjectState;
 
 public class StandState extends ObjectState<Character> {
 
   @Override
-  public void entryAction(Character object) {
-    super.entryAction(object);
-
+  public void entryAction(Character object, Input input) {
     Graphics graphics      = object.getGraphics();
     Sprite   defaultSprite = graphics.getObjectSprites().getDefaultSprite();
 

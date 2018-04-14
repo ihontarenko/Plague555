@@ -80,8 +80,7 @@ public class Audio implements Initializable {
   public void play() {
     stop();
     reset();
-
-    clip.start();
+    while (!clip.isRunning()) clip.start();
   }
 
   public void stop() {

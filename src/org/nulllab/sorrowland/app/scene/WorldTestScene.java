@@ -1,6 +1,5 @@
 package org.nulllab.sorrowland.app.scene;
 
-import org.nulllab.nullengine.core.audio.Audio;
 import org.nulllab.nullengine.core.audio.AudioManager;
 import org.nulllab.nullengine.core.common.Probability;
 import org.nulllab.nullengine.core.event.Event;
@@ -8,9 +7,7 @@ import org.nulllab.nullengine.core.event.Observer;
 import org.nulllab.nullengine.core.geometry.intersection.spatialhash.SpatialHash;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.spritesheet.SpriteManager;
-import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheet;
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpriteBatch;
-import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.core.input.Keyboard;
 import org.nulllab.nullengine.openworld.ServiceLocator;
 import org.nulllab.nullengine.openworld.World;
@@ -18,11 +15,15 @@ import org.nulllab.nullengine.openworld.character.Breed;
 import org.nulllab.nullengine.openworld.character.Character;
 import org.nulllab.nullengine.openworld.character.Skills;
 import org.nulllab.nullengine.openworld.character.level.Level;
+import org.nulllab.nullengine.openworld.object.event.OnMoveEvent;
 import org.nulllab.nullengine.openworld.object.ObjectHelper;
 import org.nulllab.nullengine.openworld.object.collision.CollisionDetector;
 import org.nulllab.nullengine.openworld.object.component.graphics.Graphics;
 import org.nulllab.nullengine.openworld.world.Camera;
-import org.nulllab.sorrowland.app.graphics.sheet.*;
+import org.nulllab.sorrowland.app.graphics.sheet.IconsSheetPackage;
+import org.nulllab.sorrowland.app.graphics.sheet.Nature1SheetPackage;
+import org.nulllab.sorrowland.app.graphics.sheet.TileSet1SheetPackage;
+import org.nulllab.sorrowland.app.graphics.sheet.TileSet2SheetPackage;
 import org.nulllab.sorrowland.app.graphics.sheet.characters.*;
 import org.nulllab.sorrowland.app.graphics.sprite.Nature1Sprites;
 import org.nulllab.sorrowland.app.graphics.sprite.PlayerSprites;
@@ -36,7 +37,6 @@ import org.nulllab.ui.process.view.AbstractView;
 import org.nulllab.ui.service.Context;
 
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
 import java.util.Set;
 
 public class WorldTestScene extends Scene<AbstractView> {
@@ -170,6 +170,13 @@ public class WorldTestScene extends Scene<AbstractView> {
     character.getObservable().addObserver(new Observer<Character>() {
       @Override
       public void onNotify(Character observable, Event event) {
+
+        switch (event.getName()) {
+          case OnMoveEvent.NAME:
+            System.out.println("Nearest SOLID Objects: " + observable.getPhysics().getNearestSolidObjects().size());
+            break;
+        }
+
         audioManager.replay("walk");
       }
     });
