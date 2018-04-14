@@ -19,16 +19,23 @@ public class Audio implements Initializable {
   private Clip        clip;
   private Timer       timer;
 
-  public Audio(String name, String filepath) {
-    this(filepath);
-    this.timer = new Timer(.5F);
+  public Audio(String name, String filepath, double interval) {
+    this.timer = new Timer(interval);
+    this.loader = new AudioLoader(filepath);
     this.name = name;
-
     initialize();
   }
 
   public Audio(String filepath) {
-    this.loader = new AudioLoader(filepath);
+    this(null, filepath, 1D);
+  }
+
+  public Audio(String filepath, double interval) {
+    this(null, filepath, interval);
+  }
+
+  public Audio(String name, String filepath) {
+    this(name, filepath, 1D);
   }
 
   public AudioLoader getLoader() {
@@ -52,38 +59,33 @@ public class Audio implements Initializable {
   }
 
   public void setVolume(float volumeValue) {
-    FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-    volume.setValue(Math.max(Math.min(volume.getMaximum(), volumeValue), volumeValue));
-  }
+    FloatControl volume  = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+    float        minimum = volume.getMinimum();
+    float        maximum = volume.getMaximum();
+    float        value   = Math.max(Math.min(volumeValue, maximum), minimum);
 
-  public void timerLoop() {
-    if (timer.isElapsedThenPurge()) {
-      play();
-    }
-  }
-
-  public void play() {
-    if (clip.isRunning()) {
-      stop();
-    }
-
-    reset();
-    clip.start();
-  }
-
-  public void loop(int start, int end) {
-    clip.setLoopPoints(start, end);
-    loop();
+    volume.setValue(value);
   }
 
   public void loop() {
-    getClip().loop(Clip.LOOP_CONTINUOUSLY);
+    stop();
+    reset();
+    clip.loop(Clip.LOOP_CONTINUOUSLY);
+  }
+
+  public void replay() {
+    if (timer.isElapsedThenPurge()) play();
+  }
+
+  public void play() {
+    stop();
+    reset();
+
+    clip.start();
   }
 
   public void stop() {
-    if (clip.isRunning()) {
-      clip.stop();
-    }
+    if (clip.isRunning()) clip.stop();
   }
 
   public void reset() {
@@ -91,9 +93,7 @@ public class Audio implements Initializable {
   }
 
   public void close() {
-    if (isInitialized()) {
-      clip.close();
-    }
+    if (isInitialized()) clip.close();
   }
 
   @Override

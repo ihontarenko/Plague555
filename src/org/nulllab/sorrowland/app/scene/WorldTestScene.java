@@ -3,6 +3,9 @@ package org.nulllab.sorrowland.app.scene;
 import org.nulllab.nullengine.core.audio.Audio;
 import org.nulllab.nullengine.core.audio.AudioManager;
 import org.nulllab.nullengine.core.common.Probability;
+import org.nulllab.nullengine.core.event.Event;
+import org.nulllab.nullengine.core.event.Observer;
+import org.nulllab.nullengine.core.geometry.intersection.spatialhash.SpatialHash;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.spritesheet.SpriteManager;
 import org.nulllab.nullengine.core.graphics.spritesheet.sheet.SpriteSheet;
@@ -34,6 +37,7 @@ import org.nulllab.ui.service.Context;
 
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.util.Set;
 
 public class WorldTestScene extends Scene<AbstractView> {
 
@@ -135,9 +139,11 @@ public class WorldTestScene extends Scene<AbstractView> {
     graphics.setSprite(graphics.getObjectSprites().getStandWest());
 
     audioManager = serviceLocator.getAudioManager();
-    audioManager.addAudio(new Audio("walk", "sounds/walk.wav"));
+    audioManager.addAudio("walk", "sounds/footstep_grass.wav", .25D);
 
-//    audioManager.loop("walk");
+    audioManager.get("walk").setVolume(2F);
+
+//    audioManager.replay("walk");
 
 //    new Character(new ElfBreed());
 
@@ -161,6 +167,13 @@ public class WorldTestScene extends Scene<AbstractView> {
     character.getPhysics().setOuterBounds(world.getWorldMap().getBound());
     character.getObservable().addObserver(world.getCamera().getObserver());
 
+    character.getObservable().addObserver(new Observer<Character>() {
+      @Override
+      public void onNotify(Character observable, Event event) {
+        audioManager.replay("walk");
+      }
+    });
+
     Camera camera = world.getCamera();
     GUIFrame frame = getContext().getGuiWindow().getMainFrame();
 
@@ -175,10 +188,6 @@ public class WorldTestScene extends Scene<AbstractView> {
   public void doUpdate(float nano) {
     getGuiWindow().getCanvas().setDefaultColor(0xffcccccc);
 
-    if (getContext().getInputKey().isPressed(Input.RIGHT)){
-      audioManager.loop("walk", .2D);
-    }
-
     if (getInputKey().isPressed(KeyEvent.VK_ESCAPE)) {
       getSceneManager().setActiveScene(Manager.STATE_INTRO);
     }
@@ -191,6 +200,18 @@ public class WorldTestScene extends Scene<AbstractView> {
   @Override
   public void render(Canvas canvas) {
     world.render(canvas);
+
+    SpatialHash spatialHash = world.getSpatialHash();
+    Camera camera = world.getCamera();
+
+    Set<Integer> keys = spatialHash.getObjectKeys(character);
+
+    canvas.setColor(0x5500ff00);
+
+    for (Integer key : keys) {
+//      canvas.drawRectangle(spatialHash.getXPixel(key) - camera.getX(), spatialHash.getYPixel(key)  - camera.getY(), spatialHash.getSize(), spatialHash.getSize());
+
+    }
 
 //    Camera camera = world.getCamera();
 

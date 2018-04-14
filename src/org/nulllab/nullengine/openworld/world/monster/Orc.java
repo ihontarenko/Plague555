@@ -6,7 +6,6 @@ import org.nulllab.nullengine.openworld.character.Character;
 
 public class Orc extends Character {
 
-
   public Orc(Breed breed, Input input) {
     super(breed, input);
   }

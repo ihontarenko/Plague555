@@ -27,8 +27,8 @@ public class MoveState extends ObjectState<Character> {
 
   @Override
   public void update(Character object) {
-    Observable<Character> observable = object.getObservable();
     Direction             direction  = getCurrentDirection(object);
+    Observable<Character> observable = object.getObservable();
     Physics               physics    = object.getPhysics();
     Graphics              graphics   = object.getGraphics();
 

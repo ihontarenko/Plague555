@@ -8,20 +8,22 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.nulllab.nullengine.openworld.object.Direction.*;
+
 public class ObjectHelper {
 
-  private Direction direction;
+  private KeyMap keyMap;
 
   public ObjectHelper() {
-    this.direction = new Direction();
-    this.direction.initialize();
+    this.keyMap = new KeyMap();
+    this.keyMap.initialize();
   }
 
-  public Direction getDirectionMaps() {
-    return direction;
+  public KeyMap getDirectionMaps() {
+    return keyMap;
   }
 
-  public class Direction implements Initializable {
+  public class KeyMap implements Initializable {
 
     private Map<org.nulllab.nullengine.openworld.object.Direction, String>  spritesMap;
     private Map<Integer, org.nulllab.nullengine.openworld.object.Direction> keyMap;
@@ -46,15 +48,15 @@ public class ObjectHelper {
         keyMap = new HashMap<>();
         spritesMap = new EnumMap<>(org.nulllab.nullengine.openworld.object.Direction.class);
 
-        spritesMap.put(org.nulllab.nullengine.openworld.object.Direction.LEFT, Sprites.KEY_MOVE_WEST);
-        spritesMap.put(org.nulllab.nullengine.openworld.object.Direction.RIGHT, Sprites.KEY_MOVE_EAST);
-        spritesMap.put(org.nulllab.nullengine.openworld.object.Direction.UP, Sprites.KEY_MOVE_NORTH);
-        spritesMap.put(org.nulllab.nullengine.openworld.object.Direction.DOWN, Sprites.KEY_MOVE_SOUTH);
+        spritesMap.put(LEFT, Sprites.KEY_MOVE_WEST);
+        spritesMap.put(RIGHT, Sprites.KEY_MOVE_EAST);
+        spritesMap.put(UP, Sprites.KEY_MOVE_NORTH);
+        spritesMap.put(DOWN, Sprites.KEY_MOVE_SOUTH);
 
-        keyMap.put(Input.LEFT, org.nulllab.nullengine.openworld.object.Direction.LEFT);
-        keyMap.put(Input.RIGHT, org.nulllab.nullengine.openworld.object.Direction.RIGHT);
-        keyMap.put(Input.UP, org.nulllab.nullengine.openworld.object.Direction.UP);
-        keyMap.put(Input.DOWN, org.nulllab.nullengine.openworld.object.Direction.DOWN);
+        keyMap.put(Input.LEFT, LEFT);
+        keyMap.put(Input.RIGHT, RIGHT);
+        keyMap.put(Input.UP, UP);
+        keyMap.put(Input.DOWN, DOWN);
 
         initialized = true;
       }
