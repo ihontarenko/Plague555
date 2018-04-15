@@ -1,9 +1,9 @@
 package org.nulllab.nullengine.openworld.object.component.physics;
 
+import org.nulllab.nullengine.core.event.Observable;
 import org.nulllab.nullengine.core.geometry.Bounds2D;
 import org.nulllab.nullengine.openworld.object.Direction;
 import org.nulllab.nullengine.openworld.object.GameObject;
-import org.nulllab.nullengine.openworld.object.component.graphics.Graphics;
 import org.nulllab.nullengine.openworld.object.event.OnCollideEvent;
 
 public class CharacterPhysics extends Physics {
@@ -14,14 +14,16 @@ public class CharacterPhysics extends Physics {
 
   @Override
   public void move(Direction direction) {
-    double     oldX      = object.getX();
-    double     oldY      = object.getY();
+    Observable<GameObject> observable = object.getObservable();
+    double                 oldX       = object.getX();
+    double                 oldY       = object.getY();
 
     super.move(direction);
 
     if (isCollidedWithNearest() || isOutOfBounds()) {
       setPositionTo(oldX, oldY);
-      object.getObservable().notify(object, new OnCollideEvent());
+      // todo: need move logic from here
+      observable.notify(object, new OnCollideEvent());
     }
   }
 
