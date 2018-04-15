@@ -13,8 +13,9 @@ import java.util.Map;
 
 public class MoveState extends ObjectState<Character> {
 
+  private Integer                 lastPressedKey;
   private Map<Integer, Direction> keyMap;
-  private int[] controlKeys = new int[]{Input.LEFT, Input.RIGHT, Input.UP, Input.DOWN};
+  private int[]                   controlKeys;
 
   @Override
   public ObjectState handle(Character object, Input input) {
@@ -35,30 +36,43 @@ public class MoveState extends ObjectState<Character> {
     Graphics               graphics   = object.getGraphics();
 
     physics.move(direction);
-    graphics.setDirectionSprite(direction);
+    graphics.setMoveDirectionSprite(direction);
 
     observable.notify(object, new OnMoveEvent());
   }
 
   @Override
   public void entryAction(Character object, Input input) {
-    keyMap = object.getObjectHelper().getDirectionMaps().getKeyMapDirection();
+    controlKeys = new int[]{Input.LEFT, Input.RIGHT, Input.UP, Input.DOWN};
+    keyMap      = object.getObjectHelper().getDirectionMaps().getKeyMapDirection();
   }
 
   @Override
   public void exitAction(Character object, Input input) {
-
+    object.getGraphics().setStandDirectionSprite(getCurrentDirection(getLastPressedKey()));
   }
 
   private Direction getCurrentDirection(Input input) {
-    Direction direction  = null;
-    Integer   pressedKey = input.getPressed();
+    return getCurrentDirection(input.getPressed());
+  }
+
+  private Direction getCurrentDirection(Integer pressedKey) {
+    Direction direction = null;
 
     if (keyMap.containsKey(pressedKey)) {
       direction = keyMap.get(pressedKey);
     }
 
+    setLastPressedKey(pressedKey);
+
     return direction;
   }
 
+  private Integer getLastPressedKey() {
+    return lastPressedKey;
+  }
+
+  private void setLastPressedKey(Integer lastPressedKey) {
+    this.lastPressedKey = lastPressedKey;
+  }
 }

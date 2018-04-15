@@ -5,6 +5,7 @@ import org.nulllab.nullengine.core.graphics.spritesheet.sprite.Sprite;
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.pack.SpritePackage;
 import org.nulllab.nullengine.openworld.character.Sprites;
 import org.nulllab.nullengine.openworld.object.GameObject;
+import org.nulllab.nullengine.openworld.object.ObjectHelper;
 import org.nulllab.nullengine.openworld.object.component.Component;
 import org.nulllab.nullengine.openworld.object.Direction;
 
@@ -13,21 +14,30 @@ import java.util.Map;
 
 public class Graphics extends Component {
 
-  private Map<Direction, String> spritesMap;
+  private Map<Direction, String> spritesMoveMap;
+  private Map<Direction, String> spritesStandMap;
   private Sprite                 sprite;
   private Sprites                objectSprites;
 
   public Graphics(GameObject object) {
     super(object);
-    this.spritesMap = getServiceLocator().getObjectHelper().getDirectionMaps().getSpritesMapDirection();
+
+    ObjectHelper.KeyMap keyMap = getServiceLocator().getObjectHelper().getDirectionMaps();
+
+    spritesStandMap = keyMap.getSpritesMapDirectionOnStand();
+    spritesMoveMap  = keyMap.getSpritesMapDirectionOnMove();
   }
 
   public void setGameObject(GameObject object) {
     super.setGameObject(object);
   }
 
-  public void setDirectionSprite(Direction direction) {
-    setSprite(objectSprites.getSprite(spritesMap.get(direction)));
+  public void setMoveDirectionSprite(Direction direction) {
+    setSprite(objectSprites.getSprite(spritesMoveMap.get(direction)));
+  }
+
+  public void setStandDirectionSprite(Direction direction) {
+    setSprite(objectSprites.getSprite(spritesStandMap.get(direction)));
   }
 
   public Sprites getObjectSprites() {

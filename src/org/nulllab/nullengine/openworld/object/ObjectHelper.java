@@ -8,8 +8,6 @@ import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.nulllab.nullengine.openworld.object.Direction.*;
-
 public class ObjectHelper {
 
   private KeyMap keyMap;
@@ -25,15 +23,20 @@ public class ObjectHelper {
 
   public class KeyMap implements Initializable {
 
-    private Map<org.nulllab.nullengine.openworld.object.Direction, String>  spritesMap;
-    private Map<Integer, org.nulllab.nullengine.openworld.object.Direction> keyMap;
-    private boolean                                                         initialized;
+    private Map<Direction, String>  standSpritesMap;
+    private Map<Direction, String>  moveSpritesMap;
+    private Map<Integer, Direction> keyMap;
+    private boolean                 initialized;
 
-    public Map<org.nulllab.nullengine.openworld.object.Direction, String> getSpritesMapDirection() {
-      return spritesMap;
+    public Map<Direction, String> getSpritesMapDirectionOnMove() {
+      return moveSpritesMap;
     }
 
-    public Map<Integer, org.nulllab.nullengine.openworld.object.Direction> getKeyMapDirection() {
+    public Map<Direction, String> getSpritesMapDirectionOnStand() {
+      return standSpritesMap;
+    }
+
+    public Map<Integer, Direction> getKeyMapDirection() {
       return keyMap;
     }
 
@@ -45,18 +48,24 @@ public class ObjectHelper {
     @Override
     public void initialize() {
       if (!isInitialized()) {
+        moveSpritesMap = new EnumMap<>(Direction.class);
+        standSpritesMap = new EnumMap<>(Direction.class);
         keyMap = new HashMap<>();
-        spritesMap = new EnumMap<>(org.nulllab.nullengine.openworld.object.Direction.class);
 
-        spritesMap.put(LEFT, Sprites.KEY_MOVE_WEST);
-        spritesMap.put(RIGHT, Sprites.KEY_MOVE_EAST);
-        spritesMap.put(UP, Sprites.KEY_MOVE_NORTH);
-        spritesMap.put(DOWN, Sprites.KEY_MOVE_SOUTH);
+        moveSpritesMap.put(Direction.LEFT, Sprites.KEY_MOVE_WEST);
+        moveSpritesMap.put(Direction.RIGHT, Sprites.KEY_MOVE_EAST);
+        moveSpritesMap.put(Direction.UP, Sprites.KEY_MOVE_NORTH);
+        moveSpritesMap.put(Direction.DOWN, Sprites.KEY_MOVE_SOUTH);
 
-        keyMap.put(Input.LEFT, LEFT);
-        keyMap.put(Input.RIGHT, RIGHT);
-        keyMap.put(Input.UP, UP);
-        keyMap.put(Input.DOWN, DOWN);
+        standSpritesMap.put(Direction.LEFT, Sprites.KEY_STAND_WEST);
+        standSpritesMap.put(Direction.RIGHT, Sprites.KEY_STAND_EAST);
+        standSpritesMap.put(Direction.UP, Sprites.KEY_STAND_NORTH);
+        standSpritesMap.put(Direction.DOWN, Sprites.KEY_STAND_SOUTH);
+
+        keyMap.put(Input.LEFT, Direction.LEFT);
+        keyMap.put(Input.RIGHT, Direction.RIGHT);
+        keyMap.put(Input.UP, Direction.UP);
+        keyMap.put(Input.DOWN, Direction.DOWN);
 
         initialized = true;
       }
