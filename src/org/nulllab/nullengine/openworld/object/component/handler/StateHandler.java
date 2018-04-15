@@ -1,4 +1,4 @@
-package org.nulllab.nullengine.openworld.object.component.input;
+package org.nulllab.nullengine.openworld.object.component.handler;
 
 import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.core.loop.Updateable;
@@ -9,11 +9,13 @@ import org.nulllab.nullengine.openworld.object.state.ObjectState;
 
 abstract public class StateHandler extends Component implements Updateable {
 
-  protected ObjectState state;
+  private ObjectState state;
+  private Input input;
 
-  public StateHandler(GameObject object) {
+  public StateHandler(GameObject object, Input input) {
     super(object);
     this.state = new NullState();
+    this.input = input;
   }
 
   public ObjectState getState() {
@@ -30,14 +32,25 @@ abstract public class StateHandler extends Component implements Updateable {
     ObjectState state = getState().handle(getGameObject(), getInput());
 
     if (state != null) {
-      getState().exitAction(getGameObject(), getInput());
-      setState(state);
-      getState().entryAction(getGameObject(), getInput());
+      swapState(state);
     }
 
     getState().update(getGameObject(), getInput());
   }
 
-  abstract public Input getInput();
+  @SuppressWarnings("unchecked")
+  private void swapState(ObjectState state) {
+    getState().exitAction(getGameObject(), getInput());
+    setState(state);
+    getState().entryAction(getGameObject(), getInput());
+  }
+
+  public Input getInput() {
+    return input;
+  }
+
+  public void setInput(Input input) {
+    this.input = input;
+  }
 
 }

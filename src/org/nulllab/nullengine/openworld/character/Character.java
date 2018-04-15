@@ -5,9 +5,8 @@ import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.openworld.character.equipment.Equipment;
 import org.nulllab.nullengine.openworld.character.level.Level;
 import org.nulllab.nullengine.openworld.object.GameObject;
-import org.nulllab.nullengine.openworld.object.component.input.CharacterHandler;
+import org.nulllab.nullengine.openworld.object.component.handler.CharacterHandler;
 import org.nulllab.nullengine.openworld.object.component.physics.CharacterPhysics;
-import org.nulllab.nullengine.openworld.world.Camera;
 
 import java.util.Set;
 
@@ -16,18 +15,15 @@ public class Character extends GameObject {
 
 //  private ObjectState           state;
   private Input                 input;
-  private Observable<Character> observable;
-  private Breed                 breed;
+
   private Level                 level;
   private Set<Equipment>        equipment;
-  private Camera                camera;
 
-  public Character(Breed breed, Input input) {
+  public Character(Input input) {
     super(0, 0, 32, 48);
 
 //    this.state = new StandState();
-    this.observable = new Observable<>();
-    this.breed = breed;
+
 
     this.setPriority(1 << 2);
     this.setMovable(true);
@@ -40,18 +36,6 @@ public class Character extends GameObject {
     getPhysics().setVelocity(2.0D);
   }
 
-  public double getHealth() {
-    return getBreed().getHealth();
-  }
-
-  public Breed getBreed() {
-    return breed;
-  }
-
-  public void setBreed(Breed breed) {
-    this.breed = breed;
-  }
-
   public Level getLevel() {
     return level;
   }
@@ -60,30 +44,14 @@ public class Character extends GameObject {
     this.level = level;
   }
 
-  public Observable<Character> getObservable() {
-    return observable;
-  }
-
   public Set<Equipment> getEquipment() {
     return equipment;
   }
 
-  public void setObservable(Observable<Character> observable) {
-    this.observable = observable;
-  }
-
-  public Camera getCamera() {
-    return camera;
-  }
-
-  public void setCamera(Camera camera) {
-    this.camera = camera;
-  }
-
   @Override
   public String toString() {
-    return String.format("Character (%s) {%s, super: %s}",
-        getClass().getSimpleName(), getBreed(), super.toString());
+    return String.format("Character (%s) {super: %s}",
+        getClass().getSimpleName(), super.toString());
   }
 
   @Override

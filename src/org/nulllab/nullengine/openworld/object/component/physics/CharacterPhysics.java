@@ -4,6 +4,7 @@ import org.nulllab.nullengine.core.geometry.Bounds2D;
 import org.nulllab.nullengine.openworld.object.Direction;
 import org.nulllab.nullengine.openworld.object.GameObject;
 import org.nulllab.nullengine.openworld.object.component.graphics.Graphics;
+import org.nulllab.nullengine.openworld.object.event.OnCollideEvent;
 
 public class CharacterPhysics extends Physics {
 
@@ -18,8 +19,10 @@ public class CharacterPhysics extends Physics {
 
     super.move(direction);
 
-    if (isCollidedWithNearest() || isOutOfBounds())
+    if (isCollidedWithNearest() || isOutOfBounds()) {
       setPositionTo(oldX, oldY);
+      object.getObservable().notify(object, new OnCollideEvent());
+    }
   }
 
   @Override

@@ -3,6 +3,7 @@ package org.nulllab.nullengine.openworld.object.state;
 import org.nulllab.nullengine.core.event.Observable;
 import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.openworld.character.Character;
+import org.nulllab.nullengine.openworld.object.GameObject;
 import org.nulllab.nullengine.openworld.object.event.OnMoveEvent;
 import org.nulllab.nullengine.openworld.object.Direction;
 import org.nulllab.nullengine.openworld.object.component.graphics.Graphics;
@@ -27,10 +28,10 @@ public class MoveState extends ObjectState<Character> {
 
   @Override
   public void update(Character object, Input input) {
-    Direction             direction  = getCurrentDirection(input);
-    Observable<Character> observable = object.getObservable();
-    Physics               physics    = object.getPhysics();
-    Graphics              graphics   = object.getGraphics();
+    Direction              direction  = getCurrentDirection(input);
+    Observable<GameObject> observable = object.getObservable();
+    Physics                physics    = object.getPhysics();
+    Graphics               graphics   = object.getGraphics();
 
     physics.move(direction);
     graphics.setDirectionSprite(direction);

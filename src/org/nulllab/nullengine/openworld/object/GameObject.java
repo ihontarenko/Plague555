@@ -1,29 +1,34 @@
 package org.nulllab.nullengine.openworld.object;
 
+import org.nulllab.nullengine.core.event.Observable;
 import org.nulllab.nullengine.core.geometry.Bounds2D;
 import org.nulllab.nullengine.core.geometry.Object2D;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.Renderable;
+import org.nulllab.nullengine.core.input.NullInput;
 import org.nulllab.nullengine.core.loop.Updateable;
 import org.nulllab.nullengine.openworld.ServiceLocator;
 import org.nulllab.nullengine.openworld.character.Values;
 import org.nulllab.nullengine.openworld.object.component.graphics.Graphics;
-import org.nulllab.nullengine.openworld.object.component.input.StateHandler;
-import org.nulllab.nullengine.openworld.object.component.input.NullHandler;
+import org.nulllab.nullengine.openworld.object.component.handler.NullHandler;
+import org.nulllab.nullengine.openworld.object.component.handler.StateHandler;
 import org.nulllab.nullengine.openworld.object.component.physics.Physics;
+
+import java.util.Set;
 
 @SuppressWarnings("unused")
 abstract public class GameObject extends Object2D implements Renderable<Canvas>, Updateable, Comparable<GameObject> {
 
-  private boolean        isSolid;
-  private boolean        isMovable;
-  private int            priority;
-  private Values         values;
-  private ServiceLocator serviceLocator;
-  private ObjectHelper   objectHelper;
-  private StateHandler   stateHandler;
-  private Graphics       graphics;
-  private Physics        physics;
+  private boolean                isSolid;
+  private boolean                isMovable;
+  private int                    priority;
+  private Values                 values;
+  private ServiceLocator         serviceLocator;
+  private ObjectHelper           objectHelper;
+  private Observable<GameObject> observable;
+  private StateHandler           stateHandler;
+  private Graphics               graphics;
+  private Physics                physics;
 
   public GameObject() {
     this(0, 0, 32, 32, null);
@@ -36,9 +41,11 @@ abstract public class GameObject extends Object2D implements Renderable<Canvas>,
     this.serviceLocator = ServiceLocator.getInstance();
     this.priority = 1;
 
+    this.observable = new Observable<>();
+
     setGraphics(new Graphics(this));
     setPhysics(new Physics(this));
-    setStateHandler(new NullHandler(this));
+    setStateHandler(new NullHandler(this, new NullInput()));
   }
 
   public GameObject(int x, int y, int width, int height) {
@@ -89,20 +96,20 @@ abstract public class GameObject extends Object2D implements Renderable<Canvas>,
     this.physics = physics;
   }
 
-  public Graphics getGraphics() {
-    return graphics;
-  }
-
-  public void setGraphics(Graphics graphics) {
-    this.graphics = graphics;
-  }
-
   public StateHandler getStateHandler() {
     return stateHandler;
   }
 
   public void setStateHandler(StateHandler stateHandler) {
     this.stateHandler = stateHandler;
+  }
+
+  public Observable<GameObject> getObservable() {
+    return observable;
+  }
+
+  public void setObservable(Observable<GameObject> observable) {
+    this.observable = observable;
   }
 
   public ObjectHelper getObjectHelper() {
@@ -133,6 +140,14 @@ abstract public class GameObject extends Object2D implements Renderable<Canvas>,
 
   public void render(Canvas canvas, double x, double y) {
     getGraphics().getSprite().draw(canvas, x, y);
+  }
+
+  public Graphics getGraphics() {
+    return graphics;
+  }
+
+  public void setGraphics(Graphics graphics) {
+    this.graphics = graphics;
   }
 
   @Override

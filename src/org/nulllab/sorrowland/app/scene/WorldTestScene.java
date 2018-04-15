@@ -11,10 +11,11 @@ import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpriteBatch;
 import org.nulllab.nullengine.core.input.Keyboard;
 import org.nulllab.nullengine.openworld.ServiceLocator;
 import org.nulllab.nullengine.openworld.World;
-import org.nulllab.nullengine.openworld.character.Breed;
 import org.nulllab.nullengine.openworld.character.Character;
 import org.nulllab.nullengine.openworld.character.Skills;
 import org.nulllab.nullengine.openworld.character.level.Level;
+import org.nulllab.nullengine.openworld.object.GameObject;
+import org.nulllab.nullengine.openworld.object.event.OnCollideEvent;
 import org.nulllab.nullengine.openworld.object.event.OnMoveEvent;
 import org.nulllab.nullengine.openworld.object.ObjectHelper;
 import org.nulllab.nullengine.openworld.object.collision.CollisionDetector;
@@ -85,17 +86,9 @@ public class WorldTestScene extends Scene<AbstractView> {
     System.out.println(health);
     System.out.println(level.getCalculator().getExperience(13));
 
-
-
     skills.getDefense();
     skills.getDexterity();
     skills.getIntellegence();
-
-
-    Breed trollDarkElf = new Breed("Troll");
-    trollDarkElf.setParentBreed(new Breed("Dark Elf"));
-    trollDarkElf.getParent().setParentBreed(new Breed("Zombie Genom"));
-    System.out.println(trollDarkElf.getFullName("/"));
 
     SpriteManager spriteManager = new SpriteManager();
 
@@ -131,7 +124,7 @@ public class WorldTestScene extends Scene<AbstractView> {
 //    System.out.println(serviceLocator.getService(InputComponent.class));
 //    System.exit(1);
 
-    character = new Character(trollDarkElf, serviceLocator.getInputKeyboard());
+    character = new Character(serviceLocator.getInputKeyboard());
     character.layerUp();
 
     Graphics graphics = character.getGraphics();
@@ -140,6 +133,7 @@ public class WorldTestScene extends Scene<AbstractView> {
 
     audioManager = serviceLocator.getAudioManager();
     audioManager.addAudio("walk", "sounds/footstep_grass.wav", .25D);
+    audioManager.addAudio("collide", "sounds/footstep_stone.wav", 1D);
 
     audioManager.get("walk").setVolume(2F);
 
@@ -167,17 +161,19 @@ public class WorldTestScene extends Scene<AbstractView> {
     character.getPhysics().setOuterBounds(world.getWorldMap().getBound());
     character.getObservable().addObserver(world.getCamera().getObserver());
 
-    character.getObservable().addObserver(new Observer<Character>() {
+    character.getObservable().addObserver(new Observer<GameObject>() {
+
       @Override
-      public void onNotify(Character observable, Event event) {
+      public void onNotify(GameObject observable, Event event) {
 
         switch (event.getName()) {
           case OnMoveEvent.NAME:
-            System.out.println("Nearest SOLID Objects: " + observable.getPhysics().getNearestSolidObjects().size());
+            audioManager.replay("walk");
+            break;
+          case OnCollideEvent.NAME:
+            audioManager.replay("collide");
             break;
         }
-
-        audioManager.replay("walk");
       }
     });
 
