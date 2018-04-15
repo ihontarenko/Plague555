@@ -1,4 +1,4 @@
-package org.nulllab.nullengine.openworld.map;
+package org.nulllab.nullengine.openworld.world.map;
 
 import org.nulllab.nullengine.openworld.object.GameObject;
 

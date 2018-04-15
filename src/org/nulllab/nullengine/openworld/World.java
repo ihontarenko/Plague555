@@ -5,7 +5,7 @@ import org.nulllab.nullengine.core.geometry.intersection.spatialhash.SpatialHash
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.Renderable;
 import org.nulllab.nullengine.core.loop.Updateable;
-import org.nulllab.nullengine.openworld.map.WorldMap;
+import org.nulllab.nullengine.openworld.world.map.WorldMap;
 import org.nulllab.nullengine.openworld.object.GameObject;
 import org.nulllab.nullengine.openworld.world.Camera;
 

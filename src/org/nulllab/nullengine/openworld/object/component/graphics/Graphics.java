@@ -14,30 +14,16 @@ import java.util.Map;
 
 public class Graphics extends Component {
 
-  private Map<Direction, String> spritesMoveMap;
-  private Map<Direction, String> spritesStandMap;
+
   private Sprite                 sprite;
   private Sprites                objectSprites;
 
   public Graphics(GameObject object) {
     super(object);
-
-    ObjectHelper.KeyMap keyMap = getServiceLocator().getObjectHelper().getDirectionMaps();
-
-    spritesStandMap = keyMap.getSpritesMapDirectionOnStand();
-    spritesMoveMap  = keyMap.getSpritesMapDirectionOnMove();
   }
 
   public void setGameObject(GameObject object) {
     super.setGameObject(object);
-  }
-
-  public void setMoveDirectionSprite(Direction direction) {
-    setSprite(objectSprites.getSprite(spritesMoveMap.get(direction)));
-  }
-
-  public void setStandDirectionSprite(Direction direction) {
-    setSprite(objectSprites.getSprite(spritesStandMap.get(direction)));
   }
 
   public Sprites getObjectSprites() {

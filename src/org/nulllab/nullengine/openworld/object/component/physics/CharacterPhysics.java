@@ -30,13 +30,11 @@ public class CharacterPhysics extends Physics {
   @Override
   public Bounds2D getInnerBounds() {
     Bounds2D bounds  = super.getInnerBounds();
-    double   offsetY = 32.0D;
-    double   offsetX = 8.0D;
 
-    bounds.setY(bounds.getY() + offsetY);
-    bounds.setHeight((int) (bounds.getHeight() - offsetY));
-    bounds.setX(bounds.getX() + offsetX);
-    bounds.setWidth((int) (bounds.getWidth() - (offsetX * 2)));
+    bounds.setY(bounds.getY() + getInnerOffsetY());
+    bounds.setHeight((int) (bounds.getHeight() - getInnerOffsetY()));
+    bounds.setX(bounds.getX() + getInnerOffsetX());
+    bounds.setWidth((int) (bounds.getWidth() - (getInnerOffsetX() * 2)));
 
     return bounds;
   }

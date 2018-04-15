@@ -1,4 +1,4 @@
-package org.nulllab.nullengine.openworld.map;
+package org.nulllab.nullengine.openworld.world.map;
 
 import org.nulllab.nullengine.core.common.Initializable;
 import org.nulllab.nullengine.core.geometry.Bounds2D;

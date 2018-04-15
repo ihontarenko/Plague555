@@ -3,8 +3,9 @@ package org.nulllab.sorrowland.app.scene;
 import org.nulllab.nullengine.core.audio.AudioManager;
 import org.nulllab.nullengine.core.common.Probability;
 import org.nulllab.nullengine.core.event.Event;
+import org.nulllab.nullengine.core.event.Observable;
 import org.nulllab.nullengine.core.event.Observer;
-import org.nulllab.nullengine.core.geometry.intersection.spatialhash.SpatialHash;
+import org.nulllab.nullengine.core.geometry.Bounds2D;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.spritesheet.SpriteManager;
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpriteBatch;
@@ -15,12 +16,14 @@ import org.nulllab.nullengine.openworld.character.Character;
 import org.nulllab.nullengine.openworld.character.Skills;
 import org.nulllab.nullengine.openworld.character.level.Level;
 import org.nulllab.nullengine.openworld.object.GameObject;
-import org.nulllab.nullengine.openworld.object.event.OnCollideEvent;
-import org.nulllab.nullengine.openworld.object.event.OnMoveEvent;
 import org.nulllab.nullengine.openworld.object.ObjectHelper;
 import org.nulllab.nullengine.openworld.object.collision.CollisionDetector;
 import org.nulllab.nullengine.openworld.object.component.graphics.Graphics;
+import org.nulllab.nullengine.openworld.object.event.OnCollideEvent;
+import org.nulllab.nullengine.openworld.object.event.OnMoveEvent;
 import org.nulllab.nullengine.openworld.world.Camera;
+import org.nulllab.nullengine.openworld.world.entities.monsters.Chicken;
+import org.nulllab.nullengine.openworld.world.entities.monsters.Troll;
 import org.nulllab.sorrowland.app.graphics.sheet.IconsSheetPackage;
 import org.nulllab.sorrowland.app.graphics.sheet.Nature1SheetPackage;
 import org.nulllab.sorrowland.app.graphics.sheet.TileSet1SheetPackage;
@@ -30,23 +33,19 @@ import org.nulllab.sorrowland.app.graphics.sprite.Nature1Sprites;
 import org.nulllab.sorrowland.app.graphics.sprite.PlayerSprites;
 import org.nulllab.sorrowland.app.graphics.sprite.TilesASprites;
 import org.nulllab.sorrowland.app.graphics.sprite.TilesBSprites;
-import org.nulllab.sorrowland.app.manager.Manager;
 import org.nulllab.sorrowland.app.scene.view.WorldTestView;
 import org.nulllab.ui.gui.GUIFrame;
 import org.nulllab.ui.process.scene.Scene;
 import org.nulllab.ui.process.view.AbstractView;
 import org.nulllab.ui.service.Context;
 
-import java.awt.event.KeyEvent;
-import java.util.Set;
-
 public class WorldTestScene extends Scene<AbstractView> {
 
   private Character character;
-  private World world;
+  private World     world;
 
   private AudioManager audioManager;
-  private SpriteBatch spriteBatch;
+  private SpriteBatch  spriteBatch;
 
   public WorldTestScene(Context context) {
     super(context);
@@ -68,20 +67,20 @@ public class WorldTestScene extends Scene<AbstractView> {
 //      System.out.println("lvl: " + i + ", health: " + 100* level.getScale());
 //    }
 
-    int health = 100;
-    int lvl = 100;
-    Level level = new Level(1);
+    int   health = 100;
+    int   lvl    = 100;
+    Level level  = new Level(1);
     Level level1 = new Level(37);
 
     Probability probability = new Probability(45);
 
     if (probability.generate()) {
-      System.out.println(String.format("%d %% was probability what you see this", (int)probability.getProbability()));
+      System.out.println(String.format("%d %% was probability what you see this", (int) probability.getProbability()));
     }
 
     Skills skills = new Skills();
 
-    health = health + (int)(health / 10 * level.getScale());
+    health = health + (int) (health / 10 * level.getScale());
 
     System.out.println(health);
     System.out.println(level.getCalculator().getExperience(13));
@@ -124,12 +123,6 @@ public class WorldTestScene extends Scene<AbstractView> {
 //    System.out.println(serviceLocator.getService(InputComponent.class));
 //    System.exit(1);
 
-    character = new Character(serviceLocator.getInputKeyboard());
-    character.layerUp();
-
-    Graphics graphics = character.getGraphics();
-    graphics.setObjectSprites(new PlayerSprites());
-    graphics.setSprite(graphics.getObjectSprites().getStandWest());
 
     audioManager = serviceLocator.getAudioManager();
     audioManager.addAudio("walk", "sounds/footstep_grass.wav", .25D);
@@ -156,12 +149,27 @@ public class WorldTestScene extends Scene<AbstractView> {
     world = new World();
     world.initialize();
 
+//    character = new Character(serviceLocator.getInputKeyboard());
+//    character = new Orc(serviceLocator.getInputKeyboard());
+//    character = new Troll(serviceLocator.getInputKeyboard());
+    character = new Chicken(serviceLocator.getInputKeyboard());
+
+    Observable<GameObject> observable = character.getObservable();
+
+    Graphics graphics = character.getGraphics();
+//    graphics.setObjectSprites(new PlayerSprites());
+    graphics.setSprite(graphics.getObjectSprites().getStandWest());
+
+    character.layerUp();
+    character.getPhysics().setOuterBounds(world.getWorldMap().getBound());
+
+    character.setX(300);
+    character.setY(420);
+
     world.addGameObject(character);
 
-    character.getPhysics().setOuterBounds(world.getWorldMap().getBound());
-    character.getObservable().addObserver(world.getCamera().getObserver());
-
-    character.getObservable().addObserver(new Observer<GameObject>() {
+    observable.addObserver(world.getCamera().getObserver());
+    observable.addObserver(new Observer<GameObject>() {
 
       @Override
       public void onNotify(GameObject observable, Event event) {
@@ -177,67 +185,32 @@ public class WorldTestScene extends Scene<AbstractView> {
       }
     });
 
-    Camera camera = world.getCamera();
-    GUIFrame frame = getContext().getGuiWindow().getMainFrame();
+    Camera   camera = world.getCamera();
+    GUIFrame frame  = getContext().getGuiWindow().getMainFrame();
 
     frame.setSize(camera.getWidth(), camera.getHeight());
 
     serviceLocator.addService(World.class, world);
+
+    // single event call for camera alignment
+    observable.notify(character, new OnMoveEvent());
+
 
     System.out.println("SpatialHash Size: " + world.getSpatialHash().getObjects().size());
   }
 
   @Override
   public void doUpdate(float nano) {
-    getGuiWindow().getCanvas().setDefaultColor(0xffcccccc);
-
-    if (getInputKey().isPressed(KeyEvent.VK_ESCAPE)) {
-      getSceneManager().setActiveScene(Manager.STATE_INTRO);
-    }
-
     world.update(nano);
-
-//    character.update(nano);
   }
 
   @Override
   public void render(Canvas canvas) {
+//    Camera   camera = world.getCamera();
+//    Bounds2D bounds = character.getPhysics().getInnerBounds();
+
     world.render(canvas);
-
-    SpatialHash spatialHash = world.getSpatialHash();
-    Camera camera = world.getCamera();
-
-    Set<Integer> keys = spatialHash.getObjectKeys(character);
-
-    canvas.setColor(0x5500ff00);
-
-    for (Integer key : keys) {
-//      canvas.drawRectangle(spatialHash.getXPixel(key) - camera.getX(), spatialHash.getYPixel(key)  - camera.getY(), spatialHash.getSize(), spatialHash.getSize());
-
-    }
-
-//    Camera camera = world.getCamera();
-
-
-//    List<GameObject> objects = character.getCollision().getNearestSolidObjects();
-
-//    canvas.setColor(0x55ff0000);
-//
-//    objects.forEach(object -> {
-//      double x = object.getX() - camera.getX();
-//      double y = object.getY() - camera.getY();
-//
-//      canvas.drawFilledRectangle(x, y, object.getWidth(), object.getHeight());
-//    });
-
-//    Bounds2D spatialBounds = character.getBounds().getSpatialBounds();
-//    Bounds2D innerBounds   = character.getBounds().getInnerBounds();
-
-//    canvas.setColor(0x5500ff00);
-//    canvas.drawRectangle(spatialBounds.getX() - camera.getX(), spatialBounds.getY()  - camera.getY(), spatialBounds.getWidth(), spatialBounds.getHeight());
-//    canvas.setColor(0x550000ff);
-//    canvas.drawRectangle(innerBounds.getX() - camera.getX(), innerBounds.getY()  - camera.getY(), innerBounds.getWidth(), innerBounds.getHeight());
-
-//    character.render(canvas);
+//    System.out.println(bounds);
+//    canvas.drawRectangle(bounds.getX() - camera.getX(), bounds.getY() - camera.getY(), bounds.getWidth(), bounds.getHeight());
   }
 }

@@ -1,13 +1,13 @@
-package org.nulllab.sorrowland.app.graphics.sprite;
+package org.nulllab.nullengine.openworld.world.graphics;
 
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.pack.mapping.SpriteAnimatedMapper;
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.pack.mapping.SpriteMapper;
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.pack.mapping.SpriteStaticMapper;
 import org.nulllab.nullengine.openworld.character.Sprites;
 
-abstract public class SpritesDefaultMapper extends Sprites {
+abstract public class CharacterSpritesDefaultMapper extends Sprites {
 
-  public SpritesDefaultMapper(String sheetID) {
+  public CharacterSpritesDefaultMapper(String sheetID) {
     super(sheetID);
   }
 

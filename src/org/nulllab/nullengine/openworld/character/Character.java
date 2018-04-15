@@ -2,8 +2,10 @@ package org.nulllab.nullengine.openworld.character;
 
 import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.openworld.object.GameObject;
+import org.nulllab.nullengine.openworld.object.component.graphics.CharacterGraphics;
 import org.nulllab.nullengine.openworld.object.component.handler.CharacterHandler;
 import org.nulllab.nullengine.openworld.object.component.physics.CharacterPhysics;
+import org.nulllab.nullengine.openworld.object.component.physics.Physics;
 
 @SuppressWarnings("unused")
 public class Character extends GameObject {
@@ -18,14 +20,10 @@ public class Character extends GameObject {
     this.setStateHandler(new CharacterHandler(this, input));
     // overwrite physics for character
     this.setPhysics(new CharacterPhysics(this));
-
-    getPhysics().setVelocity(2.0D);
-  }
-
-  @Override
-  public String toString() {
-    return String.format("Character (%s) {super: %s}",
-        getClass().getSimpleName(), super.toString());
+    // overwrite graphics for character
+    this.setGraphics(new CharacterGraphics(this));
+    // set object velocity value
+    this.setValue(Physics.VELOCITY, 2.0D);
   }
 
   @Override

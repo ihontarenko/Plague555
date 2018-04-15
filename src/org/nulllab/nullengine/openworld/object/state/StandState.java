@@ -6,12 +6,14 @@ import org.nulllab.nullengine.openworld.object.component.graphics.Graphics;
 
 public class StandState extends ObjectState<Character> {
 
-  private int[] controlKeys;
+  private static int[] controlKeys;
+
+  static {
+    controlKeys = new int[]{Input.LEFT, Input.RIGHT, Input.UP, Input.DOWN};
+  }
 
   @Override
   public void entryAction(Character object, Input input) {
-    controlKeys = new int[]{Input.LEFT, Input.RIGHT, Input.UP, Input.DOWN};
-
     Graphics graphics = object.getGraphics();
 
     if (graphics.getSprite() == null) {

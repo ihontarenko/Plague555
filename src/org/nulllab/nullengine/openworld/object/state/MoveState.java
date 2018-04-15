@@ -5,7 +5,7 @@ import org.nulllab.nullengine.core.input.Input;
 import org.nulllab.nullengine.openworld.character.Character;
 import org.nulllab.nullengine.openworld.object.Direction;
 import org.nulllab.nullengine.openworld.object.GameObject;
-import org.nulllab.nullengine.openworld.object.component.graphics.Graphics;
+import org.nulllab.nullengine.openworld.object.component.graphics.CharacterGraphics;
 import org.nulllab.nullengine.openworld.object.component.physics.Physics;
 import org.nulllab.nullengine.openworld.object.event.OnMoveEvent;
 
@@ -33,7 +33,7 @@ public class MoveState extends ObjectState<Character> {
     Direction              direction  = getCurrentDirection(input);
     Observable<GameObject> observable = object.getObservable();
     Physics                physics    = object.getPhysics();
-    Graphics               graphics   = object.getGraphics();
+    CharacterGraphics      graphics   = (CharacterGraphics) object.getGraphics();
 
     physics.move(direction);
     graphics.setMoveDirectionSprite(direction);
@@ -44,12 +44,13 @@ public class MoveState extends ObjectState<Character> {
   @Override
   public void entryAction(Character object, Input input) {
     controlKeys = new int[]{Input.LEFT, Input.RIGHT, Input.UP, Input.DOWN};
-    keyMap      = object.getObjectHelper().getDirectionMaps().getKeyMapDirection();
+    keyMap = object.getObjectHelper().getDirectionMaps().getKeyMapDirection();
   }
 
   @Override
   public void exitAction(Character object, Input input) {
-    object.getGraphics().setStandDirectionSprite(getCurrentDirection(getLastPressedKey()));
+    CharacterGraphics graphics = (CharacterGraphics) object.getGraphics();
+    graphics.setStandDirectionSprite(getCurrentDirection(getLastPressedKey()));
   }
 
   private Direction getCurrentDirection(Input input) {

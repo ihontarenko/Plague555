@@ -45,7 +45,7 @@ abstract public class GameObject extends Object2D implements Renderable<Canvas>,
 
     setGraphics(new Graphics(this));
     setPhysics(new Physics(this));
-    setStateHandler(new NullHandler(this, new NullInput()));
+    setStateHandler(new NullHandler(this));
   }
 
   public GameObject(int x, int y, int width, int height) {
