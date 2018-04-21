@@ -1,7 +1,8 @@
 package org.nulllab.nullengine.core.common.resource;
 
-import java.io.FileReader;
-import java.io.InputStream;
+import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -10,17 +11,21 @@ abstract public class FileResourceLoader <CacheObject> {
   protected Map<String, CacheObject> cacheObjectMap;
   private String                     filename;
 
-  public FileResourceLoader(String filepath) {
-    this.filename = resolveName(filepath);
+  public FileResourceLoader() {
     this.cacheObjectMap = new HashMap<>();
+  }
+
+  public FileResourceLoader(String filepath) {
+    this();
+    setFilename(filepath);
   }
 
   public InputStream getFileStream() {
     return getClass().getResourceAsStream(filename);
   }
 
-  public FileReader getFileReader() {
-    return null;
+  public InputStreamReader getReader() {
+    return new InputStreamReader(getFileStream());
   }
 
   public CacheObject getCache(String name) {
@@ -37,6 +42,10 @@ abstract public class FileResourceLoader <CacheObject> {
 
   public String getFilename() {
     return filename;
+  }
+
+  public void setFilename(String filename) {
+    this.filename = resolveName(filename);
   }
 
   private String resolveName(String filename) {

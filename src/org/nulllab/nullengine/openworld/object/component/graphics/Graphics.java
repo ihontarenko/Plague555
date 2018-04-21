@@ -14,7 +14,6 @@ import java.util.Map;
 
 public class Graphics extends Component {
 
-
   private Sprite                 sprite;
   private Sprites                objectSprites;
 

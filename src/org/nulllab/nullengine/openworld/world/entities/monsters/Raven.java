@@ -2,9 +2,9 @@ package org.nulllab.nullengine.openworld.world.entities.monsters;
 
 import org.nulllab.nullengine.core.input.Input;
 
-public class Chicken extends Monster {
+public class Raven extends Monster {
 
-  public Chicken(Input input) {
+  public Raven(Input input) {
     super(input);
   }
 

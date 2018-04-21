@@ -1,11 +1,11 @@
 package org.nulllab.sorrowland.app.scene;
 
+import com.google.gson.Gson;
 import org.nulllab.nullengine.core.audio.AudioManager;
 import org.nulllab.nullengine.core.common.Probability;
 import org.nulllab.nullengine.core.event.Event;
 import org.nulllab.nullengine.core.event.Observable;
 import org.nulllab.nullengine.core.event.Observer;
-import org.nulllab.nullengine.core.geometry.Bounds2D;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.spritesheet.SpriteManager;
 import org.nulllab.nullengine.core.graphics.spritesheet.sprite.SpriteBatch;
@@ -15,6 +15,9 @@ import org.nulllab.nullengine.openworld.World;
 import org.nulllab.nullengine.openworld.character.Character;
 import org.nulllab.nullengine.openworld.character.Skills;
 import org.nulllab.nullengine.openworld.character.level.Level;
+import org.nulllab.nullengine.openworld.configuration.ConfigurationBuilder;
+import org.nulllab.nullengine.openworld.configuration.builder.GoogleJsonBuilder;
+import org.nulllab.nullengine.openworld.configuration.entities.PlayerConfig;
 import org.nulllab.nullengine.openworld.object.GameObject;
 import org.nulllab.nullengine.openworld.object.ObjectHelper;
 import org.nulllab.nullengine.openworld.object.collision.CollisionDetector;
@@ -22,8 +25,7 @@ import org.nulllab.nullengine.openworld.object.component.graphics.Graphics;
 import org.nulllab.nullengine.openworld.object.event.OnCollideEvent;
 import org.nulllab.nullengine.openworld.object.event.OnMoveEvent;
 import org.nulllab.nullengine.openworld.world.Camera;
-import org.nulllab.nullengine.openworld.world.entities.monsters.Chicken;
-import org.nulllab.nullengine.openworld.world.entities.monsters.Troll;
+import org.nulllab.nullengine.openworld.world.entities.monsters.Raven;
 import org.nulllab.sorrowland.app.graphics.sheet.IconsSheetPackage;
 import org.nulllab.sorrowland.app.graphics.sheet.Nature1SheetPackage;
 import org.nulllab.sorrowland.app.graphics.sheet.TileSet1SheetPackage;
@@ -38,6 +40,8 @@ import org.nulllab.ui.gui.GUIFrame;
 import org.nulllab.ui.process.scene.Scene;
 import org.nulllab.ui.process.view.AbstractView;
 import org.nulllab.ui.service.Context;
+
+import java.io.*;
 
 public class WorldTestScene extends Scene<AbstractView> {
 
@@ -142,9 +146,10 @@ public class WorldTestScene extends Scene<AbstractView> {
 
     System.out.println("before map parse...");
 
-//    WorldMapLoader reader = new WorldMapLoader("map/World1.map");
-//    reader.toMapData();
+    ConfigurationBuilder builder = new GoogleJsonBuilder();
 
+    PlayerConfig config = builder.createConfigurationEntity("config/mapper/player.json", PlayerConfig.class);
+    System.out.println("Hydrated PlayerConfig: " + config);
 
     world = new World();
     world.initialize();
@@ -152,7 +157,7 @@ public class WorldTestScene extends Scene<AbstractView> {
 //    character = new Character(serviceLocator.getInputKeyboard());
 //    character = new Orc(serviceLocator.getInputKeyboard());
 //    character = new Troll(serviceLocator.getInputKeyboard());
-    character = new Chicken(serviceLocator.getInputKeyboard());
+    character = new Raven(serviceLocator.getInputKeyboard());
 
     Observable<GameObject> observable = character.getObservable();
 
