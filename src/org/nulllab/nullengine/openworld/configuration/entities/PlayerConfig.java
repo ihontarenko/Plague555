@@ -1,21 +1,32 @@
 package org.nulllab.nullengine.openworld.configuration.entities;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.nulllab.nullengine.openworld.character.Skills;
 
-public class PlayerConfig {
+public class PlayerConfig extends ConfigEntity<PlayerConfig> {
 
-  private String              name;
-  private Map<String, Double> skills;
+  private String name;
+  private Skills skills;
 
   public PlayerConfig() {
-    name = "Test";
-    skills = new HashMap<>();
-    skills.put("velocity", 1.4D);
+    this.skills = new Skills();
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public Skills getSkills() {
+    return skills;
+  }
+
+  @Override
+  public void overrideWith(PlayerConfig parent) {
+    skills.mergeWith(parent.getSkills());
   }
 
   @Override
   public String toString() {
-    return String.format("Name: %sSkills: %s", name, skills);
+    return String.format("PlayerConfig{name='%s', skills=%s super=%s}", name, skills, super.toString());
   }
+
 }

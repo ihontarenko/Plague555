@@ -1,6 +1,7 @@
 {
+  "parent": "character.json",
   "name": "Player",
   "skills": {
-    "velocity": 2.5
+    "velocity": 2.7
   }
 }

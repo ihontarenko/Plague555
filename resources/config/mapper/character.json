@@ -1,0 +1,7 @@
+{
+  "parent": "gameObject.json",
+  "name": "[Default Character Entity Object Configuration]",
+  "skills": {
+    "velocity": 3
+  }
+}

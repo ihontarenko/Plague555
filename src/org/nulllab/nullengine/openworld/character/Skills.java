@@ -1,7 +1,11 @@
 package org.nulllab.nullengine.openworld.character;
 
-public class Skills {
+import org.nulllab.nullengine.core.values.DoubleValues;
 
+@SuppressWarnings("unused")
+public class Skills extends DoubleValues {
+
+  public static final String VELOCITY     = "VELOCITY";
   public static final String VITALITY     = "VITALITY";
   public static final String STRENGTH     = "STRENGTH";
   public static final String DEXTERITY    = "DEXTERITY";
@@ -9,62 +13,68 @@ public class Skills {
   public static final String DEFENSE      = "DEFENSE";
   public static final String INTELLIGENCE = "INTELLIGENCE";
 
-  private Values values;
-
-  public Skills() {
-    this.values = new Values();
-  }
-
-  public void setVitality(Double value) {
-    values.setValue(VITALITY, value);
-  }
-
-  public void setStrength(Double value) {
-    values.setValue(STRENGTH, value);
-  }
-
-  public void setDexterity(Double value) {
-    values.setValue(DEXTERITY, value);
-  }
-
-  public void setAttack(Double value) {
-    values.setValue(ATTACK, value);
-  }
-
-  public void setDefense(Double value) {
-    values.setValue(DEFENSE, value);
-  }
-
   public void setIntelligence(Double value) {
-    values.setValue(INTELLIGENCE, value);
+    setValue(INTELLIGENCE, value);
   }
 
   public Double getVitality() {
-    return values.getValue(VITALITY);
+    return getValue(VITALITY);
+  }
+
+  public void setVitality(Double value) {
+    setValue(VITALITY, value);
   }
 
   public Double getStrength() {
-    return values.getValue(STRENGTH);
+    return getValue(STRENGTH);
+  }
+
+  public void setStrength(Double value) {
+    setValue(STRENGTH, value);
   }
 
   public Double getDexterity() {
-    return values.getValue(DEXTERITY);
+    return getValue(DEXTERITY);
+  }
+
+  public void setDexterity(Double value) {
+    setValue(DEXTERITY, value);
   }
 
   public Double getAttack() {
-    return values.getValue(ATTACK);
+    return getValue(ATTACK);
+  }
+
+  public void setAttack(Double value) {
+    setValue(ATTACK, value);
   }
 
   public Double getDefense() {
-    return values.getValue(DEFENSE);
+    return getValue(DEFENSE);
+  }
+
+  public void setDefense(Double value) {
+    setValue(DEFENSE, value);
   }
 
   public Double getIntellegence() {
-    return values.getValue(INTELLIGENCE);
+    return getValue(INTELLIGENCE);
   }
 
-  public Values getValues() {
-    return values;
+  public void mergeWith(Skills skills) {
+    skills.forEach((keyName, value) -> {
+      switch (keyName) {
+        case VELOCITY:
+          averageWith(keyName, value);
+          break;
+        default:
+          addWith(keyName, value);
+      }
+    });
   }
 
+  @Override
+  public Double put(String key, Double value) {
+    return super.put(key.toUpperCase(), value);
+  }
 }

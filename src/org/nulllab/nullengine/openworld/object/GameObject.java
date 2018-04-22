@@ -5,16 +5,13 @@ import org.nulllab.nullengine.core.geometry.Bounds2D;
 import org.nulllab.nullengine.core.geometry.Object2D;
 import org.nulllab.nullengine.core.graphics.Canvas;
 import org.nulllab.nullengine.core.graphics.Renderable;
-import org.nulllab.nullengine.core.input.NullInput;
 import org.nulllab.nullengine.core.loop.Updateable;
 import org.nulllab.nullengine.openworld.ServiceLocator;
-import org.nulllab.nullengine.openworld.character.Values;
+import org.nulllab.nullengine.core.values.DoubleValues;
 import org.nulllab.nullengine.openworld.object.component.graphics.Graphics;
 import org.nulllab.nullengine.openworld.object.component.handler.NullHandler;
 import org.nulllab.nullengine.openworld.object.component.handler.StateHandler;
 import org.nulllab.nullengine.openworld.object.component.physics.Physics;
-
-import java.util.Set;
 
 @SuppressWarnings("unused")
 abstract public class GameObject extends Object2D implements Renderable<Canvas>, Updateable, Comparable<GameObject> {
@@ -22,7 +19,7 @@ abstract public class GameObject extends Object2D implements Renderable<Canvas>,
   private boolean                isSolid;
   private boolean                isMovable;
   private int                    priority;
-  private Values                 values;
+  private DoubleValues           values;
   private ServiceLocator         serviceLocator;
   private ObjectHelper           objectHelper;
   private Observable<GameObject> observable;
@@ -37,7 +34,7 @@ abstract public class GameObject extends Object2D implements Renderable<Canvas>,
   public GameObject(int x, int y, int width, int height, Bounds2D bounds) {
     super(x, y, width, height);
 
-    this.values = new Values();
+    this.values = new DoubleValues();
     this.serviceLocator = ServiceLocator.getInstance();
     this.priority = 1;
 

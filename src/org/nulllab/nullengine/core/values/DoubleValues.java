@@ -1,16 +1,9 @@
-package org.nulllab.nullengine.openworld.character;
+package org.nulllab.nullengine.core.values;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class Values {
-
-  private Map<String, Double> values;
-
-  public Values() {
-    values = new HashMap<>();
-  }
+@SuppressWarnings({"unchecked", "unused"})
+public class DoubleValues extends DirtyMap<Double> {
 
   public Double getValue(String keyName) {
     double defaultValue = 0.0D;
@@ -18,15 +11,15 @@ public class Values {
     if (!hasValue(keyName))
       setValue(keyName, defaultValue);
 
-    return values.get(keyName);
+    return getDoubleValue(keyName);
   }
 
   public void setValue(String keyName, Double value) {
-    values.put(keyName, value);
+    put(keyName, value);
   }
 
   public boolean hasValue(String keyName) {
-    return values.containsKey(keyName);
+    return containsKey(keyName);
   }
 
   public void decreaseValue(String keyName, Double value) {
@@ -37,20 +30,20 @@ public class Values {
     addWith(keyName, value);
   }
 
-  public void averageWith(Values values) {
-    values.getValues().forEach(this::averageWith);
+  public void averageWith(DoubleValues values) {
+    values.forEach(this::averageWith);
   }
 
-  public void subtractWith(Values values) {
-    values.getValues().forEach(this::subtractWith);
+  public void subtractWith(DoubleValues values) {
+    values.forEach(this::subtractWith);
   }
 
-  public void addWith(Values values) {
-    values.getValues().forEach(this::addWith);
+  public void addWith(DoubleValues values) {
+    values.forEach(this::addWith);
   }
 
   public void averageWith(String keyName, Double value) {
-    setValue(keyName, (getValue(keyName) * value) / 2);
+    setValue(keyName, (getValue(keyName) + value) / 2);
   }
 
   public void subtractWith(String keyName, Double value) {
@@ -61,19 +54,13 @@ public class Values {
     setValue(keyName, getValue(keyName) + value);
   }
 
-  public Map<String, Double> getValues() {
-    return values;
-  }
-
   @Override
   public String toString() {
     AtomicReference<String> values = new AtomicReference<>("");
 
-    this.values.forEach((keyName, value) -> {
-      values.set(String.format("%s %s: %f,", values, keyName, value));
-    });
+    this.forEach((keyName, value) -> values.set(String.format("%s %s: %f,", values, keyName, value)));
 
-    return String.format("Values: {%s}", values);
+    return String.format("[%s]: {%s}", getClass().getSimpleName(), values);
   }
 
 }

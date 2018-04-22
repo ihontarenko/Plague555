@@ -24,6 +24,14 @@ abstract public class FileResourceLoader <CacheObject> {
     return getClass().getResourceAsStream(filename);
   }
 
+  public URL getFileResource() {
+    return getClass().getResource(filename);
+  }
+
+  public File getFileObject() {
+    return new File(getFilename());
+  }
+
   public InputStreamReader getReader() {
     return new InputStreamReader(getFileStream());
   }

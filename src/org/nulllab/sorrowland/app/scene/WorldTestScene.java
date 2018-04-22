@@ -148,11 +148,16 @@ public class WorldTestScene extends Scene<AbstractView> {
 
     ConfigurationBuilder builder = new GoogleJsonBuilder();
 
-    PlayerConfig config = builder.createConfigurationEntity("config/mapper/player.json", PlayerConfig.class);
-    System.out.println("Hydrated PlayerConfig: " + config);
-
+    PlayerConfig config = builder.buildConfigurationEntity("config/mapper/player.json", PlayerConfig.class);
+    System.out.println();
+    System.out.println("Hydrated: " + config);
+    System.out.println();
     world = new World();
     world.initialize();
+
+    Object value = config.getSkills().getIntegerValue(Skills.VELOCITY);
+
+    System.out.println("Velocity: " + value + " ClassName: " + value.getClass().getSimpleName());
 
 //    character = new Character(serviceLocator.getInputKeyboard());
 //    character = new Orc(serviceLocator.getInputKeyboard());
