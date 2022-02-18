@@ -1,4 +1,4 @@
-import org.nulllab.sorrowland.app.GameLoop;
+import org.borisovich.plague555.app.GameLoop;
 
 public class GameStart {
 

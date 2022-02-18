@@ -1,0 +1,15 @@
+package org.borisovich.core.openworld.world.entities.monsters;
+
+import org.borisovich.core.core.input.Input;
+
+public class Troll extends Monster {
+
+  public Troll(Input input) {
+    super(input);
+  }
+
+  @Override
+  String getPackageID() {
+    return "mp1.monster5";
+  }
+}
